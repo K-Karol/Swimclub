@@ -24,7 +24,7 @@ namespace Swimclub.iOS
         {
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+            LoadApplication(new Mobile.App());
 
             return base.FinishedLaunching(app, options);
         }
