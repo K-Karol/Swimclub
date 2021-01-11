@@ -15,10 +15,8 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.301
-      - name: Restore dependencies
-        run: |
-          dotnet restore
-          nuget restore
+      - name: Restore nuget
+        run: nuget restore
       - name: Android
-        run: dotnet build ./Swimclub.Mobile/Swimclub.Mobile.Android/Swimclub.Droid.csproj --no-restore
+        run: msbuild /t:restore ./Swimclub.Mobile/Swimclub.Mobile.Android/Swimclub.Droid.csproj
           
