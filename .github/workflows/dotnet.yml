@@ -19,7 +19,7 @@ jobs:
         run: nuget restore
       - name: Android
         run: msbuild /t:restore /p:Configuration=Debug ./Swimclub.Mobile/Swimclub.Mobile.Android/Swimclub.Droid.csproj
-  ASP.NET:
+  ASPNET:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,5 +29,5 @@ jobs:
           dotnet-version: 3.1.301
       - name: Restore nuget
         run: nuget restore
-      - name: ASP.NET
+      - name: ASPNET
         run: msbuild /t:restore /p:Configuration=Debug ./Swimclub.REST/Swimclub.REST.csproj
