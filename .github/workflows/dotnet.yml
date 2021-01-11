@@ -41,5 +41,5 @@ jobs:
       - name: Restore nuget
         run: nuget restore
       - name: UNITTEST
-        run: dotnet test ./Swimclub.MSTEST/Swimclub.MSTest.csproj
+        run: mstest ./Swimclub.MSTEST/Swimclub.MSTest.csproj
         
