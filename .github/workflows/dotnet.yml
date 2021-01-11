@@ -20,5 +20,5 @@ jobs:
           dotnet restore
           nuget restore
       - name: Android
-        run: dotnet build .\Swimclub.Mobile\Swimclub.Mobile.Android\Swimclub.Droid.csproj --no-restore
+        run: dotnet build ./Swimclub.Mobile/Swimclub.Mobile.Android/Swimclub.Droid.csproj --no-restore
           
