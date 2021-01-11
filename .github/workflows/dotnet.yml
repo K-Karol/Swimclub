@@ -7,19 +7,18 @@ on:
     branches: [ master ]
 
 jobs:
-  build_classLib:
-
-    runs-on: windows-latest
-
+  Android:
+    runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.301
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build_Android
-      run: dotnet build ./Swimclub.Mobile/Swimclub.Mobile.Android/Swimclub.Droid.csproj --no-restore
-    - name: Build_Test
-      run: dotnet test test ./Swimclub.MSTest/Swimclub.MSTest.csproj --no-build --verbosity normal
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.301
+      - name: Restore dependencies
+        run: |
+          dotnet restore
+          nuget restore
+      - name: Android
+        run: dotnet build .\Swimclub.Mobile\Swimclub.Mobile.Android\Swimclub.Droid.csproj --no-restore
+          
