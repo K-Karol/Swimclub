@@ -1,9 +1,9 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Swimclub.MSTest
+namespace Swimclub.MSTest.iOS
 {
 	[TestClass]
-	public class UnitTest1
+	public class iOSTest
 	{
 		[TestMethod]
 		public void TestMethod1()

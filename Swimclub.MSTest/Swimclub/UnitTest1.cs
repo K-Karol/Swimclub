@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Swimclub.MSTest
+namespace Swimclub.MSTest.Swimclub
 {
 	[TestClass]
 	public class SwimclubTest
