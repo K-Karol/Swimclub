@@ -3,10 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Swimclub.Mobile.Views.MainPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="This is the Main Page"
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.15*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0.25*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="This is the Main Page"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+            <Entry Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ClearButtonVisibility="WhileEditing" Placeholder="Input text here" Text=""/>
+            <Button Grid.Row="2" Grid.Column="0" Text="Save" BackgroundColor="Green"/>
+            <Button Grid.Row="2" Grid.Column="1" Text="Delete" BackgroundColor="Red"/>
+            <ScrollView>
+                <StackLayout>
+                    <!--for a single reusable controle item e.g. image, title, or description in a card-like layout-->
+                    <ContentView>
+                       <!--PUT THE NOTE DISPLAY STUFF HERE-->
+                    </ContentView>
+                </StackLayout>
+            </ScrollView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
