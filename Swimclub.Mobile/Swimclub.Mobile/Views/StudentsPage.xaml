@@ -3,7 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Swimclub.Mobile.Views.StudentsPage">
     <ContentPage.Content>
-        <CollectionView x:Name="Coll1" ItemsSource="{Binding Ilist}">
+        <StackLayout>
+            <SearchBar x:Name="StudentSearchBar" Placeholder="Search" CancelButtonColor="Red" 
+                       HorizontalTextAlignment="Center" TextChanged="StudentPageSearchBar_TextChanged"></SearchBar>
+            <CollectionView x:Name="Coll1" ItemsSource="{Binding Ilist}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="10" Margin="10">
@@ -27,5 +30,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>
