@@ -2,11 +2,19 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Swimclub.Mobile.Views.SwimClassesPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add a Class" />
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="This is the Swim Classes Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+       
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Upcoming Classes" FontSize="Title"/>
+            <Label Text="Class:" FontSize="Medium" />
+            <Label Text="{Binding Class}" FontSize="Small"/>
+            <Label Text="Details:" FontSize="Medium" />
+            <Label Text="{Binding Details}" FontSize="Small"/>
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>
