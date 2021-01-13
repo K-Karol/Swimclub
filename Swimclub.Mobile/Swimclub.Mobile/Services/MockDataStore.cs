@@ -9,7 +9,7 @@ namespace Swimclub.Mobile.Services
 	public class MockDataStore : IDataStore<Item>
 	{
 		readonly List<Item> items;
-
+		
 		public MockDataStore()
 		{
 			items = new List<Item>()
@@ -19,8 +19,11 @@ namespace Swimclub.Mobile.Services
 				new Item { Id = Guid.NewGuid().ToString(), Text = "Third item", Description="This is an item description." },
 				new Item { Id = Guid.NewGuid().ToString(), Text = "Fourth item", Description="This is an item description." },
 				new Item { Id = Guid.NewGuid().ToString(), Text = "Fifth item", Description="This is an item description." },
-				new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." }
+				new Item { Id = Guid.NewGuid().ToString(), Text = "Sixth item", Description="This is an item description." },
+
+				new Item { Id = Guid.NewGuid().ToString(), studentID="0000", studentName="smith" }
 			};
+
 		}
 
 		public async Task<bool> AddItemAsync(Item item)
