@@ -15,12 +15,12 @@ namespace Swimclub.Mobile.Views
         public StudentsPage()
         {
             Ilist = new List<Student>();
-            Ilist.Add(new Student { StudentName = "Joe Bloggs", StudentGrade = "Grade: 1", StudentSwimEnglandNumber = "12345678" });
-            Ilist.Add(new Student { StudentName = "Micheal Phelps", StudentGrade = "Grade: 1", StudentSwimEnglandNumber = "87654321" });
-            Ilist.Add(new Student { StudentName = "Alove Floats", StudentGrade = "Grade: 2", StudentSwimEnglandNumber = "67284153" });
-            Ilist.Add(new Student { StudentName = "Ivanha swim", StudentGrade = "Grade: 2", StudentSwimEnglandNumber = "06417324" });
-            Ilist.Add(new Student { StudentName = "Channel Crosser", StudentGrade = "Grade: 3", StudentSwimEnglandNumber = "14285097" });
-            Ilist.Add(new Student { StudentName = "Speedboat McGee", StudentGrade = "Grade: 3", StudentSwimEnglandNumber = "14285097" });
+            Ilist.Add(new Student { StudentName = "Joe Bloggs", StudentGrade = "Grade: 1", StudentSwimEnglandNumber = "Swim England Number: 12345678" });
+            Ilist.Add(new Student { StudentName = "Micheal Phelps", StudentGrade = "Grade: 1", StudentSwimEnglandNumber = "Swim England Number: 87654321" });
+            Ilist.Add(new Student { StudentName = "Alove Floats", StudentGrade = "Grade: 2", StudentSwimEnglandNumber = "Swim England Number: 67284153" });
+            Ilist.Add(new Student { StudentName = "Ivanha swim", StudentGrade = "Grade: 2", StudentSwimEnglandNumber = "Swim England Number: 06417324" });
+            Ilist.Add(new Student { StudentName = "Channel Crosser", StudentGrade = "Grade: 3", StudentSwimEnglandNumber = "Swim England Number: 14285097" });
+            Ilist.Add(new Student { StudentName = "Speedboat McGee", StudentGrade = "Grade: 3", StudentSwimEnglandNumber = "Swim England Number: 14285097" });
 
             InitializeComponent();
 

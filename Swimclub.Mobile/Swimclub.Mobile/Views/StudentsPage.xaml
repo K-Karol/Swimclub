@@ -17,8 +17,8 @@
                             <RowDefinition Height="1*"></RowDefinition>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
+                            <ColumnDefinition Width="50*"></ColumnDefinition>
+                            <ColumnDefinition Width="50*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
                         <Label Text="{Binding StudentName}" FontSize="16" Grid.Row="0" Grid.ColumnSpan="2"></Label>
                         <Label Text="{Binding StudentGrade}" Grid.Row="1" Grid.ColumnSpan="2"></Label>
