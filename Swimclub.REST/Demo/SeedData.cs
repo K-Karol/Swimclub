@@ -7,9 +7,16 @@ using System.Threading.Tasks;
 
 namespace Swimclub.REST.Demo
 {
+	/// <summary>
+	/// This static class will proceed to seed entities into the databases for the purpose of testing
+	/// </summary>
 	public static class SeedData
 	{
-
+		/// <summary>
+		/// This will initialise the services and proceed to see
+		/// </summary>
+		/// <param name="services"></param>
+		/// <returns></returns>
 		public static async Task InitialiseAsync(IServiceProvider services)
 		{
 			//await AddTestDataHotel(services.GetRequiredService<HotelApiDbContext>());

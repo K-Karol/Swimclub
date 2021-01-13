@@ -18,14 +18,14 @@ namespace Swimclub.REST.Controllers
 		[HttpPost("login")]
 		public async Task<IActionResult> Login([FromBody] Models.Login loginInfo)
 		{
-			Models.ApiError feedback = await user_service.LoginUserAsync(loginInfo);
-			if (feedback.Success)
+			Services.UserService.UserServiceResponse feedback = await user_service.LoginUserAsync(loginInfo);
+			if (feedback.success)
 			{
 				return Ok(feedback);
 			}
 			else
 			{
-				return StatusCode(401,feedback);
+				return StatusCode(401,new Models.ApiError() { Message = "Incorrect login credentials", Detail = "Failed authentication", Success = false });
 			}
 		}
 	}
