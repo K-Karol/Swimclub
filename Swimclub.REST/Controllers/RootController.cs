@@ -32,8 +32,7 @@ namespace Swimclub.REST.Controllers
 				message = "This is the root of the Swimclub REST API. Proceed to token exchange for authentication",
 				token = new
 				{
-					href1 = Url.Link(nameof(TokenController.RootOfToken), null),
-					//href = Url.Link(nameof(TokenController.TokenExchange), null)
+					href = Url.Link(nameof(AuthController.Login), null),
 				}
 			};
 			return Ok(response);

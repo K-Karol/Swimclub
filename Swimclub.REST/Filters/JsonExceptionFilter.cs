@@ -23,11 +23,13 @@ namespace Swimclub.REST.Filters
 			var error = new ApiError();
 			if (env.IsDevelopment())
 			{
+				error.Success = false;
 				error.Message = context.Exception.Message;
 				error.Detail = context.Exception.StackTrace;
 			}
 			else
 			{
+				error.Success = false;
 				error.Message = "Server error occurred.";
 				error.Detail = context.Exception.Message;
 			}

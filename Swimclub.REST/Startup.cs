@@ -19,6 +19,8 @@ using Microsoft.Data.Sqlite;
 using System.Reflection;
 using OpenIddict.Validation;
 using AspNet.Security.OpenIdConnect.Primitives;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Swimclub.REST
 {
@@ -41,7 +43,7 @@ namespace Swimclub.REST
 			var userConnectionString = new SqliteConnectionStringBuilder(locationOfUsers)
 			{
 				Mode = SqliteOpenMode.ReadWriteCreate,
-				Password = "temp"   //FIGURE OUT A SAFER WAY FOR THIS IMMEDIATELY
+				Password = Configuration["DatabaseSettings:UserPassword"]  //FIGURE OUT A SAFER WAY FOR THIS IMMEDIATELY
 			}.ToString();
 
 
@@ -50,16 +52,33 @@ namespace Swimclub.REST
 				options.UseOpenIddict<int>();
 			});
 
-			services.AddIdentity<Entities.User, Entities.UserRole>(options =>
+			//services.AddIdentity<Entities.User, Entities.UserRole>(options =>
+			//{
+			//	options.Password.RequireDigit = true;
+			//	options.Password.RequireLowercase = true;
+			//	options.Password.RequiredLength = 5;
+			//}
+			//).AddEntityFrameworkStores<Data.UserDbContext>().AddDefaultTokenProviders();
+
+
+			AddIdentityCoreServices(services);
+
+			services.AddAuthentication(auth =>
 			{
-				options.Password.RequireDigit = true;
-				options.Password.RequireLowercase = true;
-				options.Password.RequiredLength = 5;
+				auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 			}
-			).AddEntityFrameworkStores<Data.UserDbContext>().AddDefaultTokenProviders();
-
-
-
+			).AddJwtBearer(options =>
+			{
+				options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+				{
+					ValidateIssuer = true,
+					RequireExpirationTime = true,
+					IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(Configuration["AuthSettings:Key"])),
+					ValidateIssuerSigningKey = true
+				};
+			
+			});
 
 			services.AddMvc(options =>
 			{
@@ -67,6 +86,8 @@ namespace Swimclub.REST
 				options.Filters.Add<Filters.RequireHttpsOrClose>();
 			}
 			);
+
+			services.AddScoped<Services.IUserService, Services.UserService>();
 
 			services.AddControllers();
 			services.AddSwaggerGen(c =>

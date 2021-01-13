@@ -58,15 +58,17 @@ namespace Swimclub.REST.Demo
 			var user = new Entities.User
 			{
 				Forename = "Admin",
-				UserName = "admin"
+				UserName = "admin",
+				
 			};
 
-			await userManager.CreateAsync(user, "adminPassword");
-
+			Task<IdentityResult> t = userManager.CreateAsync(user, "adminPassword123!");
+			t.Wait();
 			//put the user in the role
 
 			await userManager.AddToRoleAsync(user, "Admin");
 			await userManager.UpdateAsync(user);
+
 		}
 	}
 }

@@ -12,8 +12,8 @@ namespace Swimclub.REST.Data
 {
 	public class UserDbContext : IdentityDbContext<Entities.User, Entities.UserRole, int>
 	{
-		public UserDbContext(DbContextOptions<UserDbContext> _options) : base(_options) { Database.EnsureCreated();  }
+		public UserDbContext(DbContextOptions<UserDbContext> _options) : base(_options) { Database.EnsureCreated(); }
 
-		//public DbSet<Entities.User> Users { get; set; }
+		public DbSet<Entities.User> Users { get; set; }
 	}
 }
