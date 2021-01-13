@@ -18,7 +18,7 @@ namespace Swimclub.Mobile.Views
         {
             InitializeComponent();
 
-            tempDatabase = new string[25];
+            tempDatabase = new string[25]; // 25 for now to see if scrollview xaml works (it dose)
         }
         //example database replace with real one once its constructed
         string[] tempDatabase;

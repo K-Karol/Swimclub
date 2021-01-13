@@ -16,7 +16,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.ColumnSpan="2" Text="This is the Main Page" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-            <Entry x:Name="inputBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ClearButtonVisibility="WhileEditing" Placeholder="Input text here" Text=""/>
+            <Entry x:Name="inputBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ClearButtonVisibility="WhileEditing" Keyboard="Chat" Placeholder="Input text here" Text=""/>
             <Button x:Name="SaveButton" Clicked="SaveButton_Clicked" Grid.Row="2" Grid.Column="0" Text="Save" BackgroundColor="Green"/>
             <Button x:Name="ClearButton"  Grid.Row="2" Grid.Column="1" Text="Clear" BackgroundColor="Red"/>
             <!--All users should be able to see the messages-->
