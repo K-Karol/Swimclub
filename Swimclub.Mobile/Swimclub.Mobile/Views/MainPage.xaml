@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Swimclub.Mobile.Views.MainPage">
     <ContentPage.Content>
+        <!--ONLY an admin should be able to add new messages to the main page TO BE IMPLIMENTED-->
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.15*"/>
@@ -14,18 +15,17 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="This is the Main Page"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            <Entry Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ClearButtonVisibility="WhileEditing" Placeholder="Input text here" Text=""/>
-            <Button Grid.Row="2" Grid.Column="0" Text="Save" BackgroundColor="Green"/>
-            <Button Grid.Row="2" Grid.Column="1" Text="Delete" BackgroundColor="Red"/>
-            <ScrollView>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="This is the Main Page" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+            <Entry x:Name="inputBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ClearButtonVisibility="WhileEditing" Placeholder="Input text here" Text=""/>
+            <Button x:Name="SaveButton" Clicked="SaveButton_Clicked" Grid.Row="2" Grid.Column="0" Text="Save" BackgroundColor="Green"/>
+            <Button x:Name="ClearButton"  Grid.Row="2" Grid.Column="1" Text="Clear" BackgroundColor="Red"/>
+            <!--All users should be able to see the messages-->
+            <ScrollView Grid.Row="3" Grid.ColumnSpan="2" >
                 <StackLayout>
                     <!--for a single reusable controle item e.g. image, title, or description in a card-like layout-->
-                    <ContentView>
-                       <!--PUT THE NOTE DISPLAY STUFF HERE-->
-                    </ContentView>
+                    <!--PUT THE NOTE DISPLAY STUFF HERE-->
+                    <Label x:Name="Messages" Margin="20" FontSize="Medium"/>
+                    <Label Text="End of messages" HorizontalOptions="CenterAndExpand"  FontSize="Subtitle"/>
                 </StackLayout>
             </ScrollView>
         </Grid>

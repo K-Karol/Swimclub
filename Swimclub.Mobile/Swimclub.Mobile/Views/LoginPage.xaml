@@ -8,8 +8,8 @@
              Shell.NavBarIsVisible="False">
     <ContentPage.Content>
         <StackLayout Padding="10,0,10,0" VerticalOptions="Center">
-            <Entry ClearButtonVisibility="WhileEditing" Placeholder="Username" Text=""/>
-            <Entry ClearButtonVisibility="WhileEditing" Placeholder="Password" Text=""/>
+            <Entry x:Name="UsernameInput" ClearButtonVisibility="WhileEditing" Placeholder="Username" IsTextPredictionEnabled="false" Text=""/>
+            <Entry x:Name="PasswordInput" ClearButtonVisibility="WhileEditing" Placeholder="Password" IsPassword="true" IsTextPredictionEnabled="false" Text=""/>
             <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
         </StackLayout>
     </ContentPage.Content>
