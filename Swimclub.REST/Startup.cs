@@ -26,10 +26,16 @@ namespace Swimclub.REST
 {
 	public class Startup
 	{
+
+		private string userConnectionString;
+		private string studentConnectionString;
+		private string resourceConnectionString;
+
 		public Startup(IConfiguration configuration)
 		{
-			CheckDatabases();
+			
 			Configuration = configuration;
+			ConfigureDatabases();
 		}
 
 		public IConfiguration Configuration { get; }
@@ -38,18 +44,13 @@ namespace Swimclub.REST
 		public void ConfigureServices(IServiceCollection services)
 		{
 
-			string data_path = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "data");
-			var locationOfUsers = String.Format("Data Source={0}", Path.Combine(data_path, "users.db3"));
-			var userConnectionString = new SqliteConnectionStringBuilder(locationOfUsers)
-			{
-				Mode = SqliteOpenMode.ReadWriteCreate,
-				Password = Configuration["DatabaseSettings:UserPassword"]  //FIGURE OUT A SAFER WAY FOR THIS IMMEDIATELY
-			}.ToString();
-
-
 			services.AddDbContext<Data.UserDbContext>(options => { 
 				options.UseSqlite(userConnectionString);
 				options.UseOpenIddict<int>();
+			});
+
+			services.AddDbContext<Data.StudentDbContext>(options => {
+				options.UseSqlite(studentConnectionString);
 			});
 
 
@@ -125,37 +126,23 @@ namespace Swimclub.REST
 			});
 		}
 
-		private void CheckDatabases()
+		private void ConfigureDatabases()
 		{
-			//DB files
-			//users
-			//resources
 			string data_path = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "data");
 			Directory.CreateDirectory(data_path);
 			var locationOfUsers = String.Format("Data Source={0}", Path.Combine(data_path, "users.db3"));
-			var userConnectionString = new SqliteConnectionStringBuilder(locationOfUsers)
+			userConnectionString = new SqliteConnectionStringBuilder(locationOfUsers)
 			{
 				Mode = SqliteOpenMode.ReadWriteCreate,
-				Password = "temp"	//FIGURE OUT A SAFER WAY FOR THIS IMMEDIATELY
+				Password = Configuration["DatabaseSettings:UserPassword"]
 			}.ToString();
 
-			SqliteConnection userCon = new SqliteConnection(userConnectionString);
-			userCon.Open();
-			SqliteCommand cmd = userCon.CreateCommand();
-			cmd.CommandText = "SELECT count(*) FROM sqlite_master";
-			Int64 ret = (Int64)cmd.ExecuteScalar();
-			if(ret == 0)
+			var locationOfStudents = String.Format("Data Source={0}", Path.Combine(data_path, "students.db3"));
+			studentConnectionString = new SqliteConnectionStringBuilder(locationOfStudents)
 			{
-				//Empty. Proceed to seed that database with data? maybe? Set a flag for seeding?
-				LaunchFlags.Instance.NewHost = true;
-				userCon.Close();
-				File.Delete(Path.Combine(data_path, "users.db3"));
-
-			} else
-			{
-				LaunchFlags.Instance.NewHost = false;
-				userCon.Close();
-			}
+				Mode = SqliteOpenMode.ReadWriteCreate,
+				Password = Configuration["DatabaseSettings:StudentPassword"]
+			}.ToString();
 
 		}
 
