@@ -31,8 +31,6 @@ namespace Swimclub.Mobile.Views
         {
             var searchResultName = Ilist.Where(c => c.StudentName.ToLower().Contains(StudentSearchBar.Text.ToLower()));
             Coll1.ItemsSource = searchResultName;
-
-            
         }
     }
     public class Student

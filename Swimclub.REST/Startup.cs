@@ -80,7 +80,7 @@ namespace Swimclub.REST
 				options.Filters.Add<Filters.JsonExceptionFilter>();
 				options.Filters.Add<Filters.RequireHttpsOrClose>();
 			}
-			);
+			).ConfigureApiBehaviorOptions(x=>x.SuppressMapClientErrors = true);
 
 			services.AddScoped<Services.IUserService, Services.UserService>();
 
@@ -102,8 +102,6 @@ namespace Swimclub.REST
 				app.UseSwagger();
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swimclub.REST v1"));
 			}
-
-
 			app.UseRouting();
 
 			app.UseAuthentication();

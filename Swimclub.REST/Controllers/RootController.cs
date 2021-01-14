@@ -8,7 +8,7 @@ namespace Swimclub.REST.Controllers
 {
 	[Route("/")]
 	[ApiController]
-	public class RootController : Controller
+	public class RootController : ControllerBase
 	{
 		[HttpGet(Name = nameof(GetRoot))]
 		public IActionResult GetRoot()

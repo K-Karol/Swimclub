@@ -10,7 +10,7 @@ namespace Swimclub.REST.Controllers
 	[Authorize]
 	[Route("/[controller]")]
 	[ApiController]
-	public class UsersController : Controller
+	public class UsersController : ControllerBase
 	{
 		[HttpGet("test")]
 		public IActionResult Test()
