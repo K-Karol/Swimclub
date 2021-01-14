@@ -19,7 +19,10 @@ namespace Swimclub.Mobile.ViewModels
                 if (viewStudentName != value)
                 {
                     viewStudentName = value;
-                    OnPropertyChanged(nameof(ViewStudentName));
+                    if(PropertyChanged != null)
+					{
+                        PropertyChanged(this, new PropertyChangedEventArgs("ViewStudentName"));
+					}
                 }
             }
             get
@@ -28,10 +31,10 @@ namespace Swimclub.Mobile.ViewModels
             }
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        //protected virtual void OnPropertyChanged(string propertyName)
+        //{
+        //    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        //}
     }
 
 }

@@ -17,7 +17,7 @@ namespace Swimclub.Mobile.Views
         public GradingPages() //constructor allways happens first
         {
             InitializeComponent();
-            StudentName.Text = SetStudentName;
+            //StudentName.Text = SetStudentName;
             BindingContext = new GradingPagesViewModel();
         }
 
@@ -27,7 +27,12 @@ namespace Swimclub.Mobile.Views
 			set
 			{
                 setStudentName = Uri.UnescapeDataString(value);
-                ((GradingPagesViewModel)BindingContext).ViewStudentName = SetStudentName;
+                var bind = (GradingPagesViewModel)BindingContext;
+                if(bind != null)
+				{
+                    bind.ViewStudentName = setStudentName;
+				}
+                //StudentName.Text = setStudentName;
             }
 			get
 			{

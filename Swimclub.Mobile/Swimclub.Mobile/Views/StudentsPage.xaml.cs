@@ -25,6 +25,7 @@ namespace Swimclub.Mobile.Views
             InitializeComponent();
 
             Coll1.ItemsSource = Ilist;
+
         }
 
         private void StudentPageSearchBar_TextChanged(object sender, TextChangedEventArgs e)
@@ -35,8 +36,9 @@ namespace Swimclub.Mobile.Views
 
         private async void TestingButton_Clicked(object sender, EventArgs e)
         {
+            CustomWidgets.StudentListButton button = (CustomWidgets.StudentListButton)sender;
             // move to Grades page, send student name/unique id to grade, for use in searching later
-            await Shell.Current.GoToAsync($"{nameof(GradingPages)}?identifier={"Test"}");
+            await Shell.Current.GoToAsync($"{nameof(GradingPages)}?identifier={button.BindStudentName}");
         }
     }
     public class Student

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Swimclub.Mobile.Views.StudentsPage">
+             x:Class="Swimclub.Mobile.Views.StudentsPage"
+             xmlns:CW="clr-namespace:Swimclub.Mobile.CustomWidgets">
     <ContentPage.Content>
         <StackLayout>
             <SearchBar x:Name="StudentSearchBar" Placeholder="Search" CancelButtonColor="Red" 
@@ -23,9 +24,9 @@
                         <Label Text="{Binding StudentName}" FontSize="16" Grid.Row="0" Grid.ColumnSpan="2"/>
                         <Label Text="{Binding StudentGrade}" Grid.Row="1" Grid.ColumnSpan="2"/>
                         <Label Text="{Binding StudentSwimEnglandNumber}" Grid.Row="2" Grid.Column="0"/>
-                        <Button x:Name="TestingButton" Clicked="TestingButton_Clicked" Grid.Row="2" Grid.Column="1" Text="Test Scores" HorizontalOptions="CenterAndExpand" BackgroundColor="Gray"/>
+                            <CW:StudentListButton BindStudentName="{Binding StudentName}" x:Name="TestingButton" Clicked="TestingButton_Clicked" Grid.Row="2" Grid.Column="1" Text="Test Scores" HorizontalOptions="CenterAndExpand" BackgroundColor="Gray"/>
                         <BoxView Grid.Row="3" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="4" 
-                            VerticalOptions="Center" HeightRequest="3" BackgroundColor="DarkGray"></BoxView>
+                        VerticalOptions="Center" HeightRequest="3" BackgroundColor="DarkGray"></BoxView>
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
