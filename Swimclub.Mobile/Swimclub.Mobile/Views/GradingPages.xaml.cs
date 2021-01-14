@@ -10,13 +10,26 @@ using Xamarin.Forms.Xaml;
 namespace Swimclub.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    [QueryProperty("StudentID","Identifier")] // pass in student name data from another cs file
+    [QueryProperty("StudentID", "identifier")] // pass in student name data from another cs file
     public partial class GradingPages : ContentPage
     {
+        private string studentID;
+        public string StudentID
+		{
+			set
+			{
+                studentID = Uri.UnescapeDataString(value);
+			}
+			get
+			{
+                return studentID;
+			}
+		}
+
         public GradingPages() //pass in a string of student name / unique identifier when page is created
         {
             InitializeComponent();
-            SetStudentName = StudentID; //set the name as SetStudentName
+            SetStudentName = studentID; //set the name as SetStudentName
         }
 
         private string SetStudentName;

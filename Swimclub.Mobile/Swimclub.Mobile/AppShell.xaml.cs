@@ -13,7 +13,7 @@ namespace Swimclub.Mobile
 			InitializeComponent();
 			Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
 			Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
-			Routing.RegisterRoute("//GradingPages", typeof(GradingPages)); //this is needed for the griding page to be displayed
+			Routing.RegisterRoute(nameof(GradingPages), typeof(GradingPages)); //this is needed for the griding page to be displayed
 		}
 
 		private async void OnMenuItemClicked(object sender, EventArgs e)
