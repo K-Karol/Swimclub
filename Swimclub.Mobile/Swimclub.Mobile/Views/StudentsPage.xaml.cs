@@ -29,7 +29,7 @@ namespace Swimclub.Mobile.Views
 
         private void StudentPageSearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var searchResultName = Ilist.Where(c => c.StudentName.ToLower().Contains(StudentSearchBar.Text.ToLower()));
+            var searchResultName = Ilist.Where(c => c.StudentName.ToLower().Contains(StudentSearchBar.Text.ToLower()) || c.StudentSwimEnglandNumber.Contains(StudentSearchBar.Text));
             Coll1.ItemsSource = searchResultName;
 
             
