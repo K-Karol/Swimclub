@@ -25,7 +25,7 @@ namespace Swimclub.REST.Controllers
 		/// <param name="loginInfo"><see cref="Models.Login"/> which contains the username and password</param>
 		/// <returns>A <see cref="AuthResponse"/></returns>
 		/// 
-		[HttpPost("login")]
+		[HttpPost("login", Name = nameof(Login))]
 		[ProducesResponseType(StatusCodes.Status200OK, Type=typeof(AuthResponse)), ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthResponse))]
 		public async Task<ActionResult<AuthResponse>> Login([FromBody] Models.Login loginInfo)
 		{

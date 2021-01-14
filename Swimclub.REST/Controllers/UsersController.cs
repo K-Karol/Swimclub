@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Swimclub.REST.Controllers
 {
 	/// <summary>
-	/// This controller is responsible for all interactions with system users
+	/// This controller is responsible for all interactions with system's users
 	/// </summary>
 	[Authorize]
 	[Route("/[controller]")]
@@ -24,11 +24,26 @@ namespace Swimclub.REST.Controllers
 			user_service = _user_service;
 		}
 
+
+		public IActionResult UserRoot()
+		{
+			return Ok(new
+			{
+				message = "This endpoint is responsible for all interactions with system's users",
+				userinfo = new
+				{
+					href = Url.Link(nameof(UserInfo), null)
+				},
+				
+
+			}); ;
+			}
+
 		/// <summary>
 		/// This will respond with the information about the current user.
 		/// </summary>
 		/// <returns><see cref="UserInfoResponse"/></returns>
-		[HttpGet("info")]
+		[HttpGet("info", Name = nameof(UserInfo))]
 		[ProducesResponseType(StatusCodes.Status400BadRequest, Type=typeof(UserInfoResponse)), ProducesResponseType(StatusCodes.Status401Unauthorized), ProducesResponseType(StatusCodes.Status200OK, Type=typeof(UserInfoResponse))]
 		public async Task<ActionResult<UserInfoResponse>> UserInfo() {
 			var user = await user_service.GetUserAsync(User);
