@@ -19,11 +19,8 @@ namespace Swimclub.REST.Demo
 		/// <returns></returns>
 		public static async Task InitialiseAsync(IServiceProvider services)
 		{
-			//await AddTestDataHotel(services.GetRequiredService<HotelApiDbContext>());
-			if (LaunchFlags.Instance.NewHost)
-			{
-				await AddTestUsers(services.GetRequiredService<RoleManager<Entities.UserRole>>(), services.GetRequiredService<UserManager<Entities.User>>());
-			}
+			await AddTestUsers(services.GetRequiredService<RoleManager<Entities.UserRole>>(), services.GetRequiredService<UserManager<Entities.User>>());
+			await AddTestStudents(services.GetRequiredService<Data.StudentDbContext>());
 		}
 
 		//public static async Task AddTestDataHotel(HotelApiDbContext _context)
@@ -75,6 +72,59 @@ namespace Swimclub.REST.Demo
 
 			await userManager.AddToRoleAsync(user, "Admin");
 			await userManager.UpdateAsync(user);
+
+		}
+
+		private static async Task AddTestStudents(Data.StudentDbContext _context)
+		{
+			if (_context.Students.Any())
+			{
+				return;
+			}
+
+			_context.Students.Add(new Entities.Student()
+			{
+				Forename = "Joe",
+				Surname = "Bloggs",
+				CurrentGradeNumber = 1,
+				SwimEnglandNumber = "12345678",
+				DateOfBirth = new DateTime(2008, 1, 1),
+				MedicalDetails = new Models.MedicalDetails()
+				{
+					Allergies = new string[] { "Strawberries" },
+					Notes = "Struggles with endurance",
+					Immunizations = new string[] { "Teenage booster?" },
+					EmergencyContacts = new Models.Contact[] {new Models.Contact() { FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address()
+					{
+					Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"}
+					}
+				}
+				}
+			}
+				);
+
+
+			_context.Students.Add(new Entities.Student()
+			{
+				Forename = "Micheal",
+				Surname = "Phelps",
+				CurrentGradeNumber = 1,
+				SwimEnglandNumber = "87654321",
+				DateOfBirth = new DateTime(2009, 5, 11),
+				MedicalDetails = new Models.MedicalDetails()
+				{
+					Illnesses = new string[] { "Sickle Cell Disease" },
+					EmergencyContacts = new Models.Contact[] {new Models.Contact() { FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address()
+					{
+					Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"}
+					}
+				}
+				}
+			}
+				);
+
+
+			await _context.SaveChangesAsync();
 
 		}
 	}
