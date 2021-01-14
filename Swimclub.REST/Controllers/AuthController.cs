@@ -24,7 +24,8 @@ namespace Swimclub.REST.Controllers
 		/// </summary>
 		/// <param name="loginInfo"><see cref="Models.Login"/> which contains the username and password</param>
 		/// <returns>A <see cref="AuthResponse"/></returns>
-		[HttpPost(Name =nameof(Login))]
+		/// 
+		[HttpPost("login")]
 		[ProducesResponseType(StatusCodes.Status200OK, Type=typeof(AuthResponse)), ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthResponse))]
 		public async Task<ActionResult<AuthResponse>> Login([FromBody] Models.Login loginInfo)
 		{
@@ -33,6 +34,7 @@ namespace Swimclub.REST.Controllers
 			if (feedback.success)
 			{
 				temp.Token = feedback.token;
+				temp.Expiry = feedback.ExpireDate;
 				return Ok(temp);
 			}
 			else
@@ -48,6 +50,7 @@ namespace Swimclub.REST.Controllers
 		{
 			public bool Success { get; set; }
 			public string Token { get; set; }
+			public DateTime? Expiry { get; set; }
 			public Models.ApiError Error { get; set; }
 		}
 	}

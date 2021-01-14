@@ -11,9 +11,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swimclub.iOS", "Swimclub.Mo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swimclub.Mobile", "Swimclub.Mobile\Swimclub.Mobile\Swimclub.Mobile.csproj", "{7C7C3E08-6C3E-49B0-8890-018B7AD65D78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swimclub.REST", "Swimclub.REST\Swimclub.REST.csproj", "{BD933758-6CCF-49C9-ACD9-87FFC822C38E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swimclub.REST", "Swimclub.REST\Swimclub.REST.csproj", "{BD933758-6CCF-49C9-ACD9-87FFC822C38E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swimclub.MSTest", "Swimclub.MSTest\Swimclub.MSTest.csproj", "{A7F093AB-7E29-4E3D-A03B-FAE431FF6430}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swimclub.MSTest", "Swimclub.MSTest\Swimclub.MSTest.csproj", "{A7F093AB-7E29-4E3D-A03B-FAE431FF6430}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E14A89A-68AA-4348-8C3F-0A810C376120}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

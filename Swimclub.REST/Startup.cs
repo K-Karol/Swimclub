@@ -88,6 +88,17 @@ namespace Swimclub.REST
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swimclub.REST", Version = "v1" });
+				c.IncludeXmlComments(string.Format(@"{0}\bin\SwaggerAPI.xml", Directory.GetCurrentDirectory()));
+				c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+				{
+					Type = SecuritySchemeType.Http,
+					BearerFormat = "JWT",
+					In = ParameterLocation.Header,
+					Scheme = "Bearer"
+
+				});
+				c.OperationFilter<Filters.AuthenticationRequirementsOperationFilter>();
+
 			});
 
 			services.AddRouting(options => options.LowercaseUrls = true);

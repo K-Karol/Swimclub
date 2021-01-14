@@ -16,7 +16,9 @@ namespace Swimclub.REST.Services
 	{
 
 		Task<UserService.UserServiceResponse> LoginUserAsync(Models.Login _model);
+		Task<int?> GetUserIdAsync(ClaimsPrincipal principal);
 
+		Task<User> GetUserAsync(ClaimsPrincipal user);
 	}
 
 	public class UserService : IUserService
@@ -64,5 +66,21 @@ namespace Swimclub.REST.Services
 				return new UserService.UserServiceResponse() { success = true, token = tokenAsString, ExpireDate = token.ValidTo }; ;
 			}
 		}
+
+		public async Task<User> GetUserAsync(ClaimsPrincipal user)
+		{
+			var entity = await user_manager.GetUserAsync(user);
+			return Entities.User.getUser(entity);
+		}
+
+		public async Task<int?> GetUserIdAsync(ClaimsPrincipal principal)
+		{
+			var user = await user_manager.GetUserAsync(principal);
+			if (user == null) return null;
+
+			return user.Id;
+		}
+
+
 	}
 }
