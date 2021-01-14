@@ -10,35 +10,33 @@ using Xamarin.Forms.Xaml;
 namespace Swimclub.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    [QueryProperty("StudentID", "identifier")] // pass in student name data from another cs file
+    [QueryProperty("SetStudentName", "identifier")] // pass in student name data from another cs file
     public partial class GradingPages : ContentPage
     {
-        private string studentID;
-        public string StudentID
-		{
+        private string setStudentName;
+        public string SetStudentName
+        {
 			set
 			{
-                studentID = Uri.UnescapeDataString(value);
+                setStudentName = Uri.UnescapeDataString(value);
 			}
 			get
 			{
-                return studentID;
+                return setStudentName;
 			}
 		}
 
         public GradingPages() //pass in a string of student name / unique identifier when page is created
         {
             InitializeComponent();
-            SetStudentName = studentID; //set the name as SetStudentName
         }
 
-        private string SetStudentName;
         public string SetName //display the student name in the lable
         {
-            get { return SetStudentName; }
+            get { return setStudentName; }
             set
             {
-                SetStudentName = value;
+                setStudentName = value;
                 OnPropertyChanged(nameof(SetName));
             }
         }
