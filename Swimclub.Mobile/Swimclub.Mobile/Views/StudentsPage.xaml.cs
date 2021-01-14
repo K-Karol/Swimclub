@@ -31,8 +31,12 @@ namespace Swimclub.Mobile.Views
         {
             var searchResultName = Ilist.Where(c => c.StudentName.ToLower().Contains(StudentSearchBar.Text.ToLower()));
             Coll1.ItemsSource = searchResultName;
+        }
 
-            
+        private async void TestingButton_Clicked(object sender, EventArgs e)
+        {
+            // move to Grades page, send student name/unique id to grade as well, for use in searching later
+            await Shell.Current.GoToAsync($"//{nameof(GradingPages)}?Identifier={StudentName}"); // get this to work later
         }
     }
     public class Student
@@ -40,6 +44,5 @@ namespace Swimclub.Mobile.Views
         public string StudentName { get; set; }
         public string StudentGrade { get; set; }
         public string StudentSwimEnglandNumber { get; set; }
-
     }
 }

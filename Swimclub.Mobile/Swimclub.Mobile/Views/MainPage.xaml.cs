@@ -22,6 +22,11 @@ namespace Swimclub.Mobile.Views
         }
         //example database replace with real one once its constructed
         string[] tempDatabase;
+        /// <summary>
+        /// What the save button is clicked, the text from the input box is saved into the data base, then the latest 25 messages are displayed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveButton_Clicked(object sender, EventArgs e)
         {
             DisplayAlert("Message added", "Your message has been added to the main page", "exit");
@@ -45,6 +50,16 @@ namespace Swimclub.Mobile.Views
                     Messages.Text += tempDatabase[j]+ "\n";
                 } 
             }
+        }
+
+        /// <summary>
+        /// Button spacificly to clear the input box in main, incase the clear button in the input box is too small to use 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearButton_Clicked(object sender, EventArgs e)
+        {
+            inputBox.Text = string.Empty; //clear inputBox
         }
     }
 }

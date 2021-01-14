@@ -23,6 +23,12 @@ namespace Swimclub.Mobile.Views
 		//example database replace with real one once its constructed
 		string[,] tempDatabase; // 2D array
 
+		/// <summary>
+		/// When the login button is pressed, the function compares the username and password to the database, if they match the user is sent to the main page, else a message is displayed 
+		/// saying that the user they are trying to enter doesn't exist, the password entry is whiped after every button push
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void LoginButton_Clicked(object sender, EventArgs e)
         {
 			bool found = false;
@@ -47,9 +53,9 @@ namespace Swimclub.Mobile.Views
 		}
 
 		//change this later to contact an admin to help then sign in and such
-        private async void passwordForgoten_Clicked(object sender, EventArgs e)
+        private void passwordForgoten_Clicked(object sender, EventArgs e)
         {
-			await Shell.Current.GoToAsync($"//{nameof(AboutPage)}"); 
+			DisplayAlert("Password Remainder", "An admin wiil notify you of your paassword at their earliest possible convienience" , "exit");
 		}
     }
 }

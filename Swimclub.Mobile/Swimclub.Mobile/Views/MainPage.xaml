@@ -6,8 +6,8 @@
         <!--ONLY an admin should be able to add new messages to the main page TO BE IMPLIMENTED-->
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.15*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="0.5*"/>
                 <RowDefinition Height="0.25*"/>
                 <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
@@ -15,10 +15,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="This is the Main Page" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-            <Entry x:Name="inputBox" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ClearButtonVisibility="WhileEditing" Keyboard="Chat" Placeholder="Input text here" Text=""/>
-            <Button x:Name="SaveButton" Clicked="SaveButton_Clicked" Grid.Row="2" Grid.Column="0" Text="Save" BackgroundColor="Green"/>
-            <Button x:Name="ClearButton"  Grid.Row="2" Grid.Column="1" Text="Clear" BackgroundColor="Red"/>
+            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Welcome the the Donfiled Swimclub Home Page" HorizontalOptions="CenterAndExpand" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
+            <Entry x:Name="inputBox" Grid.Row="1" Grid.Column=" 0" Grid.ColumnSpan="2" ClearButtonVisibility="WhileEditing" Keyboard="Chat" Placeholder="Input text here" Text="" Margin="5"/>
+            <Button x:Name="SaveButton" Clicked="SaveButton_Clicked" Grid.Row="2" Grid.Column="0" Text="Save" BackgroundColor="Green" Margin="5"/>
+            <Button x:Name="ClearButton" Clicked="ClearButton_Clicked" Grid.Row="2" Grid.Column="1" Text="Clear" BackgroundColor="Red" Margin="5"/>
             <!--All users should be able to see the messages-->
             <ScrollView Grid.Row="3" Grid.ColumnSpan="2" >
                 <StackLayout>
