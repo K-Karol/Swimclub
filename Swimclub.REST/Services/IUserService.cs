@@ -15,7 +15,7 @@ namespace Swimclub.REST.Services
 	public interface IUserService
 	{
 
-		Task<UserService.UserServiceResponse> LoginUserAsync(Models.Login _model);
+		Task<Models.UserServiceResponse> LoginUserAsync(Models.Login _model);
 		Task<int?> GetUserIdAsync(ClaimsPrincipal principal);
 
 		Task<User> GetUserAsync(ClaimsPrincipal user);
@@ -23,12 +23,7 @@ namespace Swimclub.REST.Services
 
 	public class UserService : IUserService
 	{
-		public class UserServiceResponse
-		{
-			public bool success;
-			public string token { get; set; }
-			public DateTime? ExpireDate { get; set; }
-		}
+		
 
 		private UserManager<Entities.User> user_manager;
 		private IConfiguration configuration;
@@ -39,17 +34,17 @@ namespace Swimclub.REST.Services
 			configuration = _configuration;
 		}
 
-		public async Task<UserService.UserServiceResponse> LoginUserAsync(Login _model)
+		public async Task<Models.UserServiceResponse> LoginUserAsync(Login _model)
 		{
 			var user = await user_manager.FindByNameAsync(_model.username);
 
 			if (user == null)
-				return new UserService.UserServiceResponse() { success = false };
+				return new Models.UserServiceResponse() { success = false };
 			else
 			{
 				var passwordCheck = await user_manager.CheckPasswordAsync(user, _model.password);
 				if (!passwordCheck)
-					return new UserService.UserServiceResponse() { success = false };
+					return new Models.UserServiceResponse() { success = false };
 
 				var claims = new[]
 				{
@@ -63,7 +58,7 @@ namespace Swimclub.REST.Services
 
 				string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
 
-				return new UserService.UserServiceResponse() { success = true, token = tokenAsString, ExpireDate = token.ValidTo }; ;
+				return new Models.UserServiceResponse() { success = true, token = tokenAsString, ExpireDate = token.ValidTo }; ;
 			}
 		}
 

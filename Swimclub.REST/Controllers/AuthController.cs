@@ -23,14 +23,14 @@ namespace Swimclub.REST.Controllers
 		/// This will accept a <see cref="Models.Login"/> with a username and password, and will proceed to authenticate the user, responding with either a 200 and a token, or a 401 and an error message.
 		/// </summary>
 		/// <param name="loginInfo"><see cref="Models.Login"/> which contains the username and password</param>
-		/// <returns>A <see cref="AuthResponse"/></returns>
+		/// <returns>A <see cref="Models.AuthResponse"/></returns>
 		/// 
 		[HttpPost("login", Name = nameof(Login))]
-		[ProducesResponseType(StatusCodes.Status200OK, Type=typeof(AuthResponse)), ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(AuthResponse))]
-		public async Task<ActionResult<AuthResponse>> Login([FromBody] Models.Login loginInfo)
+		[ProducesResponseType(StatusCodes.Status200OK, Type=typeof(Models.AuthResponse)), ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(Models.AuthResponse))]
+		public async Task<ActionResult<Models.AuthResponse>> Login([FromBody] Models.Login loginInfo)
 		{
-			Services.UserService.UserServiceResponse feedback = await user_service.LoginUserAsync(loginInfo);
-			AuthResponse temp = new AuthResponse() { Success = feedback.success };
+			Models.UserServiceResponse feedback = await user_service.LoginUserAsync(loginInfo);
+			Models.AuthResponse temp = new Models.AuthResponse() { Success = feedback.success };
 			if (feedback.success)
 			{
 				temp.Token = feedback.token;
@@ -46,12 +46,6 @@ namespace Swimclub.REST.Controllers
 
 
 
-		public class AuthResponse
-		{
-			public bool Success { get; set; }
-			public string Token { get; set; }
-			public DateTime? Expiry { get; set; }
-			public Models.ApiError Error { get; set; }
-		}
+		
 	}
 }

@@ -23,8 +23,12 @@ namespace Swimclub.REST.Controllers
 		{
 			user_service = _user_service;
 		}
-
-
+		/// <summary>
+		/// Root of this controller
+		/// </summary>
+		/// <returns>Controller's endpoints</returns>
+		[HttpGet(Name=nameof(UserRoot))]
+		[ProducesResponseType(StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public IActionResult UserRoot()
 		{
 			return Ok(new
@@ -42,24 +46,18 @@ namespace Swimclub.REST.Controllers
 		/// <summary>
 		/// This will respond with the information about the current user.
 		/// </summary>
-		/// <returns><see cref="UserInfoResponse"/></returns>
+		/// <returns><see cref="Models.UserInfoResponse"/></returns>
 		[HttpGet("info", Name = nameof(UserInfo))]
-		[ProducesResponseType(StatusCodes.Status400BadRequest, Type=typeof(UserInfoResponse)), ProducesResponseType(StatusCodes.Status401Unauthorized), ProducesResponseType(StatusCodes.Status200OK, Type=typeof(UserInfoResponse))]
-		public async Task<ActionResult<UserInfoResponse>> UserInfo() {
+		[ProducesResponseType(StatusCodes.Status400BadRequest, Type=typeof(Models.UserInfoResponse)), ProducesResponseType(StatusCodes.Status401Unauthorized), ProducesResponseType(StatusCodes.Status200OK, Type=typeof(Models.UserInfoResponse))]
+		public async Task<ActionResult<Models.UserInfoResponse>> UserInfo() {
 			var user = await user_service.GetUserAsync(User);
 			if (user == null)
 			{
-				return BadRequest(new UserInfoResponse() { error = new Models.ApiError() { Success = false, Message = "Invalid Grant", Detail = "This user does not exist" } });
+				return BadRequest(new Models.UserInfoResponse() { error = new Models.ApiError() { Success = false, Message = "Invalid Grant", Detail = "This user does not exist" } });
 			}
-			return Ok(new UserInfoResponse() { forename = user.Forename, surname = user.Surname, username = user.Username });
+			return Ok(new Models.UserInfoResponse() { forename = user.Forename, surname = user.Surname, username = user.Username });
 		}
 	}
 
-	public class UserInfoResponse
-	{
-		public string username { get; set; }
-		public string forename { get; set; }
-		public string surname { get; set; }
-		public Models.ApiError error { get; set; }
-	}
+	
 }
