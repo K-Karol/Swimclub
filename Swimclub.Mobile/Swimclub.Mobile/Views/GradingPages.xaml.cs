@@ -17,8 +17,8 @@ namespace Swimclub.Mobile.Views
         public GradingPages() //constructor allways happens first
         {
             InitializeComponent();
-            //StudentName.Text = SetStudentName;
             BindingContext = new GradingPagesViewModel();
+
         }
 
         private string setStudentName;
@@ -32,7 +32,6 @@ namespace Swimclub.Mobile.Views
 				{
                     bind.ViewStudentName = setStudentName;
 				}
-                //StudentName.Text = setStudentName;
             }
 			get
 			{
@@ -40,14 +39,11 @@ namespace Swimclub.Mobile.Views
 			}
 		}
 
-        /*
-        public class Stages
+        private void NewTest_Clicked(object sender, EventArgs e)
         {
-            public string DateDone { get; set; } //display the date of the test
-            public int Level { get; set; } // display the level of the test completed
-            public string Task { get; set; } //display the tasks in the test
-            public bool Score { get; set; } //display pass or fail in the test
-        }*/
+
+        }
+
     }
 }
 
@@ -66,3 +62,21 @@ namespace Swimclub.Mobile.Views
 // a check box to show a pass or fail for the student
 // the student's name displayed at the top of the page
 // save the results to the student's database
+
+/* attempt two
+public class tempDatabase //arrays to store the testText and other arrays containg the data
+{
+    public string[][] Grade;
+
+    public string[][] Score;
+} */
+
+/* Attempt One 
+public class Stages
+{
+    //virtaul as all the diffrent grades will use this as a base, but they all contain diffrent data
+    public virtual string DateDone { get; set; } //display the date of the test
+    public virtual int Level { get; set; } // display the level of the test completed
+    public virtual string Task { get; set; } //display the tasks in the test
+    public virtual bool Score { get; set; } //display pass or fail for each task in the test
+}*/

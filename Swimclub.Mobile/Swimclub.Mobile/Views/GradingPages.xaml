@@ -4,9 +4,8 @@
              x:Class="Swimclub.Mobile.Views.GradingPages" >
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Dynamic grading pages... Hopefully" HorizontalOptions="CenterAndExpand" />
-            <Label x:Name="StudentName" Text="{Binding ViewStudentName}" Margin="20" FontSize="Large">
-            </Label>
+            <Label x:Name="StudentName" Text="{Binding ViewStudentName}" Margin="20" FontSize="Large"/>
+            <Button x:Name="NewTest" Text="Take a new test" Clicked="NewTest_Clicked" Margin="20"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
