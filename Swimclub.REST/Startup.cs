@@ -52,14 +52,6 @@ namespace Swimclub.REST
 				options.UseOpenIddict<int>();
 			});
 
-			//services.AddIdentity<Entities.User, Entities.UserRole>(options =>
-			//{
-			//	options.Password.RequireDigit = true;
-			//	options.Password.RequireLowercase = true;
-			//	options.Password.RequiredLength = 5;
-			//}
-			//).AddEntityFrameworkStores<Data.UserDbContext>().AddDefaultTokenProviders();
-
 
 			AddIdentityCoreServices(services);
 
@@ -73,6 +65,9 @@ namespace Swimclub.REST
 				options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
 				{
 					ValidateIssuer = true,
+					ValidateAudience = true,
+					ValidAudience = Configuration["AuthSettings:Audience"],
+					ValidIssuer = Configuration["AuthSettings:Issuer"],
 					RequireExpirationTime = true,
 					IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(Configuration["AuthSettings:Key"])),
 					ValidateIssuerSigningKey = true
@@ -85,7 +80,7 @@ namespace Swimclub.REST
 				options.Filters.Add<Filters.JsonExceptionFilter>();
 				options.Filters.Add<Filters.RequireHttpsOrClose>();
 			}
-			);
+			).ConfigureApiBehaviorOptions(x=>x.SuppressMapClientErrors = true);
 
 			services.AddScoped<Services.IUserService, Services.UserService>();
 
@@ -93,6 +88,17 @@ namespace Swimclub.REST
 			services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swimclub.REST", Version = "v1" });
+				c.IncludeXmlComments(string.Format(@"{0}\bin\SwaggerAPI.xml", Directory.GetCurrentDirectory()));
+				c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+				{
+					Type = SecuritySchemeType.Http,
+					BearerFormat = "JWT",
+					In = ParameterLocation.Header,
+					Scheme = "Bearer"
+
+				});
+				c.OperationFilter<Filters.AuthenticationRequirementsOperationFilter>();
+
 			});
 
 			services.AddRouting(options => options.LowercaseUrls = true);
@@ -107,8 +113,6 @@ namespace Swimclub.REST
 				app.UseSwagger();
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swimclub.REST v1"));
 			}
-
-
 			app.UseRouting();
 
 			app.UseAuthentication();

@@ -12,7 +12,9 @@ namespace Swimclub.REST.Entities
 	{
 		public string Forename { get; set; }
 		public string Surname { get; set; }
-		//[NotMapped]
-		//public Models.User UserClass { get { return new Models.User { ID = this.ID, Forename = this.Forename, Username = this.Username }; } }
+		public static Models.User getUser(Entities.User _user)
+		{
+			return new Models.User() { Forename = _user.Forename, ID = _user.Id, Surname = _user.Surname, Username = _user.UserName };
+		}
 	}
 }

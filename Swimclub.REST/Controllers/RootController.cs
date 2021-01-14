@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace Swimclub.REST.Controllers
 {
+	/// <summary>
+	/// Starting point of the API. 
+	/// </summary>
 	[Route("/")]
 	[ApiController]
-	public class RootController : Controller
+	public class RootController : ControllerBase
 	{
 		[HttpGet(Name = nameof(GetRoot))]
 		public IActionResult GetRoot()
@@ -29,8 +32,8 @@ namespace Swimclub.REST.Controllers
 
 			var response = new
 			{
-				message = "This is the root of the Swimclub REST API. Proceed to token exchange for authentication",
-				token = new
+				message = "This is the root of the Swimclub REST API. Proceed to token endpoint for authorization",
+				authorization = new
 				{
 					href = Url.Link(nameof(AuthController.Login), null),
 				}
