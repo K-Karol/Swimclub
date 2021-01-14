@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Swimclub.Mobile.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,33 +14,27 @@ namespace Swimclub.Mobile.Views
     [QueryProperty("SetStudentName", "identifier")] // pass in student name data from another cs file
     public partial class GradingPages : ContentPage
     {
+        public GradingPages() //constructor allways happens first
+        {
+            InitializeComponent();
+            StudentName.Text = SetStudentName;
+            BindingContext = new GradingPagesViewModel();
+        }
+
         private string setStudentName;
-        public string SetStudentName
+        public string SetStudentName //save the student name in setStudentName
         {
 			set
 			{
                 setStudentName = Uri.UnescapeDataString(value);
-			}
+                ((GradingPagesViewModel)BindingContext).ViewStudentName = SetStudentName;
+            }
 			get
 			{
                 return setStudentName;
 			}
 		}
 
-        public GradingPages() //pass in a string of student name / unique identifier when page is created
-        {
-            InitializeComponent();
-        }
-
-        public string SetName //display the student name in the lable
-        {
-            get { return setStudentName; }
-            set
-            {
-                setStudentName = value;
-                OnPropertyChanged(nameof(SetName));
-            }
-        }
         /*
         public class Stages
         {

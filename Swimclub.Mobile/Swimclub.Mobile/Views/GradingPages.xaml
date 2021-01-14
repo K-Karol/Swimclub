@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Swimclub.Mobile.Views.GradingPages">
+             x:Class="Swimclub.Mobile.Views.GradingPages"
+            xmlns:local="clr-namespace:Swimclub.Mobile.ViewModels" >
     <ContentPage.Content>
         <StackLayout>
             <Label Text="Dynamic grading pages... Hopefully" HorizontalOptions="CenterAndExpand" />
-            <Label Text="{Binding SetName}" x:Name="StudentName" Margin="20" FontSize="Large" />
+            <Label x:Name="StudentName" Text="{Binding ViewStudentName}" Margin="20" FontSize="Large">
+            </Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

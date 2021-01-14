@@ -20,7 +20,7 @@ namespace Swimclub.Mobile.Views
             Ilist.Add(new Student { StudentName = "Alove Floats", StudentGrade = "Grade: 2", StudentSwimEnglandNumber = "67284153" });
             Ilist.Add(new Student { StudentName = "Ivanha swim", StudentGrade = "Grade: 2", StudentSwimEnglandNumber = "06417324" });
             Ilist.Add(new Student { StudentName = "Channel Crosser", StudentGrade = "Grade: 3", StudentSwimEnglandNumber = "14285097" });
-            Ilist.Add(new Student { StudentName = "Speedboat McGee", StudentGrade = "Grade: 3", StudentSwimEnglandNumber = "14285097" });
+            Ilist.Add(new Student { StudentName = "Speedboat McGee", StudentGrade = "Grade: 3", StudentSwimEnglandNumber = "14285098" });
 
             InitializeComponent();
 
@@ -35,8 +35,8 @@ namespace Swimclub.Mobile.Views
 
         private async void TestingButton_Clicked(object sender, EventArgs e)
         {
-            // move to Grades page, send student name/unique id to grade as well, for use in searching later
-            await Shell.Current.GoToAsync($"{nameof(GradingPages)}?identifier={"Test"}"); // get this to work later
+            // move to Grades page, send student name/unique id to grade, for use in searching later
+            await Shell.Current.GoToAsync($"{nameof(GradingPages)}?identifier={"Test"}");
         }
     }
     public class Student
