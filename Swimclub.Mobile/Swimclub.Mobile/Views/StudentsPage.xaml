@@ -5,31 +5,39 @@
     <ContentPage.Content>
         <StackLayout>
             <SearchBar x:Name="StudentSearchBar" Placeholder="Search" CancelButtonColor="Red" 
-                       HorizontalTextAlignment="Center" TextChanged="StudentPageSearchBar_TextChanged"></SearchBar>
-            <CollectionView x:Name="Coll1" ItemsSource="{Binding Ilist}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10" Margin="10">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                            <RowDefinition Height="1*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                            <ColumnDefinition Width="1*"></ColumnDefinition>
-                        </Grid.ColumnDefinitions>
-                        <Label Text="{Binding StudentName}" FontSize="16" Grid.Row="0" Grid.ColumnSpan="2"></Label>
-                        <Label Text="{Binding StudentGrade}" Grid.Row="1" Grid.ColumnSpan="2"></Label>
-                        <Label Text="{Binding StudentSwimEnglandNumber}" Grid.Row="2" Grid.ColumnSpan="2"></Label>
-                        
-                        <BoxView Grid.Row="3" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="4" 
-                                 VerticalOptions="Center" HeightRequest="3" BackgroundColor="DarkGray"></BoxView>
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                       HorizontalTextAlignment="Center" TextChanged="StudentPageSearchBar_TextChanged">
+                
+            </SearchBar>
+            <ListView x:Name="studentList" ItemsSource="{Binding StudentsView}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <!--<Grid Padding="10" Margin="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                    <RowDefinition Height="1*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Forename}" FontSize="16" Grid.Row="0" Grid.ColumnSpan="2"></Label>
+                                <Label Text="{Binding CurrentGradeNumber}" Grid.Row="1" Grid.ColumnSpan="2"></Label>
+                                <Label Text="{Binding SwimEnglandNumber}" Grid.Row="2" Grid.ColumnSpan="2"></Label>
+
+                                <BoxView Grid.Row="3" HorizontalOptions="FillAndExpand" Grid.ColumnSpan="4" 
+                                     VerticalOptions="Center" HeightRequest="3" BackgroundColor="DarkGray"></BoxView>
+                            </Grid>-->
+                            <Label Text="{Binding Forename}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+        </ListView>
+
+
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
