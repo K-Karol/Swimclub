@@ -82,26 +82,32 @@ namespace Swimclub.REST.Demo
 				return;
 			}
 
-			_context.Students.Add(new Entities.Student()
+			_context.Students.Add(new Entities.Student() // each student needs
 			{
-				Forename = "Joe",
-				Surname = "Bloggs",
-				CurrentGradeNumber = 1,
-				SwimEnglandNumber = "12345678",
-				DateOfBirth = new DateTime(2008, 1, 1),
-				MedicalDetails = new Models.MedicalDetails()
+				Forename = "Joe", //first name
+				Surname = "Bloggs", //last name
+				CurrentGradeNumber = 1, //default starting number
+				SwimEnglandNumber = "12345678", //number given by goverment
+				DateOfBirth = new DateTime(2008, 1, 1), //When they were born
+				MedicalDetails = new Models.MedicalDetails() // medical details and emergeny contact
 				{
-					Allergies = new string[] { "Strawberries" },
-					Notes = "Struggles with endurance",
-					Immunizations = new string[] { "Teenage booster?" },
-					EmergencyContacts = new Models.Contact[] {new Models.Contact() { FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address()
+					Allergies = new string[] { "Strawberries" }, //if (and what) algeries the child has, only inculde if one exists
+					Notes = "Struggles with endurance", // notes about student (medical problems)
+					Immunizations = new string[] { "Teenage booster?" }, // recient vaccines taken
+					Illnesses = new string[] {"Mumps"}, // curent illness' possesed
+					EmergencyContacts = new Models.Contact[] // who and where is thir emergency contact
 					{
-					Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"}
+						new Models.Contact() 
+						{ 
+							FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address() // name, mobile number, address and postcode of the emergency contact
+							{
+								Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"
+							}
+						}
 					}
 				}
-				}
 			}
-				);
+			);
 
 
 			_context.Students.Add(new Entities.Student()
@@ -114,14 +120,114 @@ namespace Swimclub.REST.Demo
 				MedicalDetails = new Models.MedicalDetails()
 				{
 					Illnesses = new string[] { "Sickle Cell Disease" },
-					EmergencyContacts = new Models.Contact[] {new Models.Contact() { FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address()
+					EmergencyContacts = new Models.Contact[] 
 					{
-					Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"}
+						new Models.Contact() 
+						{ 
+							FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address()
+							{
+								Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"
+							}
+						}
 					}
 				}
+			});
+
+			_context.Students.Add(new Entities.Student() 
+			{ 
+				Forename = "John",
+				Surname = "Lennon",
+				CurrentGradeNumber = 1,
+				SwimEnglandNumber = "29473029",
+				DateOfBirth = new DateTime(2008, 12, 12),
+				MedicalDetails = new Models.MedicalDetails()
+                {
+					Illnesses = new string[] { "BlackLung", "ColiflowerEar"},
+					EmergencyContacts = new Models.Contact[]
+                    {
+						new Models.Contact()
+                        {
+							FullName = "Henry Goafer", MobileNumber = "07999888777", Address = new Models.Address()
+                            {
+								Line1 = "23 Waliby Way", Line2 = "PortTon", Line3="New Bristol", Line4="Sidney", PostCode="FT16 9BC"
+                            }
+                        }
+                    }
+                }
+
+			});
+
+			_context.Students.Add(new Entities.Student()
+			{
+				Forename = "Jessie",
+				Surname = "Hampton",
+				CurrentGradeNumber = 1,
+				SwimEnglandNumber = "50378920", 
+				DateOfBirth = new DateTime(2009, 01, 29),
+				MedicalDetails = new Models.MedicalDetails()
+				{
+					Allergies = new string[] { "Latex" },
+					EmergencyContacts = new Models.Contact[]
+					{
+						new Models.Contact()
+						{
+							FullName = "Jenry Hover", MobileNumber = "07989878767", Address = new Models.Address()
+							{
+								Line1 = "18 Dusty Road", Line2 = "ButAsh", Line3="HampShire", Line4 = "England", PostCode="FT16 9BC"
+							}
+						}
+					}
 				}
-			}
-				);
+
+			});
+
+			_context.Students.Add(new Entities.Student()
+			{
+				Forename = "Olivier",
+				Surname = "Isfruit",
+				CurrentGradeNumber = 2,
+				SwimEnglandNumber = "02987831",
+				DateOfBirth = new DateTime(2007, 10, 31),
+				MedicalDetails = new Models.MedicalDetails()
+				{
+					EmergencyContacts = new Models.Contact[]
+					{
+						new Models.Contact()
+						{
+							FullName = "Tomateo Isfruit", MobileNumber = "09850729864", Address = new Models.Address()
+							{
+								Line1 = "1 Green House", Line2 = "Byline", Line3="Glostershire", Line4="England", PostCode="GY29 H43"
+							}
+						}
+					}
+				}
+
+			});
+
+			_context.Students.Add(new Entities.Student()
+			{
+				Forename = "Crystal",
+				Surname = "Ball",
+				CurrentGradeNumber = 2,
+				SwimEnglandNumber = "09284375",
+				DateOfBirth = new DateTime(2007, 08, 04),
+				MedicalDetails = new Models.MedicalDetails()
+				{
+					Allergies = new string[] { "Aquagenic urticaria", "Xeroderma Pigmentosum" },
+					Illnesses = new string[] { "Acute lymphoblastic leukaemia" },
+					EmergencyContacts = new Models.Contact[]
+					{
+						new Models.Contact()
+						{
+							FullName = "Dom Ball", MobileNumber = "07927927864", Address = new Models.Address()
+							{
+								Line1 = "36 Places Street", Line2 = "Somewhere", Line3="Deven", Line4="England", PostCode="GY29 H43"
+							}
+						}
+					}
+				}
+
+			});
 
 
 			await _context.SaveChangesAsync();
