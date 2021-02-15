@@ -12,9 +12,6 @@ namespace Swimclub.Mobile.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoginPage : ContentPage
 	{
-
-		
-
 		private readonly Services.IRestService restService;
 		public LoginPage()
 		{
@@ -26,18 +23,26 @@ namespace Swimclub.Mobile.Views
 		{
 			string username = usernameEntry.Text;
 			string password = passwordEntry.Text;
-			Task<bool> loginSuccessful = restService.LoginAsync(new Swimclub.Models.Login() { username = username, password = password });
-			loginSuccessful.Wait();
-			if (loginSuccessful.Result)
-			{
-				App.Current.MainPage = new AppShell();
-				DisplayAlert("Login status", "Successful", "Hooray!");
+			activityIndicator.IsRunning = true;
+			Task<bool> loginSuccessful = Task.Run(() => restService.LoginAsync(new Swimclub.Models.Login() { username = username, password = password }));
+			loginSuccessful.ContinueWith(success => Device.BeginInvokeOnMainThread(
+				async () => {
+					activityIndicator.IsRunning = false;
+					if (success.Result)
+					{
+						App.Current.MainPage = new AppShell();
+						await DisplayAlert("Login Successfull", "You have logged in", "Hooray!");
 
-			}
-			else
-			{
-				DisplayAlert("Login status", "Failed", "Oh no!");
-			}
+					}
+					else
+					{
+						await DisplayAlert("Login Failed", "Either the credentials are incorrect or the server is offline", "Oh no!");
+					}
+
+				}
+				));
+			
 		}
+
 	}
 }

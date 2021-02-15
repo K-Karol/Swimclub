@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Swimclub.REST.Controllers
 {
+	/// <summary>
+	/// This authorised endpoint can be used to return all students in the database.
+	/// </summary>
 	[Authorize]
 	[ApiController]
 	[Route("/[controller]")]

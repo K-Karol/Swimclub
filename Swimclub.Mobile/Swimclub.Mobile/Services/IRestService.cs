@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Swimclub.Models;
@@ -21,7 +22,7 @@ namespace Swimclub.Mobile.Services
 
 	public class RestService : IRestService
 	{
-		private static string api_url = "https://192.168.1.115:5001";
+		private static string api_url = "https://192.168.1.111:5001";
 		//private WinHttpHandler handler;
 		private HttpClient client;
 
@@ -50,19 +51,25 @@ namespace Swimclub.Mobile.Services
 				RequestUri = uri,
 				Content = new StringContent(JsonConvert.SerializeObject(_loginModel), Encoding.UTF8, "application/json")
 			};
-			var response = await client.SendAsync(request).ConfigureAwait(false);
-			if(response.StatusCode != System.Net.HttpStatusCode.OK)
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+
+			if (response.Wait(TimeSpan.FromSeconds(20)))
 			{
-				return false;
+				if (response.Result.StatusCode != System.Net.HttpStatusCode.OK)
+				{
+					return false;
+				}
+				else
+				{
+					var responseBody = await response.Result.Content.ReadAsStringAsync();
+					AuthResponse authResponse = JsonConvert.DeserializeObject<AuthResponse>(responseBody);
+					authToken = authResponse.Token;
+					return true;
+				}
 			}
 			else
-			{
-				var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-				AuthResponse authResponse = JsonConvert.DeserializeObject<AuthResponse>(responseBody);
-				authToken = authResponse.Token;
-				return true;
-			}
-			throw new NotImplementedException();
+				return false;
+		
 		}
 
 		public async Task<Student[]> GetAllStudentsAsync()
