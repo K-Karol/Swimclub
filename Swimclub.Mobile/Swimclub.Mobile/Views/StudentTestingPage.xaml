@@ -5,49 +5,32 @@
     <ContentPage.Content>
         
         <StackLayout Margin="10">
-            <Label Text="Testing Page"/>
-            <Label x:Name="StudentNameLable" Text=""/>
+            <Label Text="Testing Page" FontSize="30" FontAttributes="Bold" TextColor="Black"/>
+            <Label x:Name="StudentNameLable" Text="debug" TextColor="Black"/>
 
-            <ListView x:Name="TestingQuestionsList" IsVisible="true">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*"/>
-                                    <ColumnDefinition Width="0.5*"/>
-                                </Grid.ColumnDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="0.75*"/>
+                </Grid.ColumnDefinitions>
 
-                                <!--testing -->
-                                <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="Red"/>
-                                <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="Green"/>
-                                <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="Blue"/>
-                                <!--End of testing-->
-                                
-                                <Label FontSize="30" Grid.Row="0" Grid.ColumnSpan="2" TextColor="{Binding textColour}">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <FormattedString.Spans>
-                                                <Span Text="Task To Complete"/>
-                                                <Span Text="         "/>
-                                                <Span Text="Passed?"/>
-                                            </FormattedString.Spans>
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
+                <!--testing -->
+                <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="Red"/>
+                <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="Green"/>
+                <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="Blue"/>
+                <!--End of testing-->
 
-                                <Label x:Name="NameOfTask" Text="" Grid.Row="1" Grid.Column="1" TextColor="{Binding textColour}" FontSize="20"/>
-                                <CheckBox x:Name="TaskScore" Grid.Row="1" Grid.Column="1"/>
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
+                <Label Text="Task To Complete" Grid.Row="0" Grid.Column="0" TextColor="{Binding textColour}"/>
+                <Label Text="Passed?" Grid.Row="0" Grid.Column="1" TextColor="{Binding textColour}"/>
+                
+                <Label x:Name="NameOfTask" Text="" Grid.Row="1" Grid.Column="0" TextColor="{Binding textColour}" FontSize="20"/>
+                <CheckBox x:Name="TaskScore" Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

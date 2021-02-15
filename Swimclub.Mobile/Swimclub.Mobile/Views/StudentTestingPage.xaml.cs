@@ -22,6 +22,7 @@ namespace Swimclub.Mobile.Views
             InitializeComponent();
             student = lastClickedstudent;
             StudentNameLable.Text = student.Forename;
+            NameOfTask.Text = tasks[taskPos]; //temp position
         }
 
     }
