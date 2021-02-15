@@ -17,6 +17,7 @@ namespace Swimclub.Mobile.Views
         private readonly Services.IRestService restService;
         private Swimclub.Models.Student[] Students = new Swimclub.Models.Student[] { };
 
+        private Models.Student lastClickedstudent = null; // pass unique student data to the test page
 
         ObservableCollection<StudentCell> students = new ObservableCollection<StudentCell>();
         public ObservableCollection<StudentCell> StudentsView { get { return students; } }
@@ -28,6 +29,26 @@ namespace Swimclub.Mobile.Views
             studentList.ItemsSource = students;
             studentList.IsRefreshing = true;
             Task.Run(loadData);
+        }
+
+        private void studentList_GoToNewTest(object sender, EventArgs e)
+        {
+            //check if the last clicked is not null
+            if (lastClickedstudent != null)
+            {
+                if (restService.Role == "Coach")
+                { //if not coach display message
+                    DisplayAlert("PermitionsCheck", "You do not have the correct premition for this action", "exit");
+                }
+                else
+                { //if coach go to testing page
+                    Shell.Current.Navigation.PushAsync(new StudentTestingPage(lastClickedstudent));
+                }
+            }
+            else
+            {
+                DisplayAlert("Student Check", "You do not select a student for this action, please click a student before trying to proceed", "exit");
+            }
         }
 
         private void StudentPageSearchBar_TextChanged(object sender, TextChangedEventArgs e)
@@ -60,6 +81,8 @@ namespace Swimclub.Mobile.Views
 		{
             StudentCell student = e.Item as StudentCell;
             Swimclub.Models.Student s = student as Swimclub.Models.Student;
+            lastClickedstudent = s;
+
             DisplayAlert("Data",
                 String.Format(
                     "Name: {0} {1}" +
@@ -85,8 +108,9 @@ namespace Swimclub.Mobile.Views
 			{
                 a.textColour = Application.Current.Resources["OnSurface"] as Color? ?? Color.Black;
             }
-		}
-	}
+        }
+
+    }
 }
 
 

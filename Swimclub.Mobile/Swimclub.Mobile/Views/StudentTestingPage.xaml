@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Swimclub.Mobile.Views.StudentsPage">
+             x:Class="Swimclub.Mobile.Views.StudentTestingPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Button x:Name="New_Test" Text="Start Test" Pressed="studentList_GoToNewTest" />
-            <SearchBar x:Name="StudentSearchBar" Placeholder="Search" CancelButtonColor="Red" 
-                       HorizontalTextAlignment="Center" TextChanged="StudentPageSearchBar_TextChanged"/>
-            <ListView x:Name="studentList" ItemsSource="{Binding StudentsView}" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="studentList_Refreshing" ItemTapped="studentList_ItemTapped" ItemSelected="studentList_ItemSelected">
+        
+        <StackLayout Margin="10">
+            <Label Text="Testing Page"/>
+            <Label x:Name="StudentNameLable" Text=""/>
+
+            <ListView x:Name="TestingQuestionsList" IsVisible="true">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -17,30 +18,36 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="0.5*"/>
                                 </Grid.ColumnDefinitions>
 
+                                <!--testing -->
+                                <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="Red"/>
+                                <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="Green"/>
+                                <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="Blue"/>
+                                <!--End of testing-->
+                                
                                 <Label FontSize="30" Grid.Row="0" Grid.ColumnSpan="2" TextColor="{Binding textColour}">
                                     <Label.FormattedText>
                                         <FormattedString>
                                             <FormattedString.Spans>
-                                                <Span Text="{Binding Forename}"/>
-                                                <Span Text=" "/>
-                                                <Span Text="{Binding Surname}"/>
+                                                <Span Text="Task To Complete"/>
+                                                <Span Text="         "/>
+                                                <Span Text="Passed?"/>
                                             </FormattedString.Spans>
                                         </FormattedString>
                                     </Label.FormattedText>
                                 </Label>
 
-                                <Label Text="Swim England Number" Grid.Row="1" Grid.Column="0" TextColor="{Binding textColour}"/>
-                                <Label Text="{Binding SwimEnglandNumber}" Grid.Row="1" Grid.Column="1" TextColor="{Binding textColour}"/>
-
+                                <Label x:Name="NameOfTask" Text="" Grid.Row="1" Grid.Column="1" TextColor="{Binding textColour}" FontSize="20"/>
+                                <CheckBox x:Name="TaskScore" Grid.Row="1" Grid.Column="1"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

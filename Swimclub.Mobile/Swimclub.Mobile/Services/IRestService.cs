@@ -26,7 +26,7 @@ namespace Swimclub.Mobile.Services
 
 	public class RestService : IRestService
 	{
-		private static string api_url = "https://192.168.1.111:5001";
+		private static string api_url = "https://192.168.1.225:5001";
 		//private WinHttpHandler handler;
 		private HttpClient client;
 
