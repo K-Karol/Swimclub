@@ -12,10 +12,14 @@ namespace Swimclub.Mobile.Services
 {
 	public interface IRestService
 	{
-
 		string AuthToken { get; }
-
-		Task<bool> LoginAsync(Login _loginModel);
+		string Role { get; }
+		/// <summary>
+		/// Logs the user in, sets the <see cref="AuthToken"/> and <see cref="Role"/>
+		/// </summary>
+		/// <param name="_loginModel"></param>
+		/// <returns>200 = OK, 401 = Unauthorised, 503 = Server down</returns>
+		Task<int> LoginAsync(Login _loginModel);
 		Task<Student[]> GetAllStudentsAsync();
 
 	}
@@ -28,6 +32,8 @@ namespace Swimclub.Mobile.Services
 
 		private string authToken;
 		public string AuthToken { get { return authToken; } }
+		private string role;
+		public string Role { get { return role; } }
 
 		public RestService()
 		{
@@ -42,7 +48,7 @@ namespace Swimclub.Mobile.Services
 			
 		}
 
-		public async Task<bool> LoginAsync(Login _loginModel)
+		public async Task<int> LoginAsync(Login _loginModel)
 		{
 			Uri uri = new Uri(String.Format("{0}/{1}/{2}", api_url, "auth", "login"));
 			var request = new HttpRequestMessage
@@ -57,18 +63,19 @@ namespace Swimclub.Mobile.Services
 			{
 				if (response.Result.StatusCode != System.Net.HttpStatusCode.OK)
 				{
-					return false;
+					return 401;
 				}
 				else
 				{
 					var responseBody = await response.Result.Content.ReadAsStringAsync();
 					AuthResponse authResponse = JsonConvert.DeserializeObject<AuthResponse>(responseBody);
 					authToken = authResponse.Token;
-					return true;
+					role = authResponse.Role;
+					return 200;
 				}
 			}
 			else
-				return false;
+				return 503;
 		
 		}
 

@@ -58,7 +58,15 @@ namespace Swimclub.REST.Services
 
 				string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
 
-				return new Models.UserServiceResponse() { success = true, token = tokenAsString, ExpireDate = token.ValidTo }; ;
+				var getRoles = await user_manager.GetRolesAsync(user);
+
+				string role = "NA";
+				if(getRoles.Count >=1)
+				{
+					role = getRoles[0];
+				}
+
+				return new Models.UserServiceResponse() { success = true, token = tokenAsString, ExpireDate = token.ValidTo, Role = role }; ;
 			}
 		}
 

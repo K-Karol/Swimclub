@@ -27,12 +27,14 @@ namespace Swimclub.Models
 		public string Token { get; set; }
 		public DateTime? Expiry { get; set; }
 		public Models.ApiError Error { get; set; }
+		public string Role { get; set; }
 	}
 	public class UserServiceResponse
 	{
 		public bool success;
 		public string token { get; set; }
 		public DateTime? ExpireDate { get; set; }
+		public string Role { get; set; }
 	}
 
 	namespace standard

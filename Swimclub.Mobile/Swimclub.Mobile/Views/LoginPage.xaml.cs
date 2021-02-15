@@ -12,6 +12,7 @@ namespace Swimclub.Mobile.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class LoginPage : ContentPage
 	{
+		private bool running = false;
 		private readonly Services.IRestService restService;
 		public LoginPage()
 		{
@@ -21,22 +22,32 @@ namespace Swimclub.Mobile.Views
 
 		private void Button_Clicked(object sender, EventArgs e)
 		{
+			if (running)
+				return;
+
+			running = true;
 			string username = usernameEntry.Text;
 			string password = passwordEntry.Text;
 			activityIndicator.IsRunning = true;
-			Task<bool> loginSuccessful = Task.Run(() => restService.LoginAsync(new Swimclub.Models.Login() { username = username, password = password }));
-			loginSuccessful.ContinueWith(success => Device.BeginInvokeOnMainThread(
+			Task<int> loginSuccessful = Task.Run(() => restService.LoginAsync(new Swimclub.Models.Login() { username = username, password = password }));
+			loginSuccessful.ContinueWith(statusCode => Device.BeginInvokeOnMainThread(
 				async () => {
 					activityIndicator.IsRunning = false;
-					if (success.Result)
+					running = false;
+					int temp = loginSuccessful.Result;
+					if (temp == 200)
 					{
 						App.Current.MainPage = new AppShell();
-						await DisplayAlert("Login Successfull", "You have logged in", "Hooray!");
+						await DisplayAlert("Login Successfull", $"You have logged in with the role of a {restService.Role}", "Hooray!");
 
+					}
+					else if(temp == 401)
+					{
+						await DisplayAlert("Login Failed", "Either the credentials are incorrect or the user does not exist", "Oh no!");
 					}
 					else
 					{
-						await DisplayAlert("Login Failed", "Either the credentials are incorrect or the server is offline", "Oh no!");
+						await DisplayAlert("Login Failed", "Either the server is offline or you are disconnected", "Oh no!");
 					}
 
 				}

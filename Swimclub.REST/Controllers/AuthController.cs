@@ -35,6 +35,7 @@ namespace Swimclub.REST.Controllers
 			{
 				temp.Token = feedback.token;
 				temp.Expiry = feedback.ExpireDate;
+				temp.Role = feedback.Role;
 				return Ok(temp);
 			}
 			else
