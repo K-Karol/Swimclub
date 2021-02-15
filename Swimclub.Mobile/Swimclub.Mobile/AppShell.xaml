@@ -92,6 +92,9 @@
     <FlyoutItem Title="Swim Classes" Icon="icon_feed.png">
         <ShellContent Route="SwimClassesPage" ContentTemplate="{DataTemplate local:SwimClassesPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="Grades" Icon="icon_feed.png">
+        <ShellContent Route="AllGrades" ContentTemplate="{DataTemplate local:AllGrades}" />
+    </FlyoutItem>
     <FlyoutItem Title="Students" Icon="icon_feed.png">
         <ShellContent Route="StudentsPage" ContentTemplate="{DataTemplate local:StudentsPage}" />
     </FlyoutItem>

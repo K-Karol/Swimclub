@@ -38,16 +38,36 @@ namespace Swimclub.Mobile.Views
 
         private async Task loadData()
 		{
-            Students = await restService.GetAllStudentsAsync();
-            students.Clear();
-            
-            foreach (var s in Students)
-            {
-                StudentCell cell = new StudentCell(s);
-                cell.textColour = Application.Current.Resources["OnSurface"] as Color? ?? Color.Black;
-                students.Add(cell);
-            }
-            studentList.IsRefreshing = false;
+            Services.AllStudentsReturn ret;
+            Task<Services.AllStudentsReturn> task = Task.Run(() => restService.GetAllStudentsAsync());
+            await task.ContinueWith(t => Device.BeginInvokeOnMainThread(
+                async () =>
+                {
+                    ret = t.Result;
+                    if (!ret.Success)
+                    {
+                        studentList.IsRefreshing = false;
+                        await DisplayAlert("Error", "There was an error fetching the data", "oopsieDasiy");
+                        return;
+                    }
+                    Students = ret.Students;
+
+                    students.Clear();
+
+                    
+
+                    foreach (var s in Students)
+                    {
+                        StudentCell cell = new StudentCell(s);
+                        cell.textColour = Application.Current.Resources["OnSurface"] as Color? ?? Color.Black;
+                        students.Add(cell);
+                    }
+                    studentList.IsRefreshing = false;
+
+                    
+                }
+                    ));
+           
         }
 
 		private async void studentList_Refreshing(object sender, EventArgs e)

@@ -4,12 +4,10 @@ using System.Text;
 
 namespace Swimclub.Models
 {
-	public class User
+	public class Grade
 	{
 		public int ID { get; set; }
-		public string Username { get; set; }
-		public string Forename { get; set; }
-		public string Surname { get; set; }
+		public int Number { get; set; }
+		public Test[] Tests {get;set;}
 	}
-
 }
