@@ -1,14 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Swimclub.Mobile.Views.StudentsPage">
+             x:Class="Swimclub.Mobile.Views.StudentsPage"
+             xmlns:local="clr-namespace:Swimclub.Mobile.ViewModels"
+             xmlns:model="clr-namespace:Swimclub.Models;assembly=SwimclubStandard">
     <ContentPage.Content>
         <StackLayout>
-            <SearchBar x:Name="StudentSearchBar" Placeholder="Search" CancelButtonColor="Red" 
-                       HorizontalTextAlignment="Center" TextChanged="StudentPageSearchBar_TextChanged">
+            <!--<SearchBar x:Name="StudentSearchBar" Placeholder="Search" CancelButtonColor="Red" 
+                       HorizontalTextAlignment="Center">
                 
-            </SearchBar>
-            <ListView x:Name="studentList" ItemsSource="{Binding StudentsView}" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="studentList_Refreshing" ItemTapped="studentList_ItemTapped" ItemSelected="studentList_ItemSelected">
+            </SearchBar>-->
+            <!--<ListView x:Name="studentList" ItemsSource="{Binding StudentsView}" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="studentList_Refreshing" ItemTapped="studentList_ItemTapped" ItemSelected="studentList_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -41,8 +43,41 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-        </ListView>
+        </ListView>-->
+            <RefreshView x:DataType="local:StudentViewModel" IsRefreshing="{Binding isRefreshing}" Command="{Binding LoadData}">
+                <CollectionView x:Name="cv" ItemsSource="{Binding StudentsCollection}" SelectionMode="Single" SelectionChangedCommand="{Binding SelectStudent}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference cv}}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
+                                <Label FontSize="30" Grid.Row="0" Grid.ColumnSpan="2"  x:DataType="local:StudentCell" TextColor="{Binding textColour}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <FormattedString.Spans>
+                                                <Span Text="{Binding Forename}" x:DataType="local:StudentCell"/>
+                                                <Span Text=" "/>
+                                                <Span Text="{Binding Surname}" x:DataType="local:StudentCell"/>
+                                            </FormattedString.Spans>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+
+                                <Label Text="Swim England Number" Grid.Row="1" Grid.Column="0" x:DataType="local:StudentCell" TextColor="{Binding textColour}"/>
+                                <Label Text="{Binding SwimEnglandNumber}" Grid.Row="1" Grid.Column="1" x:DataType="local:StudentCell" TextColor="{Binding textColour}"/>
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </RefreshView>
 
             
         </StackLayout>

@@ -7,6 +7,7 @@ namespace Swimclub.Mobile.ViewModels
 	class GradeDetailViewModel : BaseViewModel
 	{
 		private Models.Grade grade;
+
 		public Models.Grade Grade
 		{
 			get { return grade; }
