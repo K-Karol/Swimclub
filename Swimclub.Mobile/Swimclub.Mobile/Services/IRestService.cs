@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Swimclub.Models;
+using Xamarin.Forms;
 
 namespace Swimclub.Mobile.Services
 {
@@ -26,7 +27,7 @@ namespace Swimclub.Mobile.Services
 
 	public class RestService : IRestService
 	{
-		private static string api_url = "https://192.168.1.111:5001";
+		private string api_url;
 		//private WinHttpHandler handler;
 		private HttpClient client;
 
@@ -40,6 +41,9 @@ namespace Swimclub.Mobile.Services
 			//handler = new WinHttpHandler();
 			//HttpClientHandler httpHandler = new HttpClientHandler();
 			//httpHandler.ServerCertificateCustomValidationCallback
+			IConfigurationService config = DependencyService.Get<IConfigurationService>();
+			api_url = $"https://{config.ConfigValues["apiIP"]}:{config.ConfigValues["apiPORT"]}";
+
 			HttpClientHandler h = new System.Net.Http.HttpClientHandler();
 
 			h.ServerCertificateCustomValidationCallback =
