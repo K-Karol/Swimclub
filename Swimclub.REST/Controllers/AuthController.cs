@@ -35,11 +35,12 @@ namespace Swimclub.REST.Controllers
 			{
 				temp.Token = feedback.token;
 				temp.Expiry = feedback.ExpireDate;
+				temp.Role = feedback.Role;
 				return Ok(temp);
 			}
 			else
 			{
-				temp.Error = new Models.ApiError() { Message = "Incorrect login credentials", Detail = "Failed authentication", Success = false };
+				temp.Error = new Swimclub.Models.ApiError() { Message = "Incorrect login credentials", Detail = "Failed authentication", Success = false };
 				return Unauthorized(temp);
 			}
 		}

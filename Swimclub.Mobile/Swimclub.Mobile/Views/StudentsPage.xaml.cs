@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,33 +13,51 @@ namespace Swimclub.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class StudentsPage : ContentPage {
-        public IList<Student> Ilist { get; set; }
+        private ViewModels.StudentViewModel _viewModel;
+
         public StudentsPage()
         {
-            Ilist = new List<Student>();
-            Ilist.Add(new Student { StudentName = "Joe Bloggs", StudentGrade = "Grade: 1", StudentSwimEnglandNumber = "12345678" });
-            Ilist.Add(new Student { StudentName = "Micheal Phelps", StudentGrade = "Grade: 1", StudentSwimEnglandNumber = "87654321" });
-            Ilist.Add(new Student { StudentName = "Alove Floats", StudentGrade = "Grade: 2", StudentSwimEnglandNumber = "67284153" });
-            Ilist.Add(new Student { StudentName = "Ivanha swim", StudentGrade = "Grade: 2", StudentSwimEnglandNumber = "06417324" });
-            Ilist.Add(new Student { StudentName = "Channel Crosser", StudentGrade = "Grade: 3", StudentSwimEnglandNumber = "14285097" });
-            Ilist.Add(new Student { StudentName = "Speedboat McGee", StudentGrade = "Grade: 3", StudentSwimEnglandNumber = "14285097" });
-
+           
             InitializeComponent();
 
-            Coll1.ItemsSource = Ilist;
+            _viewModel = new ViewModels.StudentViewModel();
+            BindingContext = _viewModel;
         }
 
-        private void StudentPageSearchBar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var searchResultName = Ilist.Where(c => c.StudentName.ToLower().Contains(StudentSearchBar.Text.ToLower()) || c.StudentSwimEnglandNumber.Contains(StudentSearchBar.Text));
-            Coll1.ItemsSource = searchResultName;
-        }
-    }
-    public class Student
-    {
-        public string StudentName { get; set; }
-        public string StudentGrade { get; set; }
-        public string StudentSwimEnglandNumber { get; set; }
+		//private void studentList_ItemTapped(object sender, ItemTappedEventArgs e)
+		//{
+  //          StudentCell student = e.Item as StudentCell;
+  //          Swimclub.Models.Student s = student as Swimclub.Models.Student;
+  //          DisplayAlert("Data",
+  //              String.Format(
+  //                  "Name: {0} {1}" +
+  //                  "\nCurrentGrade: {2}" +
+  //                  "\nDate of Birth: {3}" +
+  //                  "\nMedical Details" +
+  //                  "\tAllergies: {4}" +
+  //                  "\tImmunizations {5}" +
+  //                  "\tIllnesses {6}+" +
+  //                  "\tDisabilities {7}"
+  //                  ,
+  //                  s.Forename, s.Surname, s.CurrentGradeNumber, s.DateOfBirth.ToString("dd/MM/yyyy"), "WIP",
+  //                  "WIP", "WIP", "WIP", "WIP"
+  //                  ), "ok");
+  //      }
 
-    }
+		//private void studentList_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+		//{
+  //          StudentCell currentCell = e.SelectedItem as StudentCell;
+  //          currentCell.textColour = Application.Current.Resources["OnSecondary"] as Color? ?? Color.Black;
+  //          List<StudentCell> temp = students.Except<StudentCell>(new List<StudentCell>() { currentCell }).ToList();
+  //          foreach(var a in temp)
+		//	{
+  //              a.textColour = Application.Current.Resources["OnSurface"] as Color? ?? Color.Black;
+  //          }
+		//}
+	}
 }
+
+
+
+
+//Swimclub.Models.Student[] students = await restService.GetAllStudentsAsync();

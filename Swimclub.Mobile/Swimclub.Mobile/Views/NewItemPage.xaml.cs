@@ -1,4 +1,4 @@
-﻿using Swimclub.Mobile.Models;
+﻿
 using Swimclub.Mobile.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,12 +10,12 @@ namespace Swimclub.Mobile.Views
 {
 	public partial class NewItemPage : ContentPage
 	{
-		public Item Item { get; set; }
+		//public Item Item { get; set; }
 
 		public NewItemPage()
 		{
 			InitializeComponent();
-			BindingContext = new NewItemViewModel();
+			//BindingContext = new NewItemViewModel();
 		}
 	}
 }

@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SwimclubStandard\SwimclubStandard.csproj" />
     <ProjectReference Include="..\Swimclub\Swimclub.csproj" />
   </ItemGroup>
 

@@ -7,7 +7,7 @@
     -->
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
+            <!--<Color x:Key="Primary">#2196F3</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">
@@ -26,7 +26,42 @@
                         </VisualStateGroup>
                     </VisualStateGroupList>
                 </Setter>
+            </Style>-->
+
+            <Color x:Key="Primary">#3949ab</Color>
+            <Color x:Key="PrimaryLight">#6f74dd</Color>
+            <Color x:Key="PrimaryDark">#00227b</Color>
+            <Color x:Key="Secondary">#424242</Color>
+            <Color x:Key="SecondaryLight">#6d6d6d</Color>
+            <Color x:Key="SecondaryDark">#1b1b1b</Color>
+            <Color x:Key="Surface">#ffffff</Color>
+            <Color x:Key="Background">#ffffff</Color>
+            <Color x:Key="OnPrimary">#ffffff</Color>
+            <Color x:Key="OnSecondary">#ffffff</Color>
+            <Color x:Key="OnSurface">#000000</Color>
+            <Color x:Key="OnBackground">#000000</Color>
+
+            <Style x:Key="PrimLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource OnPrimary}"/>
             </Style>
+
+            <Style x:Key="SecondaryLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource OnSecondary}"/>
+            </Style>
+
+            <Style x:Key="BackgroundLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource OnBackground}"/>
+            </Style>
+
+            <Style x:Key="SurfaceLabel" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource OnSurface}"/>
+            </Style>
+
+            <Style x:Key="Button" TargetType="Button">
+                <Setter Property="TextColor" Value="{StaticResource OnSecondary}"></Setter>
+                <Setter Property="BackgroundColor" Value="{StaticResource Secondary}"></Setter>
+            </Style>
+            
         </ResourceDictionary>        
     </Application.Resources>
 </Application>

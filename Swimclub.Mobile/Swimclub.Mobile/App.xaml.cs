@@ -13,8 +13,10 @@ namespace Swimclub.Mobile
 		{
 			InitializeComponent();
 
-			DependencyService.Register<MockDataStore>();
-			MainPage = new AppShell();
+			//DependencyService.Register<MockDataStore>();
+			DependencyService.Register<Services.RestService>();
+			DependencyService.Register<Services.ConfigurationService>();
+			MainPage = new Views.LoginPage();
 			
         }
 
