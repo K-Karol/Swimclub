@@ -9,5 +9,6 @@ namespace Swimclub.Models
 		public int ID { get; set; }
 		public int Number { get; set; }
 		public Test[] Tests {get;set;}
+		public Models.Student[] Students { get; set; }
 	}
 }

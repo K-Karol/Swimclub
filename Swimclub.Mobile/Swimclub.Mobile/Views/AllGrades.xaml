@@ -6,12 +6,33 @@
              xmlns:model="clr-namespace:Swimclub.Models;assembly=SwimclubStandard">
     <ContentPage.Content>
         <StackLayout>
-            <RefreshView x:DataType="local:GradeViewModel" Command="{Binding LoadAll}" IsRefreshing="{Binding isBusy}">
+            <RefreshView x:DataType="local:GradeViewModel" Command="{Binding LoadAll}" IsRefreshing="{Binding isRefreshing}">
                 <CollectionView x:Name="cv" ItemsSource="{Binding GradesCollection}" SelectionMode="Single" SelectionChangedCommand="{Binding SelectGrade}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference cv}}">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
-                                <Label Text="{Binding ID}" x:DataType="model:Grade"/>
+                                <Label FontSize="30" x:DataType="local:GradeCell" TextColor="{Binding textColour}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <FormattedString.Spans>
+                                                <Span Text="Grade" x:DataType="local:GradeCell"/>
+                                                <Span Text=" "/>
+                                                <Span Text="{Binding ID}" x:DataType="local:GradeCell"/>
+                                            </FormattedString.Spans>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label FontSize="15" x:DataType="local:GradeCell" TextColor="{Binding textColour}">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <FormattedString.Spans>
+                                                <Span Text="Count:" x:DataType="local:GradeCell"/>
+                                                <Span Text=" "/>
+                                                <Span Text="{Binding StudentsLength}" x:DataType="local:GradeCell"/>
+                                            </FormattedString.Spans>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
