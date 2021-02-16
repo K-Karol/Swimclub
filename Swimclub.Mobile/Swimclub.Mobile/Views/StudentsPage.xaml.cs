@@ -77,7 +77,8 @@ namespace Swimclub.Mobile.Views
             await loadData();
         }
 
-		private void studentList_ItemTapped(object sender, ItemTappedEventArgs e)
+
+        private void studentList_ItemTapped(object sender, ItemTappedEventArgs e)
 		{
             StudentCell student = e.Item as StudentCell;
             Swimclub.Models.Student s = student as Swimclub.Models.Student;
