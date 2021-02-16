@@ -8,5 +8,8 @@ namespace Swimclub.REST.Data
 {
 	public class ResourceDbContext : DbContext
 	{
+		public ResourceDbContext(DbContextOptions<ResourceDbContext> _options) : base(_options) { Database.EnsureCreated(); }
+
+		//public DbSet<Entities.Student> Students { get; set; }
 	}
 }

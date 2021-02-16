@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using System.Net;
 
 namespace Swimclub.Droid
 {
@@ -14,6 +15,7 @@ namespace Swimclub.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -21,6 +23,15 @@ namespace Swimclub.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            //ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, errors) =>
+            //{
+            //    // local dev, just approve all certs
+            //    return true;
+            //};
+
+            System.Net.ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+
             LoadApplication(new Mobile.App());
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

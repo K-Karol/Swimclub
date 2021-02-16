@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swimclub.Mobile.Views.StudentTestingPage">
+    <ContentPage.Content>
+        
+        <StackLayout Margin="10">
+            <Label Text="Testing Page" FontSize="30" FontAttributes="Bold" TextColor="Black"/>
+            <Label x:Name="StudentNameLable" Text="debug" TextColor="Black"/>
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="0.75*"/>
+                </Grid.ColumnDefinitions>
+
+                <!--testing -->
+                <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="Red"/>
+                <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="Green"/>
+                <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="Blue"/>
+                <!--End of testing-->
+
+                <Label Text="Task To Complete" Grid.Row="0" Grid.Column="0" TextColor="{Binding textColour}"/>
+                <Label Text="Passed?" Grid.Row="0" Grid.Column="1" TextColor="{Binding textColour}"/>
+                
+                <Label x:Name="NameOfTask" Text="" Grid.Row="1" Grid.Column="0" TextColor="{Binding textColour}" FontSize="20"/>
+                <CheckBox x:Name="TaskScore" Grid.Row="1" Grid.Column="1"/>
+            </Grid>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
