@@ -6,6 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Views\ItemDetailPage.xaml.cs" />
     <Compile Remove="Views\ItemsPage.xaml.cs" />
     <Compile Remove="Views\NewItemPage.xaml.cs" />
@@ -58,16 +64,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource
-      Include="settings.json"
-      Condition="'$(Configuration)' != 'Debug' or !Exists('local.settings.json')" />
-    <EmbeddedResource
-      Include="local.settings.json"
-      Link="settings.json"
-      Condition="'$(Configuration)' == 'Debug' and Exists('local.settings.json')" />
+    <EmbeddedResource Include="settings.json" Condition="'$(Configuration)' != 'Debug' or !Exists('local.settings.json')" />
+    <EmbeddedResource Include="local.settings.json" Link="settings.json" Condition="'$(Configuration)' == 'Debug' and Exists('local.settings.json')" />
   </ItemGroup>
 </Project>
