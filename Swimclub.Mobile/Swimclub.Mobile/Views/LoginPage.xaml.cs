@@ -37,7 +37,15 @@ namespace Swimclub.Mobile.Views
 					int temp = loginSuccessful.Result;
 					if (temp == 200)
 					{
-						App.Current.MainPage = new AppShell();
+						AppShell appShell = new AppShell();
+						if (restService.Role == "Admin")
+						{
+							ShellSection adminPage = new ShellSection() { Title = "Admin Page" };
+							adminPage.Items.Add(new ShellContent() { Content = new AdminPage() });
+							appShell.Items.Add(adminPage);
+						}
+
+						App.Current.MainPage = appShell;
 						await DisplayAlert("Login Successfull", $"You have logged in with the role of a {restService.Role}", "Hooray!");
 
 					}

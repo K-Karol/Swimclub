@@ -36,6 +36,12 @@ namespace Swimclub.Models
 		public DateTime? ExpireDate { get; set; }
 		public string Role { get; set; }
 	}
+	public class AllStudentsResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+		public standard.Collection<Models.Student> Students { get; set; }
+	}
 
 	namespace standard
 	{

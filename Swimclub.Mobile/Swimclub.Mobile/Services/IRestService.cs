@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Swimclub.Models;
+using Xamarin.Forms;
 
 namespace Swimclub.Mobile.Services
 {
@@ -20,13 +21,13 @@ namespace Swimclub.Mobile.Services
 		/// <param name="_loginModel"></param>
 		/// <returns>200 = OK, 401 = Unauthorised, 503 = Server down</returns>
 		Task<int> LoginAsync(Login _loginModel);
-		Task<Student[]> GetAllStudentsAsync();
+		Task<AllStudentsReturn> GetAllStudentsAsync();
 
 	}
 
 	public class RestService : IRestService
 	{
-		private static string api_url = "https://192.168.1.225:5001";
+		private string api_url;
 		//private WinHttpHandler handler;
 		private HttpClient client;
 
@@ -40,6 +41,9 @@ namespace Swimclub.Mobile.Services
 			//handler = new WinHttpHandler();
 			//HttpClientHandler httpHandler = new HttpClientHandler();
 			//httpHandler.ServerCertificateCustomValidationCallback
+			IConfigurationService config = DependencyService.Get<IConfigurationService>();
+			api_url = $"https://{config.ConfigValues["apiIP"]}:{config.ConfigValues["apiPORT"]}";
+
 			HttpClientHandler h = new System.Net.Http.HttpClientHandler();
 
 			h.ServerCertificateCustomValidationCallback =
@@ -79,10 +83,10 @@ namespace Swimclub.Mobile.Services
 		
 		}
 
-		public async Task<Student[]> GetAllStudentsAsync()
+		public async Task<AllStudentsReturn> GetAllStudentsAsync()
 		{
 			if (authToken == null)
-				throw new UnauthorizedAccessException("No bearer token detected");
+				return new AllStudentsReturn() { Success = false };
 
 			Uri uri = new Uri(String.Format("{0}/{1}/{2}", api_url, "students", "all"));
 			var request = new HttpRequestMessage
@@ -92,17 +96,40 @@ namespace Swimclub.Mobile.Services
 				
 			};
 			request.Headers.Add("Authorization", String.Format("Bearer {0}",authToken));
-			var response = await client.SendAsync(request).ConfigureAwait(false);
-			if(response.StatusCode != System.Net.HttpStatusCode.OK)
+			//var response = await client.SendAsync(request).ConfigureAwait(false);
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+			//if (response.StatusCode != System.Net.HttpStatusCode.OK)
+			//{
+			//	return new AllStudentsReturn() { Success = false };
+			//}
+			//else
+			//{
+			//	var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+			//	Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
+			//	return new AllStudentsReturn() { Success = false, Students = students.values};
+			//}
+
+			if (response.Wait(TimeSpan.FromSeconds(30)))
 			{
-				return null;
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				//Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
+				Swimclub.Models.AllStudentsResponse res = JsonConvert.DeserializeObject<Swimclub.Models.AllStudentsResponse>(responseBody);
+				if(res.Success)
+					return new AllStudentsReturn() { Success = res.Success, Students = res.Students.values };
+				else
+					return new AllStudentsReturn() { Success = res.Success, Students = null };
+
 			}
 			else
 			{
-				var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-				Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
-				return students.values;
+				return new AllStudentsReturn() { Success = false };
 			}
 		}
+	}
+
+	public class AllStudentsReturn
+	{
+		public bool Success { get; set; }
+		public Student[] Students { get; set; }
 	}
 }
