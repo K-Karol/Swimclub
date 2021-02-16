@@ -49,8 +49,6 @@ namespace Swimclub.REST.Demo
 		//	await _context.SaveChangesAsync();
 		//}
 
-	
-
 		private static async Task AddTestUsers( RoleManager<Entities.UserRole> roleManager, UserManager<Entities.User> userManager)
 		{
 			var dataExists = roleManager.Roles.Any() || userManager.Users.Any();
