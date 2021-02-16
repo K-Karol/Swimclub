@@ -17,52 +17,13 @@
                 </Grid.ColumnDefinitions>
                 
                 <Button x:Name="New_Test" Text="Start Test" Grid.Row="0" Grid.Column="0" Pressed="studentList_GoToNewTest" />
-                <Button x:Name="Test_Record" Text="View Previous Test" Grid.Row="1" Grid.Column="0" /><!--="studentList_GoToPastTest"/>
-                <Button x:Name="New_Student" Text="Add New Student" Grid.Row="0" Grid.Column="1" IsVisible="true"/><!--Pressed="studentList_addStudent"/>
-                <Button x:Name="Modify_Student" Text="Modify Student Data" Grid.Row="1" Grid.Column="1" IsVisible="true"/><!--Pressed="studentList_modifyStudent"/>
+                <Button x:Name="Test_Record" Text="View Previous Test" Grid.Row="1" Grid.Column="0" "studentList_GoToPastTest"/>
+                <Button x:Name="New_Student" Text="Add New Student" Grid.Row="0" Grid.Column="1" IsVisible="true"/><Pressed="studentList_addStudent"/>
+                <Button x:Name="Modify_Student" Text="Modify Student Data" Grid.Row="1" Grid.Column="1" IsVisible="true"/><Pressed="studentList_modifyStudent"/>
                 
-            </Grid>
-            <SearchBar x:Name="StudentSearchBar" Placeholder="Search" CancelButtonColor="Red" 
-                       HorizontalTextAlignment="Center" TextChanged="StudentPageSearchBar_TextChanged"/>
-            <ListView x:Name="studentList" ItemsSource="{Binding StudentsView}" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="studentList_Refreshing" ItemTapped="studentList_ItemTapped" ItemSelected="studentList_ItemSelected">-->
-            <!--<SearchBar x:Name="StudentSearchBar" Placeholder="Search" CancelButtonColor="Red" 
-                       HorizontalTextAlignment="Center">
-                
-            </SearchBar>-->
-            <!--<ListView x:Name="studentList" ItemsSource="{Binding StudentsView}" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="studentList_Refreshing" ItemTapped="studentList_ItemTapped" ItemSelected="studentList_ItemSelected">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Label FontSize="30" Grid.Row="0" Grid.ColumnSpan="2" TextColor="{Binding textColour}">
-                                    <Label.FormattedText>
-                                        <FormattedString>
-                                            <FormattedString.Spans>
-                                                <Span Text="{Binding Forename}"/>
-                                                <Span Text=" "/>
-                                                <Span Text="{Binding Surname}"/>
-                                            </FormattedString.Spans>
-                                        </FormattedString>
-                                    </Label.FormattedText>
-                                </Label>
-
-                                <Label Text="Swim England Number" Grid.Row="1" Grid.Column="0" TextColor="{Binding textColour}"/>
-                                <Label Text="{Binding SwimEnglandNumber}" Grid.Row="1" Grid.Column="1" TextColor="{Binding textColour}"/>
-
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-        </ListView>-->
+            </Grid>-->
+            <!--<ListView x:Name="studentList" ItemsSource="{Binding StudentsView}" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="studentList_Refreshing" ItemTapped="studentList_ItemTapped" ItemSelected="studentList_ItemSelected":>-->
+            <SearchBar x:Name="searchBar" Text="{Binding SearchString}"  Placeholder="Search" SearchCommand="{Binding SearchStudents}"></SearchBar>
             <RefreshView x:DataType="local:StudentViewModel" IsRefreshing="{Binding isRefreshing}" Command="{Binding LoadData}">
                 <CollectionView x:Name="cv" ItemsSource="{Binding StudentsCollection}" SelectionMode="Single" SelectionChangedCommand="{Binding SelectStudent}" SelectionChangedCommandParameter="{Binding SelectedItem, Source={x:Reference cv}}">
                     <CollectionView.ItemTemplate>
