@@ -19,21 +19,26 @@
             <ScrollView IsVisible="{Binding isLoading}">
                 <Grid Margin="5">
                 <Grid.RowDefinitions> <!--13 x 2 grid-->
-                    <RowDefinition Height="*"/> <!--forname-->
-                    <RowDefinition Height="*"/> <!--surname-->
-                    <RowDefinition Height="*"/> <!--grade number-->
-                    <RowDefinition Height="*"/> <!--swim Englandnumber-->
-                    <RowDefinition Height="*"/> <!--DOB-->
-                    <RowDefinition Height="*"/> <!--Medical details bool-->
-                    <RowDefinition Height="*"/> <!--illness-->
-                    <RowDefinition Height="*"/> <!--Alergies-->
-                    <RowDefinition Height="*"/> <!--Immunizations-->
-                    <RowDefinition Height="*"/> <!--notes-->
-                    <RowDefinition Height="*"/> <!--emergency info-->
-                    <RowDefinition Height="*"/> <!--parents name-->
-                    <RowDefinition Height="*"/> <!--contact number-->
-                    <RowDefinition Height="*"/> <!--address, extend to 4 lines?-->
-                </Grid.RowDefinitions>
+                        <RowDefinition Height="*"/> <!--forname 1-->
+                        <RowDefinition Height="*"/> <!--surname 2-->
+                        <RowDefinition Height="*"/> <!--grade number 3-->
+                        <RowDefinition Height="*"/> <!--swim Englandnumber 4-->
+                        <RowDefinition Height="*"/> <!--DOB 5-->
+                        <RowDefinition Height="*"/> <!--Medical details line 6-->
+                        <RowDefinition Height="*"/> <!--Alergies 7-->
+                        <RowDefinition Height="*"/> <!--Immunizations 8-->
+                        <RowDefinition Height="*"/> <!--illness 9-->
+                        <RowDefinition Height="*"/> <!--Disabilities 10-->
+                        <RowDefinition Height="*"/> <!--notes 11-->
+                        <RowDefinition Height="*"/> <!--emergency info Line 12-->
+                        <RowDefinition Height="*"/> <!--parents name 13-->
+                        <RowDefinition Height="*"/> <!--contact number 14-->
+                        <RowDefinition Height="*"/> <!--address line 1 15-->
+                        <RowDefinition Height="*"/> <!--address line 2 16-->
+                        <RowDefinition Height="*"/> <!--address line 3 17-->
+                        <RowDefinition Height="*"/> <!--address line 4 18-->
+                        <RowDefinition Height="*"/> <!--Postcode 19-->
+                    </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"/> <!--lable-->
                     <ColumnDefinition Width="*"/> <!--input-->
@@ -50,21 +55,32 @@
                     <Label Text="Date of Birth" Grid.Row="4" Grid.Column="0"/>
                     <DatePicker x:Name="StudentDOB" Date="{Binding SelectedStudent.DateOfBirth}" Grid.Row="4" Grid.Column="1"/>
                     <Label Text="Medical Details* (required unless specified)" Grid.Row="5" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label Text="Illnesses"  Grid.Row="6" Grid.Column="0"/>
-                    <Editor x:Name="StudentIllnesses" Text="{Binding SelectedStudent.MedicalDetails.Illnesses,Converter={StaticResource ConvertArray}}" Grid.Row="6" Grid.Column="1"/>
+                    <Label Text="Allergies" Grid.Row="6" Grid.Column="0"/>
+                    <Editor x:Name="StudentAlergies" Text="{Binding SelectedStudent.MedicalDetails.Allergies,Converter={StaticResource ConvertArray}}" Grid.Row="6" Grid.Column="1"/>
                     <Label Text="Allergies" Grid.Row="7" Grid.Column="0"/>
-                    <Editor x:Name="StudentAlergies" Text="{Binding SelectedStudent.MedicalDetails.Allergies,Converter={StaticResource ConvertArray}}" Grid.Row="7" Grid.Column="1"/>
-                    <Label Text="Disabilities" Grid.Row="8" Grid.Column="0"/>
-                    <Editor x:Name="StudentDisabilities" Text="{Binding SelectedStudent.MedicalDetails.Disabilities,Converter={StaticResource ConvertArray}}" Grid.Row="8" Grid.Column="1"/>
-                    <Label Text="Important Notes (optional)" Grid.Row="9" Grid.Column="0"/>
-                    <Editor x:Name="StudentImpNotes" Text="{Binding SelectedStudent.MedicalDetails.Notes}" Grid.Row="9" Grid.Column="1"/>
-                    <Label Text="Contact Infomation (required)" Grid.Row="10" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label Text="Parent / Gardian's Name" Grid.Row="11" Grid.Column="0"/>
-                    <Editor x:Name="PGName" Text="{Binding SelectedStudent.MedicalDetails.EmergencyContacts.FullName}" Placeholder="Forname surname" Grid.Row="11" Grid.Column="1"/>
-                    <Label Text="Emergency Contact" Grid.Row="12" Grid.Column="0"/>
-                    <Editor x:Name="StudentEmergenctContact" Text="{Binding SelectedStudent.MedicalDetails.EmergencyContacts.MobileNumber}" Placeholder="55 555 555 555" Grid.Row="12" Grid.Column="1"/>
-                    <Label Text="Address" Grid.Row="13" Grid.Column="0"/>
-                    <Editor x:Name="StudentAddress" Text="{Binding SelectedStudent.MedicalDetails.Contact.Address.Line1}" Placeholder="43 walliby way" Grid.Row="13" Grid.Column="1"/>
+                    <Editor x:Name="StudentImmunizations" Text="{Binding SelectedStudent.MedicalDetails.Immunizations,Converter={StaticResource ConvertArray}}" Grid.Row="7" Grid.Column="1"/>
+                    <Label Text="Immunizations"  Grid.Row="8" Grid.Column="0"/>
+                    <Editor x:Name="StudentIllnesses" Text="{Binding SelectedStudent.MedicalDetails.Illnesses,Converter={StaticResource ConvertArray}}" Grid.Row="8" Grid.Column="1"/>
+                    <Label Text="Disabilities" Grid.Row="9" Grid.Column="0"/>
+                    <Editor x:Name="StudentDisabilities" Text="{Binding SelectedStudent.MedicalDetails.Disabilities,Converter={StaticResource ConvertArray}}" Grid.Row="9" Grid.Column="1"/>
+                    <Label Text="Important Notes (optional)" Grid.Row="10" Grid.Column="0"/>
+                    <Editor x:Name="StudentImpNotes" Text="{Binding SelectedStudent.MedicalDetails.Notes}" Grid.Row="10" Grid.Column="1"/>
+                    <Label Text="Contact Infomation (required)" Grid.Row="11" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label Text="Parent / Gardian's Name" Grid.Row="12" Grid.Column="0"/>
+                    <Editor x:Name="PGName" Text="{Binding SelectedStudent.MedicalDetails.EmergencyContacts.FullName}" Placeholder="Forname surname" Grid.Row="12" Grid.Column="1"/>
+                    <Label Text="Emergency Contact" Grid.Row="13" Grid.Column="0"/>
+                    <Editor x:Name="StudentEmergenctContact" Text="{Binding SelectedStudent.MedicalDetails.EmergencyContacts.MobileNumber}" Placeholder="55 555 555 555" Grid.Row="13" Grid.Column="1"/>
+                    <Label Text="Address Line 1" Grid.Row="14" Grid.Column="0"/>
+                    <Editor x:Name="StudentAddressL1" Text="{Binding SelectedStudent.MedicalDetails.Contact.Address.Line1}" Placeholder="43" Grid.Row="14" Grid.Column="1"/>
+                    <Label Text="Address Line 2" Grid.Row="15" Grid.Column="0"/>
+                    <Editor x:Name="StudentAddressL2" Text="{Binding SelectedStudent.MedicalDetails.Contact.Address.Line2}" Placeholder="walliby way" Grid.Row="15" Grid.Column="1"/>
+                    <Label Text="Address Line 3" Grid.Row="16" Grid.Column="0"/>
+                    <Editor x:Name="StudentAddressL3" Text="{Binding SelectedStudent.MedicalDetails.Contact.Address.Line3}" Placeholder="Sidney" Grid.Row="16" Grid.Column="1"/>
+                    <Label Text="Address Line 4" Grid.Row="17" Grid.Column="0"/>
+                    <Editor x:Name="StudentAddressL4" Text="{Binding SelectedStudent.MedicalDetails.Contact.Address.Line4}" Placeholder="Australia" Grid.Row="17" Grid.Column="1"/>
+                    <Label Text="PostCode" Grid.Row="18" Grid.Column="0"/>
+                    <Editor x:Name="StudentAddressPC" Text="{Binding SelectedStudent.MedicalDetails.Contact.Address.PostCode}" Placeholder="AA10 3GT" Grid.Row="18" Grid.Column="1"/>
+
                 </Grid>
             </ScrollView>
 
