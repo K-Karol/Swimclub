@@ -26,7 +26,7 @@ namespace Swimclub.REST
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();
-					webBuilder.UseUrls($"https://{GetLocalIPAddress()}:5001");
+					webBuilder.UseUrls($"https://{GetLocalIPAddress()}:5001", $"https://localhost:5001");
 				});
 		public static void InitialiseDatabase(IHost _host)
 		{
