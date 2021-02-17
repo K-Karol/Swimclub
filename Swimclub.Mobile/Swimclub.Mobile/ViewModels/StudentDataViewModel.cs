@@ -15,17 +15,17 @@ namespace Swimclub.Mobile.ViewModels
 
         public Command LoadData { get; }
 
-        private Models.Student selected;
+        private StudentTemp selected;
 
-        public Models.Student SelectedStudent
+        public StudentTemp SelectedStudent
         {
             get { return selected; }
             set { SetProperty(ref selected, value); }
         }
 
-         ObservableCollection<Models.Student> students = new ObservableCollection<Models.Student>();
+         ObservableCollection<StudentTemp> students = new ObservableCollection<StudentTemp>();
 
-         public ObservableCollection<Models.Student> StudentsCollection { get { return students; } }
+         public ObservableCollection<StudentTemp> StudentsCollection { get { return students; } }
 
 
          private bool loading;
@@ -66,11 +66,13 @@ namespace Swimclub.Mobile.ViewModels
 
                      students.Clear();
 
-                     students.Add(new Models.Student() { Forename="New Student", CurrentGradeNumber=1});
+                     students.Add(new StudentTemp() { Forename="New Student", CurrentGradeNumber=1, newStudent = true});
 
                      foreach (var s in Students)
                      {
-                         students.Add(s);
+                         StudentTemp st = new StudentTemp(s);
+                         st.newStudent = false;
+                         students.Add(st);
                      }
 
                      isLoading = true;
@@ -83,6 +85,39 @@ namespace Swimclub.Mobile.ViewModels
         {
             get { return student; }
             set { SetProperty(ref student, value); }
+        }
+    }
+
+    public class StudentTemp : Models.Student
+	{
+        public bool newStudent;
+
+        public StudentTemp()
+		{
+
+		}
+
+        public StudentTemp(Swimclub.Models.Student _s)
+        {
+            this.Forename = _s.Forename;
+            this.Surname = _s.Surname;
+            this.SwimEnglandNumber = _s.SwimEnglandNumber;
+            this.MedicalDetails = _s.MedicalDetails;
+            this.DateOfBirth = _s.DateOfBirth;
+            this.CurrentGradeNumber = _s.CurrentGradeNumber;
+        }
+
+        public static Models.Student ConvertToStudent(StudentTemp temp)
+        {
+            return new Models.Student()
+            {
+                Forename = temp.Forename,
+                Surname = temp.Surname,
+                SwimEnglandNumber = temp.SwimEnglandNumber,
+                MedicalDetails = temp.MedicalDetails,
+                DateOfBirth = temp.DateOfBirth,
+                CurrentGradeNumber = temp.CurrentGradeNumber
+            };
         }
     }
 }
