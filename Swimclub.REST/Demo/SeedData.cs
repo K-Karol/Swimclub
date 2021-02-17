@@ -467,7 +467,7 @@ namespace Swimclub.REST.Demo
 				MedicalDetails = new Models.MedicalDetails()
 				{
 					Disabilities = new string[] { "Dwarfism" },
-					Illnesses = new string[] { "Thrush" },
+					Illnesses = new string[] { "Thrush", "AIDS" },
 					EmergencyContacts = new Models.Contact[]
 					{
 						new Models.Contact()

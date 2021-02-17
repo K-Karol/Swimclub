@@ -16,5 +16,10 @@ namespace Swimclub.Mobile.Views
 		{
 			InitializeComponent();
 		}
+
+		private void Modify_Student(object sender, EventArgs e)
+        {
+			Shell.Current.Navigation.PushAsync(new StudentData());
+		}
 	}
 }

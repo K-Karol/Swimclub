@@ -17,9 +17,9 @@
                 </Grid.ColumnDefinitions>
                 
                 <Button x:Name="New_Test" Text="Start Test" Grid.Row="0" Grid.Column="0" Pressed="studentList_GoToNewTest" />
-                <Button x:Name="Test_Record" Text="View Previous Test" Grid.Row="1" Grid.Column="0" /><!--="studentList_GoToPastTest"/>
-                <Button x:Name="New_Student" Text="Add New Student" Grid.Row="0" Grid.Column="1" IsVisible="true"/><!--Pressed="studentList_addStudent"/>
-                <Button x:Name="Modify_Student" Text="Modify Student Data" Grid.Row="1" Grid.Column="1" IsVisible="true"/><!--Pressed="studentList_modifyStudent"/>
+                <Button x:Name="Test_Record" Text="View Previous Test" Grid.Row="1" Grid.Column="0" Pressed="studentList_GoToPastTest"/>
+                <Button x:Name="New_Student" Text="Add New Student" Grid.Row="0" Grid.Column="1" IsVisible="true" Pressed="studentList_addStudent"/>
+                <Button x:Name="Modify_Student" Text="Modify Student Data" Grid.Row="1" Grid.Column="1" IsVisible="true" Pressed="studentList_modifyStudent"/>
                 
             </Grid>
             <SearchBar x:Name="StudentSearchBar" Placeholder="Search" CancelButtonColor="Red" 
