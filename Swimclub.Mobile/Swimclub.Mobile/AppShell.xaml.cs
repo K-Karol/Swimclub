@@ -9,12 +9,15 @@ namespace Swimclub.Mobile
 {
 	public partial class AppShell : Xamarin.Forms.Shell
 	{
-		public AppShell()
+		private AppShellViewModel _viewModel;
+		public AppShell(bool admin)
 		{
+			_viewModel = new AppShellViewModel();
+			_viewModel.isAdmin = admin;
 			InitializeComponent();
+			BindingContext = _viewModel;
 			//Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
 			//Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
-			
 		}
 		//private async void OnMenuItemClicked(object sender, EventArgs e)
 		//{
