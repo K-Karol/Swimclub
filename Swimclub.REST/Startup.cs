@@ -21,6 +21,7 @@ using OpenIddict.Validation;
 using AspNet.Security.OpenIdConnect.Primitives;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace Swimclub.REST
 {
@@ -46,15 +47,18 @@ namespace Swimclub.REST
 
 			services.AddDbContext<Data.UserDbContext>(options => { 
 				options.UseSqlite(userConnectionString);
-				options.UseOpenIddict<int>();
 			});
 
 			services.AddDbContext<Data.StudentDbContext>(options => {
 				options.UseSqlite(studentConnectionString);
 			});
 
+			services.AddDbContext<Data.ResourceDbContext>(options => {
+				options.UseSqlite(resourceConnectionString);
+			});
 
 			AddIdentityCoreServices(services);
+
 
 			services.AddAuthentication(auth =>
 			{
@@ -74,6 +78,18 @@ namespace Swimclub.REST
 					ValidateIssuerSigningKey = true
 				};
 			
+			});
+
+			//services.Configure<IdentityOptions>(options => {
+			//	options.ClaimsIdentity.UserNameClaimType = OpenIdConnectConstants.Claims.Name;
+			//	options.ClaimsIdentity.UserIdClaimType = OpenIdConnectConstants.Claims.Subject;
+			//	options.ClaimsIdentity.RoleClaimType = OpenIdConnectConstants.Claims.Role;
+			//});
+
+			services.AddAuthorization(opt =>
+			{
+				opt.AddPolicy("AdminPolicy", p => p.RequireAuthenticatedUser().RequireClaim(ClaimTypes.Role,"Admin")) ;
+				opt.AddPolicy("CoachPolicy", p => p.RequireAuthenticatedUser().RequireRole(ClaimTypes.Role, "Admin", "Coach"));
 			});
 
 			services.AddMvc(options =>
@@ -142,6 +158,13 @@ namespace Swimclub.REST
 			{
 				Mode = SqliteOpenMode.ReadWriteCreate,
 				Password = Configuration["DatabaseSettings:StudentPassword"]
+			}.ToString();
+
+			var locationOfResources = String.Format("Data Source={0}", Path.Combine(data_path, "resources.db3"));
+			resourceConnectionString = new SqliteConnectionStringBuilder(locationOfResources)
+			{
+				Mode = SqliteOpenMode.ReadWriteCreate,
+				Password = Configuration["DatabaseSettings:ResourcePassword"]
 			}.ToString();
 
 		}

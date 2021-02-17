@@ -43,6 +43,13 @@ namespace Swimclub.Models
 		public standard.Collection<Models.Student> Students { get; set; }
 	}
 
+	public class AllGradeResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+		public standard.Collection<Models.Grade> Grades { get; set; }
+	}
+
 	namespace standard
 	{
 		public class Collection<T>

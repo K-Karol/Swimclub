@@ -21,6 +21,7 @@ namespace Swimclub.REST.Demo
 		{
 			await AddTestUsers(services.GetRequiredService<RoleManager<Entities.UserRole>>(), services.GetRequiredService<UserManager<Entities.User>>());
 			await AddTestStudents(services.GetRequiredService<Data.StudentDbContext>());
+			await AddTestGrades(services.GetRequiredService<Data.ResourceDbContext>());
 		}
 
 		//public static async Task AddTestDataHotel(HotelApiDbContext _context)
@@ -57,6 +58,7 @@ namespace Swimclub.REST.Demo
 
 			await roleManager.CreateAsync(new Entities.UserRole("Admin"));
 			await roleManager.CreateAsync(new Entities.UserRole("Coach"));
+			await roleManager.CreateAsync(new Entities.UserRole("Guest"));
 
 			var user = new Entities.User
 			{
@@ -80,6 +82,17 @@ namespace Swimclub.REST.Demo
 			Task<IdentityResult> t2 = userManager.CreateAsync(user2, "davePassword123!");
 			t2.Wait();
 			await userManager.AddToRoleAsync(user2, "Coach");
+
+
+			var user3 = new Entities.User
+			{
+				Forename = "Random peep",
+				UserName = "guest"
+			};
+
+			Task<IdentityResult> t3 = userManager.CreateAsync(user3, "guestPassword123!");
+			t3.Wait();
+			await userManager.AddToRoleAsync(user3, "Guest");
 
 			await userManager.UpdateAsync(user);
 
@@ -484,6 +497,52 @@ namespace Swimclub.REST.Demo
 
 			await _context.SaveChangesAsync();
 
+		}
+
+		private static async Task AddTestGrades(Data.ResourceDbContext _context)
+		{
+			if (_context.Grades.Any())
+			{
+				return;
+			}
+
+			_context.Grades.Add(new Entities.Grade()
+			{
+				Number = 1,
+				Tests = new Models.Test[] { new Models.Test() { Number = 1, Name = "Swim 5m" }, new Models.Test() { Number = 2, Name = "Swim 10m" } , new Models.Test() { Number = 3, Name = "Swim 15m" } }
+			});
+			_context.Grades.Add(new Entities.Grade()
+			{
+				Number = 2,
+				Tests = new Models.Test[] { new Models.Test() { Number = 1, Name = "Swim 5m" }, new Models.Test() { Number = 2, Name = "Swim 10m" }, new Models.Test() { Number = 3, Name = "Swim 15m" } }
+			});
+			_context.Grades.Add(new Entities.Grade()
+			{
+				Number = 3,
+				Tests = new Models.Test[] { new Models.Test() { Number = 1, Name = "Swim 5m" }, new Models.Test() { Number = 2, Name = "Swim 10m" }, new Models.Test() { Number = 3, Name = "Swim 15m" } }
+			});
+			_context.Grades.Add(new Entities.Grade()
+			{
+				Number = 4,
+				Tests = new Models.Test[] { new Models.Test() { Number = 1, Name = "Swim 5m" }, new Models.Test() { Number = 2, Name = "Swim 10m" }, new Models.Test() { Number = 3, Name = "Swim 15m" } }
+			});
+			_context.Grades.Add(new Entities.Grade()
+			{
+				Number = 5,
+				Tests = new Models.Test[] { new Models.Test() { Number = 1, Name = "Swim 5m" }, new Models.Test() { Number = 2, Name = "Swim 10m" }, new Models.Test() { Number = 3, Name = "Swim 15m" } }
+			});
+			_context.Grades.Add(new Entities.Grade()
+			{
+				Number = 6,
+				Tests = new Models.Test[] { new Models.Test() { Number = 1, Name = "Swim 5m" }, new Models.Test() { Number = 2, Name = "Swim 10m" }, new Models.Test() { Number = 3, Name = "Swim 15m" } }
+			});
+			_context.Grades.Add(new Entities.Grade()
+			{
+				Number = 7,
+				Tests = new Models.Test[] { new Models.Test() { Number = 1, Name = "Swim 5m" }, new Models.Test() { Number = 2, Name = "Swim 10m" }, new Models.Test() { Number = 3, Name = "Swim 15m" } }
+			});
+
+			await _context.SaveChangesAsync();
 		}
 	}
 }

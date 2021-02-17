@@ -17,17 +17,26 @@ namespace Swimclub.REST.Controllers
 	public class StudentsController : ControllerBase
 	{
 		private readonly Data.StudentDbContext studentDbContext;
+		private readonly IAuthorizationService authService;
 
-		public StudentsController(Data.StudentDbContext _context)
+		public StudentsController(Data.StudentDbContext _context, IAuthorizationService _authService)
 		{
 			studentDbContext = _context;
+			authService = _authService;
 		}
 		[HttpGet("all",Name =nameof(GetAllStudents))]
 		public async Task<ActionResult<Models.AllStudentsResponse>> GetAllStudents()
 		{
 			Models.AllStudentsResponse response;
-			if ((User.IsInRole("Admin") || User.IsInRole("Coach")))
-				return Unauthorized(response = new Models.AllStudentsResponse() { Success = false, Error = new Models.ApiError() { Success = false, Message = "This user is not authorised.", Detail = "Requirements: Admin or Coach" } });
+			if (User.Identity.IsAuthenticated)
+			{
+				var policyCheck = await authService.AuthorizeAsync(User, "CoachPolicy");
+				if (!policyCheck.Succeeded)
+				{
+					return Unauthorized(response = new Models.AllStudentsResponse() { Success = false, Error = new Models.ApiError() { Success = false, Message = "This user is not authorised.", Detail = "Requirements: Admin or Coach" } });
+
+				}
+			}
 
 			Entities.Student[] entities = await studentDbContext.Students.ToArrayAsync();
 			Models.Student[] students = entities.Select(ent => Entities.Student.GetStudent(ent)).ToArray();
