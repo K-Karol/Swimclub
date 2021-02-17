@@ -147,23 +147,11 @@ namespace Swimclub.Mobile.Services
 
 			};
 			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
-			//var response = await client.SendAsync(request).ConfigureAwait(false);
 			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
-			//if (response.StatusCode != System.Net.HttpStatusCode.OK)
-			//{
-			//	return new AllStudentsReturn() { Success = false };
-			//}
-			//else
-			//{
-			//	var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-			//	Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
-			//	return new AllStudentsReturn() { Success = false, Students = students.values};
-			//}
 
 			if (response.Wait(TimeSpan.FromSeconds(40)))
 			{
 				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
-				//Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
 				Swimclub.Models.AllGradeResponse res = JsonConvert.DeserializeObject<Swimclub.Models.AllGradeResponse>(responseBody);
 				if (res.Success)
 					return new AllGradesReturn() { Success = res.Success, Grades = res.Grades.values };
@@ -174,6 +162,37 @@ namespace Swimclub.Mobile.Services
 			else
 			{
 				return new AllGradesReturn() { Success = false };
+			}
+		}
+
+		public async Task<ModifyStudentReturn> ModifyStudent(Models.Student student)
+		{
+			if (authToken == null)
+				return new ModifyStudentReturn() { Success = false };
+
+			Uri uri = new Uri(String.Format("{0}/{1}/{2}", api_url, "grades", "all"));
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Get,
+				RequestUri = uri,
+
+			};
+			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+
+			if (response.Wait(TimeSpan.FromSeconds(40)))
+			{
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				Swimclub.Models.ModifyStudentResponse res = JsonConvert.DeserializeObject<Swimclub.Models.ModifyStudentResponse>(responseBody);
+				if (res.Success)
+					return new ModifyStudentReturn() { Success = res.Success, Student = res.Student.itemValue };
+				else
+					return new ModifyStudentReturn() { Success = res.Success, Student = null };
+
+			}
+			else
+			{
+				return new ModifyStudentReturn() { Success = false };
 			}
 		}
 	}
@@ -188,5 +207,11 @@ namespace Swimclub.Mobile.Services
 	{
 		public bool Success { get; set; }
 		public Grade[] Grades { get; set; }
+	}
+
+	public class ModifyStudentReturn
+	{
+		public bool Success { get; set; }
+		public Models.Student Student { get; set; }
 	}
 }
