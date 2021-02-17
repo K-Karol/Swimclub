@@ -17,6 +17,14 @@ namespace Swimclub.Mobile.ViewModels
 
         public Command LoadData { get; }
         public Command<object> SelectStudent { get; }
+		public Command SearchStudents { get; }
+
+		private string searchString;
+		public string SearchString
+		{
+			get { return searchString; }
+			set { SetProperty(ref searchString, value); search(); }
+		}
 
         ObservableCollection<StudentCell> students = new ObservableCollection<StudentCell>();
 		public ObservableCollection<StudentCell> StudentsCollection { get { return students; } }
@@ -33,6 +41,7 @@ namespace Swimclub.Mobile.ViewModels
 			restService = DependencyService.Get<Services.IRestService>();
             LoadData = new Command(loadData);
             SelectStudent = new Command<object>(selectStudent);
+			SearchStudents = new Command(search);
             Task.Run(() => loadDataAsync());
         }
 
@@ -70,11 +79,11 @@ namespace Swimclub.Mobile.ViewModels
 						students.Add(cell);
                     }
                     isRefreshing = false;
+					search();
 
-
-                }
+				}
               ));
-
+			
         }
 
         private void selectStudent(object obj)
@@ -88,6 +97,32 @@ namespace Swimclub.Mobile.ViewModels
 			}
 
 			Shell.Current.Navigation.PushAsync(new Views.StudentDetailPage(StudentCell.ConvertToStudent(currentCell)));
+		}
+
+		private void search()
+		{
+			if (searchString == null || searchString == "")
+			{
+				students.Clear();
+				foreach (var s in Students)
+				{
+					StudentCell cell = new StudentCell(s);
+					cell.textColour = Application.Current.Resources["OnSurface"] as Color? ?? Color.Black;
+					students.Add(cell);
+				}
+			}
+			else
+			{
+				string searchStringTemp = searchString.ToLower();
+				List<Models.Student> searchResults = Students.Where<Models.Student>(s => $"{s.Forename.ToLower()} {s.Surname.ToLower()}".StartsWith(searchStringTemp) || s.Forename.ToLower().StartsWith(searchStringTemp) || s.Surname.ToLower().StartsWith(searchStringTemp) || s.SwimEnglandNumber.StartsWith(searchStringTemp)).ToList();
+				students.Clear();
+				foreach (var s in searchResults)
+				{
+					StudentCell cell = new StudentCell(s);
+					cell.textColour = Application.Current.Resources["OnSurface"] as Color? ?? Color.Black;
+					students.Add(cell);
+				}
+			}
 		}
 
 	}

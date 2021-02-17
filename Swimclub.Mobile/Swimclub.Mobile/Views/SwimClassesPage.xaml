@@ -4,7 +4,7 @@
              x:Class="Swimclub.Mobile.Views.SwimClassesPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add a Class" />
+        <ToolbarItem Text="Add a Class"  Command="{Binding AddSwimCLassCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
        
@@ -17,4 +17,4 @@
         </StackLayout>
 
     </ContentPage.Content>
-</ContentPage>
+</ContentPage> 

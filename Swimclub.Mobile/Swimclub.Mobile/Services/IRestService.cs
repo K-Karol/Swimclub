@@ -22,6 +22,8 @@ namespace Swimclub.Mobile.Services
 		/// <returns>200 = OK, 401 = Unauthorised, 503 = Server down</returns>
 		Task<int> LoginAsync(Login _loginModel);
 		Task<AllStudentsReturn> GetAllStudentsAsync();
+		Task<AllGradesReturn> GetAllGradesAsync();
+		void ClearClient();
 
 	}
 
@@ -50,6 +52,12 @@ namespace Swimclub.Mobile.Services
 				(message, certificate, chain, sslPolicyErrors) => true;
 			client = new HttpClient(h);
 			
+		}
+
+		public void ClearClient()
+		{
+			authToken = "";
+			role = "";
 		}
 
 		public async Task<int> LoginAsync(Login _loginModel)
@@ -125,11 +133,60 @@ namespace Swimclub.Mobile.Services
 				return new AllStudentsReturn() { Success = false };
 			}
 		}
+
+		public async Task<AllGradesReturn> GetAllGradesAsync()
+		{
+			if (authToken == null)
+				return new AllGradesReturn() { Success = false };
+
+			Uri uri = new Uri(String.Format("{0}/{1}/{2}", api_url, "grades", "all"));
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Get,
+				RequestUri = uri,
+
+			};
+			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
+			//var response = await client.SendAsync(request).ConfigureAwait(false);
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+			//if (response.StatusCode != System.Net.HttpStatusCode.OK)
+			//{
+			//	return new AllStudentsReturn() { Success = false };
+			//}
+			//else
+			//{
+			//	var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+			//	Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
+			//	return new AllStudentsReturn() { Success = false, Students = students.values};
+			//}
+
+			if (response.Wait(TimeSpan.FromSeconds(40)))
+			{
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				//Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
+				Swimclub.Models.AllGradeResponse res = JsonConvert.DeserializeObject<Swimclub.Models.AllGradeResponse>(responseBody);
+				if (res.Success)
+					return new AllGradesReturn() { Success = res.Success, Grades = res.Grades.values };
+				else
+					return new AllGradesReturn() { Success = res.Success, Grades = null };
+
+			}
+			else
+			{
+				return new AllGradesReturn() { Success = false };
+			}
+		}
 	}
 
 	public class AllStudentsReturn
 	{
 		public bool Success { get; set; }
 		public Student[] Students { get; set; }
+	}
+
+	public class AllGradesReturn
+	{
+		public bool Success { get; set; }
+		public Grade[] Grades { get; set; }
 	}
 }

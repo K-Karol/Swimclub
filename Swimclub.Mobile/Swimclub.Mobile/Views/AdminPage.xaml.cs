@@ -18,8 +18,14 @@ namespace Swimclub.Mobile.Views
 		}
 
 		private void Modify_Student(object sender, EventArgs e)
-        {
+    {
 			Shell.Current.Navigation.PushAsync(new StudentData());
+    }
+		protected override void OnAppearing()
+		{
+			Services.IRestService s = DependencyService.Get<Services.IRestService>();
+			if(s.Role != "Admin")
+				App.Current.MainPage = new Views.LoginPage(true);
 		}
 	}
 }

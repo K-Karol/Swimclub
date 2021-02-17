@@ -1,10 +1,82 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Swimclub.Mobile.Views.StudentDetailPage">
+             x:Class="Swimclub.Mobile.Views.StudentDetailPage"
+             xmlns:local="clr-namespace:Swimclub.Mobile.ViewModels"
+             xmlns:model="clr-namespace:Swimclub.Models;assembly=SwimclubStandard">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:StringArrayToString x:Key="ConvertArray"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Student.Forename}"></Label>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions> <!--20 x 2 grid-->
+                        <RowDefinition Height="*"/> <!--Student Details line 0-->
+                        <RowDefinition Height="*"/> <!--forname 1-->
+                        <RowDefinition Height="*"/> <!--surname 2-->
+                        <RowDefinition Height="*"/> <!--grade number 3-->
+                        <RowDefinition Height="*"/> <!--swim Englandnumber 4-->
+                        <RowDefinition Height="*"/> <!--DOB 5-->
+                        <RowDefinition Height="*"/> <!--Medical details line 6-->
+                        <RowDefinition Height="*"/> <!--Alergies 7-->
+                        <RowDefinition Height="*"/> <!--Immunizations 8-->
+                        <RowDefinition Height="*"/> <!--illness 9-->
+                        <RowDefinition Height="*"/> <!--Disabilities 10-->
+                        <RowDefinition Height="*"/> <!--notes 11-->
+                        <RowDefinition Height="*"/> <!--emergency info Line 12-->
+                        <RowDefinition Height="*"/> <!--parents name 13-->
+                        <RowDefinition Height="*"/> <!--contact number 14-->
+                        <RowDefinition Height="*"/> <!--address line 1 15-->
+                        <RowDefinition Height="*"/> <!--address line 2 16-->
+                        <RowDefinition Height="*"/> <!--address line 3 17-->
+                        <RowDefinition Height="*"/> <!--address line 4 18-->
+                        <RowDefinition Height="*"/> <!--Postcode 19-->
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/> <!--descriptor-->
+                        <ColumnDefinition Width="*"/> <!--data-->
+                    </Grid.ColumnDefinitions>
+                
+                    <Label Text=" --- Student Details --- " FontAttributes="Bold" Grid.Row="0" Grid.ColumnSpan="2"  HorizontalOptions="Center"/>
+                    <Label Text="Forename : " FontAttributes="Bold" Grid.Row="1" Grid.Column="0"/>
+                    <Label Text="{Binding Student.Forename}" Grid.Row="1" Grid.Column="1"/>
+                    <Label Text="Surname : " FontAttributes="Bold" Grid.Row="2" Grid.Column="0"/>
+                    <Label Text="{Binding Student.Surname}" Grid.Row="2" Grid.Column="1"/>
+                    <Label Text="Swim England Number : " FontAttributes="Bold" Grid.Row="3" Grid.Column="0"/>
+                    <Label Text="{Binding Student.SwimEnglandNumber}" Grid.Row="3" Grid.Column="1"/>
+                    <Label Text="Date of Birth : " FontAttributes="Bold" Grid.Row="4" Grid.Column="0"/>
+                    <Label Text="{Binding Student.DateOfBirth}" Grid.Row="4" Grid.Column="1"/>
+                    <Label Text="Current Grade : " FontAttributes="Bold" Grid.Row="5" Grid.Column="0"/>
+                    <Label Text="{Binding Student.CurrentGradeNumber}" Grid.Row="5" Grid.Column="1"/>
+            
+                    <Label Text=" --- Medical Details --- " FontAttributes="Bold" Grid.Row="6" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                    <Label Text="Allergies : " FontAttributes="Bold" Grid.Row="7" Grid.Column="0"/>
+                    <Label Text="{Binding Student.MedicalDetails.Allergies,Converter={StaticResource ConvertArray}}" Grid.Row="7" Grid.Column="1" />
+                    <Label Text="Immunizations : " FontAttributes="Bold" Grid.Row="8" Grid.Column="0"/>
+                    <Label Text="{Binding Student.MedicalDetails.Immunizations,Converter={StaticResource ConvertArray}}" Grid.Row="8" Grid.Column="1" />
+                    <Label Text="Illnesses : " FontAttributes="Bold" Grid.Row="9" Grid.Column="0"/>
+                    <Label Text="{Binding Student.MedicalDetails.Illnesses,Converter={StaticResource ConvertArray}}" Grid.Row="9" Grid.Column="1" />
+                    <Label Text="Disabilities : " FontAttributes="Bold" Grid.Row="10" Grid.Column="0"/>
+                    <Label Text="{Binding Student.MedicalDetails.Disabilities,Converter={StaticResource ConvertArray}}" Grid.Row="10" Grid.Column="1" />
+                    <Label Text="Notes : " FontAttributes="Bold" Grid.Row="11" Grid.Column="0"/>
+                    <Label Text="{Binding Student.MedicalDetails.Notes}" Grid.Row="11" Grid.Column="1" />
+            
+                    <Label Text=" --- Parent / Guardian Details --- " FontAttributes="Bold" Grid.Row="12" Grid.ColumnSpan="2" HorizontalOptions="Center"/>
+                    <Label Text="Full Name : " FontAttributes="Bold" Grid.Row="13" Grid.Column="0"/>
+                    <Label Text="{Binding Student.MedicalDetails.Contact.FullName,Converter={StaticResource ConvertArray}}" Grid.Row="13" Grid.Column="1" />
+                    <Label Text="Phone Number : " FontAttributes="Bold" Grid.Row="14" Grid.Column="0"/>
+                    <Label Text="Mobile Number : " FontAttributes="Bold" Grid.Row="15" Grid.Column="0"/>
+                    <Label Text="Address Line1 : " FontAttributes="Bold" Grid.Row="16" Grid.Column="0"/>
+                    <Label Text="Address Line2 : " FontAttributes="Bold" Grid.Row="17" Grid.Column="0"/>
+                    <Label Text="Address Line3 : " FontAttributes="Bold" Grid.Row="18" Grid.Column="0"/>
+                    <Label Text="Address Line4 : " FontAttributes="Bold" Grid.Row="19" Grid.Column="0"/>
+                    <Label Text="Address PostCode : " FontAttributes="Bold" Grid.Row="20" Grid.Column="0"/>
+                    </Grid>
+            </ScrollView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -14,6 +14,11 @@ namespace Swimclub.Mobile.ViewModels
 			set { SetProperty(ref grade, value); }
 		}
 
+		public int StudentsCount
+		{
+			get { return grade.Students.Length; }
+		}
+
 	}
 }
 //192.168.1.118

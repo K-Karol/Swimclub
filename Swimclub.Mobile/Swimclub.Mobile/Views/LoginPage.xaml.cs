@@ -14,9 +14,10 @@ namespace Swimclub.Mobile.Views
 	{
 		private bool running = false;
 		private readonly Services.IRestService restService;
-		public LoginPage()
+		public LoginPage(bool breach)
 		{
 			InitializeComponent();
+			if (breach) DisplayAlert("Security Breach", "You've accessed the page not as an admin. You have been logged to enforce the security policy", "OK???");
 			restService = DependencyService.Get<Services.IRestService>();
 		}
 

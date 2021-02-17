@@ -10,12 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace Swimclub.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SwimClassesPage : ContentPage
+    public partial class NewClass : ContentPage
     {
-        public SwimClassesPage()
+        public NewClass()
         {
             InitializeComponent();
-           // BindingContext = new SwimCLassViewModel();
         }
     }
 }

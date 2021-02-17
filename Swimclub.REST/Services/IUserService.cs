@@ -46,10 +46,13 @@ namespace Swimclub.REST.Services
 				if (!passwordCheck)
 					return new Models.UserServiceResponse() { success = false };
 
+				var getRoles = await user_manager.GetRolesAsync(user);
+
 				var claims = new[]
 				{
 					new Claim("Username",user.UserName),
-					new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+					new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+					new Claim(ClaimTypes.Role, getRoles[0])
 				};
 
 				var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AuthSettings:Key"]));
@@ -58,7 +61,7 @@ namespace Swimclub.REST.Services
 
 				string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
 
-				var getRoles = await user_manager.GetRolesAsync(user);
+				
 
 				string role = "NA";
 				if(getRoles.Count >=1)
