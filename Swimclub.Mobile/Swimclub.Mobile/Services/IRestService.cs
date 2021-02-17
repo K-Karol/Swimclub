@@ -170,11 +170,44 @@ namespace Swimclub.Mobile.Services
 			if (authToken == null)
 				return new ModifyStudentReturn() { Success = false };
 
-			Uri uri = new Uri(String.Format("{0}/{1}/{2}", api_url, "grades", "all"));
+			Uri uri = new Uri(String.Format("{0}/{1}", api_url, "modify"));
 			var request = new HttpRequestMessage
 			{
-				Method = HttpMethod.Get,
+				Method = HttpMethod.Post,
 				RequestUri = uri,
+				Content = new StringContent(JsonConvert.SerializeObject(student), Encoding.UTF8, "application/json")
+
+			};
+			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+
+			if (response.Wait(TimeSpan.FromSeconds(40)))
+			{
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				Swimclub.Models.ModifyStudentResponse res = JsonConvert.DeserializeObject<Swimclub.Models.ModifyStudentResponse>(responseBody);
+				if (res.Success)
+					return new ModifyStudentReturn() { Success = res.Success, Student = res.Student.itemValue };
+				else
+					return new ModifyStudentReturn() { Success = res.Success, Student = null };
+
+			}
+			else
+			{
+				return new ModifyStudentReturn() { Success = false };
+			}
+		}
+
+		public async Task<ModifyStudentReturn> CreateStudent(Models.Student student)
+		{
+			if (authToken == null)
+				return new ModifyStudentReturn() { Success = false };
+
+			Uri uri = new Uri(String.Format("{0}/{1}", api_url, "add"));
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Post,
+				RequestUri = uri,
+				Content = new StringContent(JsonConvert.SerializeObject(student), Encoding.UTF8, "application/json")
 
 			};
 			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
@@ -210,6 +243,12 @@ namespace Swimclub.Mobile.Services
 	}
 
 	public class ModifyStudentReturn
+	{
+		public bool Success { get; set; }
+		public Models.Student Student { get; set; }
+	}
+
+	public class CreateStudentReturn
 	{
 		public bool Success { get; set; }
 		public Models.Student Student { get; set; }
