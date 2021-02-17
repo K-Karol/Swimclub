@@ -16,5 +16,15 @@ namespace Swimclub.Mobile.Views
 		{
 			InitializeComponent();
 		}
+
+		protected override void OnAppearing()
+		{
+			Services.IRestService s = DependencyService.Get<Services.IRestService>();
+			if(s.Role != "Admin")
+			{
+				
+				App.Current.MainPage = new Views.LoginPage(true);
+			}
+		}
 	}
 }

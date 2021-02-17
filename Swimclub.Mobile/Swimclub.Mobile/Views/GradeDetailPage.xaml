@@ -6,7 +6,18 @@
              xmlns:model="clr-namespace:Swimclub.Models;assembly=SwimclubStandard">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Grade.ID}"/>
+            <Label FontSize="30">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <FormattedString.Spans>
+                            <Span Text="Grade"/>
+                            <Span Text=" "/>
+                            <Span Text="{Binding Grade.ID}"/>
+                        </FormattedString.Spans>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label Text="{Binding StudentsCount}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
