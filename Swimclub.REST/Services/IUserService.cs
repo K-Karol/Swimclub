@@ -37,40 +37,40 @@ namespace Swimclub.REST.Services
 		public async Task<Models.UserServiceResponse> LoginUserAsync(Login _model)
 		{
 			var user = await user_manager.FindByNameAsync(_model.username);
-
 			if (user == null)
 				return new Models.UserServiceResponse() { success = false };
-			else
+			bool usernameCheck = user.UserName == _model.username;
+			if (!usernameCheck)
+				return new Models.UserServiceResponse() { success = false };
+
+			var passwordCheck = await user_manager.CheckPasswordAsync(user, _model.password);
+			if (!passwordCheck)
+				return new Models.UserServiceResponse() { success = false };
+
+			var getRoles = await user_manager.GetRolesAsync(user);
+
+			var claims = new[]
 			{
-				var passwordCheck = await user_manager.CheckPasswordAsync(user, _model.password);
-				if (!passwordCheck)
-					return new Models.UserServiceResponse() { success = false };
+				new Claim("Username",user.UserName),
+				new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+				new Claim(ClaimTypes.Role, getRoles[0])
+			};
 
-				var getRoles = await user_manager.GetRolesAsync(user);
+			var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AuthSettings:Key"]));
+			var token = new JwtSecurityToken(issuer: configuration["AuthSettings:Issuer"], audience: configuration["AuthSettings:Audience"], claims: claims, expires: DateTime.Now.AddHours(8),
+				signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
 
-				var claims = new[]
-				{
-					new Claim("Username",user.UserName),
-					new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-					new Claim(ClaimTypes.Role, getRoles[0])
-				};
-
-				var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["AuthSettings:Key"]));
-				var token = new JwtSecurityToken(issuer: configuration["AuthSettings:Issuer"], audience: configuration["AuthSettings:Audience"], claims: claims, expires: DateTime.Now.AddHours(8),
-					signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
-
-				string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
+			string tokenAsString = new JwtSecurityTokenHandler().WriteToken(token);
 
 				
 
-				string role = "NA";
-				if(getRoles.Count >=1)
-				{
-					role = getRoles[0];
-				}
-
-				return new Models.UserServiceResponse() { success = true, token = tokenAsString, ExpireDate = token.ValidTo, Role = role }; ;
+			string role = "NA";
+			if(getRoles.Count >=1)
+			{
+				role = getRoles[0];
 			}
+
+			return new Models.UserServiceResponse() { success = true, token = tokenAsString, ExpireDate = token.ValidTo, Role = role }; ;
 		}
 
 		public async Task<User> GetUserAsync(ClaimsPrincipal user)

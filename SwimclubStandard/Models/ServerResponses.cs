@@ -43,12 +43,42 @@ namespace Swimclub.Models
 		public standard.Collection<Models.Student> Students { get; set; }
 	}
 
+	public class ModifyStudentResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+		public standard.Item<Models.Student> Student { get; set; }
+	}
+
+	public class SingularStudentResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+		public standard.Item<Models.Student> Student { get; set; }
+	}
+
+	public class CreateStudentResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+		public standard.Item<Models.Student> Student { get; set; }
+	}
+
+	public class DeleteStudentResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+		public int ID { get; set; }
+	}
+
 	public class AllGradeResponse
 	{
 		public bool Success { get; set; }
 		public Models.ApiError Error { get; set; }
 		public standard.Collection<Models.Grade> Grades { get; set; }
 	}
+
+	
 
 	namespace standard
 	{
@@ -62,6 +92,18 @@ namespace Swimclub.Models
 			{
 				get { return JsonConvert.SerializeObject(values); }
 				set { values = JsonConvert.DeserializeObject<T[]>(value); }
+			}
+		}
+
+		public class Item<T>
+		{
+			public bool success { get; set; }
+			[JsonIgnore]
+			public T itemValue { get; set; }
+			public string valuejson
+			{
+				get { return JsonConvert.SerializeObject(itemValue); }
+				set { itemValue = JsonConvert.DeserializeObject<T>(value); }
 			}
 		}
 	}
