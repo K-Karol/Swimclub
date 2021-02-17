@@ -92,7 +92,8 @@ namespace Swimclub.Mobile.ViewModels
         {
             string temp = "";
             string[] data = (string[])value;
-            if(data.Length == 0) { return "";  }
+            if(data == null) { return ""; }
+            if(data.Length == 0) { return ""; }
             foreach (var s in data)
             {
                 temp += $"{s},";
@@ -104,6 +105,7 @@ namespace Swimclub.Mobile.ViewModels
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string data = (string)value;
+            if(data == "") { return null; }
             string[] temp = data.Split(',');
             return temp;
         }
