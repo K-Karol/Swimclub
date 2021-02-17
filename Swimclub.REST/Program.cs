@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace Swimclub.REST
@@ -24,6 +26,7 @@ namespace Swimclub.REST
 				.ConfigureWebHostDefaults(webBuilder =>
 				{
 					webBuilder.UseStartup<Startup>();
+					webBuilder.UseUrls($"https://{GetLocalIPAddress()}:5001");
 				});
 		public static void InitialiseDatabase(IHost _host)
 		{
@@ -40,6 +43,19 @@ namespace Swimclub.REST
 					logger.LogError(ex, "An error occurred seeding the database.");
 				}
 			}
+		}
+
+		public static string GetLocalIPAddress()
+		{
+			var host = Dns.GetHostEntry(Dns.GetHostName());
+			foreach (var ip in host.AddressList)
+			{
+				if (ip.AddressFamily == AddressFamily.InterNetwork)
+				{
+					return ip.ToString();
+				}
+			}
+			throw new Exception("No network adapters with an IPv4 address in the system!");
 		}
 	}
 
