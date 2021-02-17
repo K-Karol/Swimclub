@@ -23,6 +23,7 @@ namespace Swimclub.Mobile.Services
 		Task<int> LoginAsync(Login _loginModel);
 		Task<AllStudentsReturn> GetAllStudentsAsync();
 		Task<AllGradesReturn> GetAllGradesAsync();
+		void ClearClient();
 
 	}
 
@@ -51,6 +52,12 @@ namespace Swimclub.Mobile.Services
 				(message, certificate, chain, sslPolicyErrors) => true;
 			client = new HttpClient(h);
 			
+		}
+
+		public void ClearClient()
+		{
+			authToken = "";
+			role = "";
 		}
 
 		public async Task<int> LoginAsync(Login _loginModel)
