@@ -5,6 +5,7 @@ using Swashbuckle.AspNetCore.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Swimclub.REST.Controllers
@@ -18,10 +19,11 @@ namespace Swimclub.REST.Controllers
 	public class UsersController : ControllerBase
 	{
 		private readonly Services.IUserService user_service;
-
-		public UsersController(Services.IUserService _user_service)
+		private readonly IAuthorizationService authService;
+		public UsersController(Services.IUserService _user_service, IAuthorizationService _authService)
 		{
 			user_service = _user_service;
+			authService = _authService;
 		}
 		/// <summary>
 		/// Root of this controller
@@ -56,6 +58,32 @@ namespace Swimclub.REST.Controllers
 				return BadRequest(new Models.UserInfoResponse() { error = new Models.ApiError() { Success = false, Message = "Invalid Grant", Detail = "This user does not exist" } });
 			}
 			return Ok(new Models.UserInfoResponse() { forename = user.Forename, surname = user.Surname, username = user.Username });
+		}
+
+
+
+		[HttpPost("register", Name = nameof(RegisterUser))]
+		public async Task<ActionResult<Models.CreateUserResponse>> RegisterUser([FromBody] Models.Register _register)
+		{
+			Models.CreateUserResponse response;
+			if (User.Identity.IsAuthenticated)
+			{
+				var policyCheck = await authService.AuthorizeAsync(User, "AdminPolicy");
+				if (!policyCheck.Succeeded)
+				{
+					return Unauthorized(response = new Models.CreateUserResponse() { Success = false, Error = new Models.ApiError() { Success = false, Message = "This user is not authorised.", Detail = "Requirements: Admin" } });
+
+				}
+			}
+
+			Models.UserServiceRegistrationResponse resp = await user_service.RegisterUserAsync(_register);
+			if (!resp.Success)
+			{
+				return BadRequest(new Models.CreateUserResponse() { Success = false, Error = new Models.ApiError() { Success = false, Message = "There was an error creating the user", Detail = JsonSerializer.Serialize(resp.PasswordValidErrors) } });
+			}
+
+			return Ok(new Models.CreateUserResponse() { Success = true, Error = new Models.ApiError() { Success = true } });
+
 		}
 	}
 

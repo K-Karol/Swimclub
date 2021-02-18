@@ -59,6 +59,13 @@ namespace Swimclub.REST
 
 			AddIdentityCoreServices(services);
 
+			services.Configure<IdentityOptions>(options => {
+				options.Password.RequireDigit = true;
+				options.Password.RequireLowercase = true;
+				options.Password.RequireUppercase = true;
+				options.Password.RequiredLength = 6;
+				options.Password.RequireNonAlphanumeric = true;
+			});
 
 			services.AddAuthentication(auth =>
 			{

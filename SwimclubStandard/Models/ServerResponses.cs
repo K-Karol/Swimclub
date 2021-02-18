@@ -36,6 +36,12 @@ namespace Swimclub.Models
 		public DateTime? ExpireDate { get; set; }
 		public string Role { get; set; }
 	}
+
+	public class UserServiceRegistrationResponse
+	{
+		public bool Success;
+		public string[] PasswordValidErrors;
+	}
 	public class AllStudentsResponse
 	{
 		public bool Success { get; set; }
@@ -78,6 +84,11 @@ namespace Swimclub.Models
 		public standard.Collection<Models.Grade> Grades { get; set; }
 	}
 
+	public class CreateUserResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+	}
 	
 
 	namespace standard
