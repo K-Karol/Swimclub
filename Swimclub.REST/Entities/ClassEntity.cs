@@ -15,6 +15,8 @@ namespace Swimclub.REST.Entities
         [Required]
         public string Pool { get; set; }
         [Required]
+        public int ClassGrade { get; set; }
+        [Required]
         public int coachID { get; set; }
         [Required]
         DateTime TimeOfClass { get; set; }
