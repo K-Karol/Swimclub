@@ -16,7 +16,20 @@ namespace Swimclub.Mobile
 			//DependencyService.Register<MockDataStore>();
 			DependencyService.Register<Services.RestService>();
 			DependencyService.Register<Services.ConfigurationService>();
-			MainPage = new Views.LoginPage(false);
+			IRestService restService = DependencyService.Get<IRestService>();
+			IConfigurationService configService = DependencyService.Get<IConfigurationService>();
+			if (!Application.Current.Properties.ContainsKey("API_URL"))
+			{
+				restService.ApiUrl = configService.ConfigValues["apiIP"];
+				Application.Current.Properties["API_URL"] = configService.ConfigValues["apiIP"];
+				Application.Current.SavePropertiesAsync();
+			}
+			else
+			{
+				restService.ApiUrl = (string)Application.Current.Properties["API_URL"];
+			}
+
+			MainPage = new NavigationPage(new Views.LoginPage(false));
 			
         }
 

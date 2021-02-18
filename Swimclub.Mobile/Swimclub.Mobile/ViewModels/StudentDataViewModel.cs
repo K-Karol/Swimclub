@@ -57,6 +57,7 @@ namespace Swimclub.Mobile.ViewModels
             task.ContinueWith(t => Device.BeginInvokeOnMainThread(
                 async () =>
                 {
+                    if (t.IsFaulted) await App.Current.MainPage.DisplayAlert("Connection error", "There was an error connecting to the server", "Try Again");
                     resp = t.Result;
                     if (!resp.Success)
                     {

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swimclub.Mobile.Views.SettingsPage" Title="Settings">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="API IP" Grid.Row="0" Grid.Column="0"/>
+                <Entry Text="{Binding IP}" Grid.Row="0" Grid.Column="1"/>
+            </Grid>
+            <Button Margin="30,30,0,30" Text="Save" Command="{Binding Save}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
