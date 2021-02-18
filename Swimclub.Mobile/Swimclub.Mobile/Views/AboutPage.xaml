@@ -16,7 +16,9 @@
         <StackLayout BackgroundColor="{StaticResource PrimaryLight}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Grid.Row="0">
             <Label Style="{StaticResource PrimLabel}" FontSize="40" Text="Swimclub app" Margin="5,20,0,20"/>
         </StackLayout>
-        
+        <Label Text="Welcome to the Dromfield Swimclub app,                                                                                       
+               use the tab in the top left to navigate throught the application" HorizontalTextAlignment="Center" 
+               FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="1"/>
     </Grid>
 
 </ContentPage>
