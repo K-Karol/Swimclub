@@ -19,6 +19,7 @@ namespace Swimclub.Mobile.Views
 			_viewModel = new ViewModels.StudentDetailViewModel();
 			_viewModel.Student = student;
 			BindingContext = _viewModel;
+
 		}
 	}
 }

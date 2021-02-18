@@ -11,14 +11,28 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackLayout BackgroundColor="{StaticResource PrimaryLight}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Grid.Row="0">
             <Label Style="{StaticResource PrimLabel}" FontSize="40" Text="Swimclub app" Margin="5,20,0,20"/>
+
         </StackLayout>
-        <Label Text="Welcome to the Dromfield Swimclub app,                                                                                       
-               use the tab in the top left to navigate throught the application" HorizontalTextAlignment="Center" 
-               FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Grid.Row="1"/>
+        <StackLayout Grid.Row="1" Margin="5,0,5,0">
+            <Label Text="Welcome to the Dromfield Swimclub app." HorizontalTextAlignment="Center" 
+                   FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+            <Label Text="Use the tab in the top left to navigate throught the application." HorizontalTextAlignment="Center" 
+                   FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+            <Label></Label>
+            <Label Text="The Swim Classes page will display the upcoming classes along with a few details regarding them." HorizontalTextAlignment="Center" 
+                   FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+            <Label></Label>
+            <Label Text="The Grades page will display Grades 1-7 and when clicked, this will display which students are in that grade." HorizontalTextAlignment="Center" 
+                   FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+            <Label></Label>
+            <Label Text="The Students page allows you to search for a student to retreive some basic details about them and when clicked, this will show a more detailed information page regarding the chosen student." HorizontalTextAlignment="Center" 
+                   FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+        </StackLayout>
+        <Label></Label>
     </Grid>
 
 </ContentPage>

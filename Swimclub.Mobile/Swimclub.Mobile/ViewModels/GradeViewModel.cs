@@ -151,6 +151,7 @@ namespace Swimclub.Mobile.ViewModels
 				Tests = cell.Tests,
 			};
 		}
+
 	}
 
 }
