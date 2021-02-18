@@ -23,6 +23,9 @@ namespace Swimclub.Mobile.Services
 		Task<int> LoginAsync(Login _loginModel);
 		Task<AllStudentsReturn> GetAllStudentsAsync();
 		Task<AllGradesReturn> GetAllGradesAsync();
+		Task<ModifyStudentReturn> CreateStudent(Models.Student student);
+		Task<ModifyStudentReturn> ModifyStudent(Models.Student student);
+		Task<RegisterUserReturn> RegisterUser(Models.Register register);
 		void ClearClient();
 
 	}
@@ -228,6 +231,40 @@ namespace Swimclub.Mobile.Services
 				return new ModifyStudentReturn() { Success = false };
 			}
 		}
+
+
+
+		public async Task<RegisterUserReturn> RegisterUser(Models.Register register)
+		{
+			if (authToken == null)
+				return new RegisterUserReturn() { Success = false };
+
+			Uri uri = new Uri(String.Format("{0}/{1}/{2}", api_url, "users", "register"));
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Post,
+				RequestUri = uri,
+				Content = new StringContent(JsonConvert.SerializeObject(register), Encoding.UTF8, "application/json")
+
+			};
+			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+
+			if (response.Wait(TimeSpan.FromSeconds(40)))
+			{
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				CreateUserResponse res = JsonConvert.DeserializeObject<Swimclub.Models.CreateUserResponse>(responseBody);
+				if (res.Success)
+					return new RegisterUserReturn() { Success = res.Success, Errors = null };
+				else
+					return new RegisterUserReturn() { Success = res.Success, Errors = JsonConvert.DeserializeObject<List<string>>(res.Error.Detail) };
+
+			}
+			else
+			{
+				return new RegisterUserReturn() { Success = false };
+			}
+		}
 	}
 
 	public class AllStudentsReturn
@@ -252,5 +289,11 @@ namespace Swimclub.Mobile.Services
 	{
 		public bool Success { get; set; }
 		public Models.Student Student { get; set; }
+	}
+
+	public class RegisterUserReturn
+	{
+		public bool Success { get; set; }
+		public List<string> Errors { get; set; }
 	}
 }

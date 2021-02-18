@@ -98,7 +98,7 @@ namespace Swimclub.REST.Services
 
 			var user = new Entities.User
 			{
-				Forename = register.Forname,
+				Forename = register.Forename,
 				UserName = register.Username,
 				Surname = register.Surname
 			};

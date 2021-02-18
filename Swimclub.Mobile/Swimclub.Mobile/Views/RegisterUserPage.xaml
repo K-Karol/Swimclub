@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swimclub.Mobile.Views.RegisterUserPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="regLabel">
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="TextColor" Value="{StaticResource Key=OnBackground}"/>
+                <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.4*"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Forename" Grid.Row="0" Grid.Column="0" Style="{StaticResource regLabel}"/>
+                <Label Text="Surname" Grid.Row="1" Grid.Column="0" Style="{StaticResource regLabel}"/>
+                <Label Text="Username" Grid.Row="2" Grid.Column="0" Style="{StaticResource regLabel}"/>
+                <Label Text="Password" Grid.Row="3" Grid.Column="0" Style="{StaticResource regLabel}"/>
+                <Label Text="Role" Grid.Row="4" Grid.Column="0" Style="{StaticResource regLabel}"/>
+                
+                <Entry Grid.Row="0" Text="{Binding RegisterModel.Forename}" Grid.Column="1" Margin="5"></Entry>
+                <Entry Grid.Row="1" Text="{Binding RegisterModel.Surname}" Grid.Column="1" Margin="5"></Entry>
+                <Entry Grid.Row="2" Text="{Binding RegisterModel.Username}" Grid.Column="1" Margin="5"></Entry>
+                <Entry Grid.Row="3" Text="{Binding RegisterModel.Password}" IsPassword="True" Grid.Column="1" Margin="5"></Entry>
+                <Picker Grid.Row="4" Grid.Column="1" Margin="5" SelectedItem="{Binding RegisterModel.Role}">
+                    <Picker.Items>
+                        <x:String>Admin</x:String>
+                        <x:String>Coach</x:String>
+                    </Picker.Items>
+                </Picker>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.7*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <CollectionView ItemsSource="{Binding RegistrationErrors}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Label Text="{Binding}" TextColor="{Binding ErrorColour}"/>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                <ActivityIndicator IsRunning="{Binding isRefreshing}"></ActivityIndicator>
+                <Button Grid.Row="1" Text="Register" Margin="80,20,80,20" Command="{Binding RegisterUser}"/>
+            </Grid>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

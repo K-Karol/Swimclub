@@ -21,6 +21,13 @@ namespace Swimclub.Models
 		public Models.ApiError error { get; set; }
 
 	}
+
+	public class AllUsersResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+		public standard.Collection<Models.User> Users { get; set; }
+	}
 	public class AuthResponse
 	{
 		public bool Success { get; set; }
