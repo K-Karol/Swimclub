@@ -15,5 +15,6 @@ namespace Swimclub.Mobile.ViewModels
 
         private async void OnAddClass(object obj)
         { await Shell.Current.GoToAsync(nameof(NewClass)); }
+
     }
 }

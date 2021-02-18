@@ -8,10 +8,16 @@
              ios:Page.UseSafeArea="true">
     <ContentPage.Content>
         <StackLayout Spacing="3" Padding="15">
-            <Label Text="Class Title:" FontSize="Medium" />
-            <Entry Text="{Binding Text, Mode=TwoWay}" FontSize="Medium" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Description, Mode=TwoWay}" AutoSize="TextChanges" FontSize="Medium" Margin="0" />
+            <Label Text="Pool" FontSize="Medium" />
+            <Editor Text="{Binding _Class.Pool}" AutoSize="TextChanges" FontSize="Medium" Margin="0" Placeholder="Enter Pool You Will Use"/>
+            <Label Text="Grade OF Class" FontSize="Medium" />
+            <Editor Text="{Binding _Class.ClassGrade}" AutoSize="TextChanges" FontSize="Medium" Margin="0" Placeholder="Enter Grade Of The Class"/>
+            <Label Text="Coach" FontSize="Medium" />
+            <Editor Text="{Binding _Class.coachID}" IsReadOnly="True" Placeholder="IsReadOnly"/>
+            <Label Text="Date Of Class" FontSize="Medium" />
+            <DatePicker Date="{Binding _Class.TimeOfClass}"/>
+            <Label Text="Time Of Class" FontSize="Medium" />
+            <TimePicker Time="{Binding _Class.TimeOfClass}"/>
             <StackLayout Orientation="Horizontal">
                 <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
                 <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
