@@ -65,23 +65,33 @@ namespace Swimclub.Mobile.ViewModels
 			if (registerModel.Role == null) regErrorsCollection.Add("Role required");
 			if (registerModel.Forename == null || registerModel.Surname == null || registerModel.Username == null || registerModel.Password == null || registerModel.Role == null) { isRefreshing = false; return; }
 
-			Services.RegisterUserReturn ret;
-			Task<Services.RegisterUserReturn> task = Task.Run(() => restService.RegisterUser(RegisterModel));
+			Models.RegistrationResponse resp;
+			Task<Models.RegistrationResponse> task = Task.Run(() => restService.RegisterUser(RegisterModel));
 			task.ContinueWith(t => Device.BeginInvokeOnMainThread(
 				async () =>
 				{
-					ret = t.Result;
-					if (!ret.Success)
+					resp = t.Result;
+					if (!resp.Success)
 					{
 						isRefreshing = false;
-						if (ret.Errors == null) regErrorsCollection.Add("There was a problem registering the user. Please try again");
-						else
+						//if (ret.Errors == null) regErrorsCollection.Add("There was a problem registering the user. Please try again");
+						//else
+						//{
+						//	foreach(var i in ret.Errors)
+						//	{
+						//		regErrorsCollection.Add(i);
+						//	}
+						//}
+
+						if((int)resp.Error.Code == (int)Models.ServerResponse.ErrorCodes.PASSWORD_INVALID)
 						{
-							foreach(var i in ret.Errors)
+							foreach(var i in resp.PasswordValidationErrors.values)
 							{
 								regErrorsCollection.Add(i);
 							}
 						}
+
+						await App.Current.MainPage.DisplayAlert(resp.Error.Message, resp.Error.Detail, "Try Again");
 						isRefreshing = false;
 						return;
 					}

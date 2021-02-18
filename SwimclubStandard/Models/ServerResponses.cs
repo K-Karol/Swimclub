@@ -8,101 +8,92 @@ namespace Swimclub.Models
 {
 	public class ApiError
 	{
-		[JsonIgnore]
-		public bool Success { get; set; }
 		public string Message { get; set; }
 		public string Detail { get; set; }
-	}
-	public class UserInfoResponse
-	{
-		public string username { get; set; }
-		public string forename { get; set; }
-		public string surname { get; set; }
-		public Models.ApiError error { get; set; }
+		public int Code { get; set; }
 
+		public static ApiError UnAuthResponse()
+		{
+			return new Models.ApiError() { Message = "Unauthorised request", Detail = "This user is not authorised to perform this action", Code = (int)Models.ServerResponse.ErrorCodes.UNAUTHORISED };
+		}
+
+		public static ApiError TimeOutResponse()
+		{
+			return new Models.ApiError() { Message = "Timeout", Detail = "Either your connection is offline or the server is currently down for maintenance", Code = (int)Models.ServerResponse.ErrorCodes.TIME_OUT };
+		}
+
+		public static ApiError NotLoggedInError()
+		{
+			return new Models.ApiError() { Message = "You are not logged in", Detail = "You are not logged in", Code = (int)Models.ServerResponse.ErrorCodes.NOT_LOGGEDIN };
+		}
 	}
 
-	public class AllUsersResponse
+
+	public abstract class ServerResponse
 	{
 		public bool Success { get; set; }
-		public Models.ApiError Error { get; set; }
+		public ApiError Error { get; set; }
+		public enum ErrorCodes { MISC = 0, USER_NOT_EXIST =  1, USER_CREDENTIALS_INCORRECT = 2, PASSWORD_INVALID = 3, REGISTRATION_ERROR = 4, UNAUTHORISED = 5, STUDENT_NOT_EXIST = 6, MISSING_DATA = 7, TIME_OUT = 8, NOT_LOGGEDIN = 9}
+	}
+
+
+	public class UserInfoResponse : ServerResponse
+	{
+		public Models.User User { get; set; }
+	}
+
+	public class AllUsersResponse : ServerResponse
+	{
 		public standard.Collection<Models.User> Users { get; set; }
 	}
-	public class AuthResponse
+
+	public class AuthResponse : ServerResponse
 	{
-		public bool Success { get; set; }
 		public string Token { get; set; }
 		public DateTime? Expiry { get; set; }
-		public Models.ApiError Error { get; set; }
-		public string Role { get; set; }
-	}
-	public class UserServiceResponse
-	{
-		public bool success;
-		public string token { get; set; }
-		public DateTime? ExpireDate { get; set; }
 		public string Role { get; set; }
 	}
 
-	public class UserServiceRegistrationResponse
+	public class RegistrationResponse : ServerResponse
 	{
-		public bool Success;
-		public string[] PasswordValidErrors;
+		public standard.Collection<string> PasswordValidationErrors { get; set; }
 	}
-	public class AllStudentsResponse
+
+	public class AllStudentsResponse : ServerResponse
 	{
-		public bool Success { get; set; }
-		public Models.ApiError Error { get; set; }
 		public standard.Collection<Models.Student> Students { get; set; }
 	}
-
-	public class ModifyStudentResponse
+	
+	public class ModifyStudentResponse : ServerResponse
 	{
-		public bool Success { get; set; }
-		public Models.ApiError Error { get; set; }
 		public standard.Item<Models.Student> Student { get; set; }
 	}
 
-	public class SingularStudentResponse
+	public class StudentResponse : ServerResponse
 	{
-		public bool Success { get; set; }
-		public Models.ApiError Error { get; set; }
 		public standard.Item<Models.Student> Student { get; set; }
 	}
 
-	public class CreateStudentResponse
+	public class CreateStudentResponse : ServerResponse
 	{
-		public bool Success { get; set; }
-		public Models.ApiError Error { get; set; }
 		public standard.Item<Models.Student> Student { get; set; }
 	}
 
-	public class DeleteStudentResponse
+	public class DeleteStudentResponse : ServerResponse
 	{
-		public bool Success { get; set; }
-		public Models.ApiError Error { get; set; }
 		public int ID { get; set; }
 	}
 
-	public class AllGradeResponse
+	public class AllGradesResponse : ServerResponse
 	{
-		public bool Success { get; set; }
-		public Models.ApiError Error { get; set; }
 		public standard.Collection<Models.Grade> Grades { get; set; }
 	}
 
-	public class CreateUserResponse
-	{
-		public bool Success { get; set; }
-		public Models.ApiError Error { get; set; }
-	}
-	
 
 	namespace standard
 	{
 		public class Collection<T>
 		{
-			public bool success { get; set; }
 			[JsonIgnore]
 			public T[] values { get; set; }
 			public int length { get; set; }
@@ -115,7 +106,6 @@ namespace Swimclub.Models
 
 		public class Item<T>
 		{
-			public bool success { get; set; }
 			[JsonIgnore]
 			public T itemValue { get; set; }
 			public string valuejson

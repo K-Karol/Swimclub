@@ -52,32 +52,34 @@ namespace Swimclub.Mobile.ViewModels
          {
             isLoading = false;
 
-             Services.AllStudentsReturn ret;
-             Task<Services.AllStudentsReturn> task = Task.Run(() => restService.GetAllStudentsAsync());
-             task.ContinueWith(t => Device.BeginInvokeOnMainThread(
-                 async () =>
-                 {
-                     ret = t.Result;
-                     if (!ret.Success)
-                     {
-                         return;
-                     }
-                     Students = ret.Students;
+            Models.AllStudentsResponse resp;
+            Task<Models.AllStudentsResponse> task = Task.Run(() => restService.GetAllStudentsAsync());
+            task.ContinueWith(t => Device.BeginInvokeOnMainThread(
+                async () =>
+                {
+                    resp = t.Result;
+                    if (!resp.Success)
+                    {
+                        await App.Current.MainPage.DisplayAlert(resp.Error.Message, resp.Error.Detail, "Try again");
+                        isLoading = true;
+                        return;
+                    }
+                    Students = resp.Students.values;
 
-                     students.Clear();
+                    students.Clear();
 
-                     students.Add(new StudentTemp() { Forename="New Student", CurrentGradeNumber=1, newStudent = true});
+                    students.Add(new StudentTemp() { Forename="New Student", CurrentGradeNumber=1, newStudent = true});
 
-                     foreach (var s in Students)
-                     {
-                         StudentTemp st = new StudentTemp(s);
-                         st.newStudent = false;
-                         students.Add(st);
-                     }
+                    foreach (var s in Students)
+                    {
+                        StudentTemp st = new StudentTemp(s);
+                        st.newStudent = false;
+                        students.Add(st);
+                    }
 
-                     isLoading = true;
-                 }
-                 ));
+                    isLoading = true;
+                }
+                ));
          }
 
         private Models.Student student;

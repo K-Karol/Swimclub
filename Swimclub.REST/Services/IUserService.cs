@@ -15,9 +15,9 @@ namespace Swimclub.REST.Services
 	public interface IUserService
 	{
 
-		Task<Models.UserServiceResponse> LoginUserAsync(Models.Login _model);
+		Task<Models.AuthResponse> LoginUserAsync(Models.Login _model);
 		Task<int?> GetUserIdAsync(ClaimsPrincipal principal);
-		Task<Models.UserServiceRegistrationResponse> RegisterUserAsync(Register register);
+		Task<Models.RegistrationResponse> RegisterUserAsync(Register register);
 		Task<User> GetUserAsync(ClaimsPrincipal user);
 	}
 
@@ -34,18 +34,18 @@ namespace Swimclub.REST.Services
 			configuration = _configuration;
 		}
 
-		public async Task<Models.UserServiceResponse> LoginUserAsync(Login _model)
+		public async Task<Models.AuthResponse> LoginUserAsync(Login _model)
 		{
 			var user = await user_manager.FindByNameAsync(_model.username);
 			if (user == null)
-				return new Models.UserServiceResponse() { success = false };
+				return new Models.AuthResponse() { Success = false, Error = new ApiError() { Message = "Cannot login user", Detail = "User does not exist" , Code = (int)ServerResponse.ErrorCodes.USER_NOT_EXIST} };
 			bool usernameCheck = user.UserName == _model.username;
 			if (!usernameCheck)
-				return new Models.UserServiceResponse() { success = false };
+				return new Models.AuthResponse() { Success = false, Error = new ApiError() { Message = "Cannot login user", Detail = "Credentials are incorrect", Code = (int)ServerResponse.ErrorCodes.USER_CREDENTIALS_INCORRECT} };
 
 			var passwordCheck = await user_manager.CheckPasswordAsync(user, _model.password);
 			if (!passwordCheck)
-				return new Models.UserServiceResponse() { success = false };
+				return new Models.AuthResponse() { Success = false, Error = new ApiError() { Message = "Cannot login user", Detail = "Credentials are incorrect", Code = (int)ServerResponse.ErrorCodes.USER_CREDENTIALS_INCORRECT } };
 
 			var getRoles = await user_manager.GetRolesAsync(user);
 
@@ -70,10 +70,10 @@ namespace Swimclub.REST.Services
 				role = getRoles[0];
 			}
 
-			return new Models.UserServiceResponse() { success = true, token = tokenAsString, ExpireDate = token.ValidTo, Role = role }; ;
+			return new Models.AuthResponse() { Success = true, Token = tokenAsString, Expiry = token.ValidTo, Role = role }; ;
 		}
 
-		public async Task<Models.UserServiceRegistrationResponse> RegisterUserAsync(Register register)
+		public async Task<Models.RegistrationResponse> RegisterUserAsync(Register register)
 		{
 			List<string> passwordErrors = new List<string>();
 
@@ -90,7 +90,7 @@ namespace Swimclub.REST.Services
 						passwordErrors.Add(error.Description);
 					}
 
-					return new UserServiceRegistrationResponse() { Success = false, PasswordValidErrors = passwordErrors.ToArray() };
+					return new RegistrationResponse() { Success = false, Error = new ApiError() { Message = "Cannot register user", Detail = "Password is invalid",  Code = (int)ServerResponse.ErrorCodes.PASSWORD_INVALID} ,PasswordValidationErrors = new Models.standard.Collection<string>() { values = passwordErrors.ToArray() } };
 				}
 				
 			}
@@ -105,13 +105,18 @@ namespace Swimclub.REST.Services
 
 			Task<IdentityResult> t = user_manager.CreateAsync(user, register.Password);
 			t.Wait();
+
+			if (!t.Result.Succeeded)
+			{
+				return new RegistrationResponse() { Success = false, Error = new ApiError() { Message = "Cannot register user", Detail = "There was a problem", Code = (int)ServerResponse.ErrorCodes.REGISTRATION_ERROR } };
+			}
 			//put the user in the role
 
 			await user_manager.AddToRoleAsync(user, register.Role);
 
 			await user_manager.UpdateAsync(user);
 
-			return new UserServiceRegistrationResponse() { Success = true };
+			return new RegistrationResponse() { Success = true };
 		}
 
 		public async Task<User> GetUserAsync(ClaimsPrincipal user)
