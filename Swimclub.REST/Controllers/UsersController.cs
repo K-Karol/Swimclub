@@ -58,34 +58,34 @@ namespace Swimclub.REST.Controllers
 			var user = await user_service.GetUserAsync(User);
 			if (user == null)
 			{
-				return BadRequest(new Models.UserInfoResponse() { error = new Models.ApiError() { Success = false, Message = "Invalid Grant", Detail = "This user does not exist" } });
+				return BadRequest(new Models.UserInfoResponse() { Success = false, Error = new Models.ApiError() { Message = "Invalid user", Detail = "Cannot retrieve user", Code= 0 } });
 			}
-			return Ok(new Models.UserInfoResponse() { forename = user.Forename, surname = user.Surname, username = user.Username });
+			return Ok(new Models.UserInfoResponse() { Success = true, User = user});
 		}
 
 
 
 		[HttpPost("register", Name = nameof(RegisterUser))]
-		public async Task<ActionResult<Models.CreateUserResponse>> RegisterUser([FromBody] Models.Register _register)
+		public async Task<ActionResult<Models.RegistrationResponse>> RegisterUser([FromBody] Models.Register _register)
 		{
-			Models.CreateUserResponse response;
+			Models.RegistrationResponse response;
 			if (User.Identity.IsAuthenticated)
 			{
 				var policyCheck = await authService.AuthorizeAsync(User, "AdminPolicy");
 				if (!policyCheck.Succeeded)
 				{
-					return Unauthorized(response = new Models.CreateUserResponse() { Success = false, Error = new Models.ApiError() { Success = false, Message = "This user is not authorised.", Detail = "Requirements: Admin" } });
+					return Unauthorized(response = new Models.RegistrationResponse() { Success = false, Error = Models.ApiError.UnAuthResponse() });
 
 				}
 			}
 
-			Models.UserServiceRegistrationResponse resp = await user_service.RegisterUserAsync(_register);
+			Models.RegistrationResponse resp = await user_service.RegisterUserAsync(_register);
 			if (!resp.Success)
 			{
-				return BadRequest(new Models.CreateUserResponse() { Success = false, Error = new Models.ApiError() { Success = false, Message = "There was an error creating the user", Detail = JsonSerializer.Serialize(resp.PasswordValidErrors) } });
+				return BadRequest(resp);
 			}
 
-			return Ok(new Models.CreateUserResponse() { Success = true, Error = new Models.ApiError() { Success = true } });
+			return Ok(resp);
 
 		}
 		[HttpGet("all",Name = nameof(GetAllUsers))]
@@ -97,14 +97,14 @@ namespace Swimclub.REST.Controllers
 				var policyCheck = await authService.AuthorizeAsync(User, "AdminPolicy");
 				if (!policyCheck.Succeeded)
 				{
-					return Unauthorized(response = new Models.AllUsersResponse() { Success = false, Error = new Models.ApiError() { Success = false, Message = "This user is not authorised.", Detail = "Requirements: Admin" } });
+					return Unauthorized(response = new Models.AllUsersResponse() { Success = false, Error = Models.ApiError.UnAuthResponse()});
 				}
 			}
 
 			Entities.User[] entities = await userDbContext.Users.ToArrayAsync();
 			Models.User[] users = entities.Select(ent => Entities.User.getUser(ent)).ToArray();
-			Models.standard.Collection<Models.User> ret = new Models.standard.Collection<Models.User>() { success = true, values = users, length = users.Length };
-			response = new Models.AllUsersResponse() { Success = true, Error = new Models.ApiError() { Success = true }, Users = ret };
+			Models.standard.Collection<Models.User> ret = new Models.standard.Collection<Models.User>() { values = users, length = users.Length };
+			response = new Models.AllUsersResponse() { Success = true, Users = ret };
 			return Ok(response);
 		}
 	}

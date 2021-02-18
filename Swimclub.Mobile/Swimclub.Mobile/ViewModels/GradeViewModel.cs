@@ -59,19 +59,19 @@ namespace Swimclub.Mobile.ViewModels
 		private void loadData()
 		{
 			isRefreshing = true;
-			Services.AllGradesReturn ret;
-			Task<Services.AllGradesReturn> task = Task.Run(() => restService.GetAllGradesAsync());
+			Models.AllGradesResponse resp;
+			Task<Models.AllGradesResponse> task = Task.Run(() => restService.GetAllGradesAsync());
 			task.ContinueWith(t => Device.BeginInvokeOnMainThread(
 				async () =>
 				{
-					ret = t.Result;
-					if (!ret.Success)
+					resp = t.Result;
+					if (!resp.Success)
 					{
 						isRefreshing = false;
-						//await DisplayAlert("Error", "There was an error fetching the data", "oopsieDasiy");
+						await App.Current.MainPage.DisplayAlert(resp.Error.Message, resp.Error.Detail, "Try Again");
 						return;
 					}
-					grades = ret.Grades;
+					grades = resp.Grades.values;
 					
 
 					gradesCollection.Clear();

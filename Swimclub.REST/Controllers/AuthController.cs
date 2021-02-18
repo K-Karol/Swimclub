@@ -29,20 +29,8 @@ namespace Swimclub.REST.Controllers
 		[ProducesResponseType(StatusCodes.Status200OK, Type=typeof(Models.AuthResponse)), ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(Models.AuthResponse))]
 		public async Task<ActionResult<Models.AuthResponse>> Login([FromBody] Models.Login loginInfo)
 		{
-			Models.UserServiceResponse feedback = await user_service.LoginUserAsync(loginInfo);
-			Models.AuthResponse temp = new Models.AuthResponse() { Success = feedback.success };
-			if (feedback.success)
-			{
-				temp.Token = feedback.token;
-				temp.Expiry = feedback.ExpireDate;
-				temp.Role = feedback.Role;
-				return Ok(temp);
-			}
-			else
-			{
-				temp.Error = new Swimclub.Models.ApiError() { Message = "Incorrect login credentials", Detail = "Failed authentication", Success = false };
-				return Unauthorized(temp);
-			}
+			Models.AuthResponse feedback = await user_service.LoginUserAsync(loginInfo);
+			return feedback;
 		}
 
 

@@ -25,15 +25,15 @@ namespace Swimclub.REST.Controllers
 		}
 
 		[HttpGet("all", Name = nameof(GetAllGrades))]
-		public async Task<ActionResult<Models.AllStudentsResponse>> GetAllGrades()
+		public async Task<ActionResult<Models.AllGradesResponse>> GetAllGrades()
 		{
-			Models.AllGradeResponse response;
+			Models.AllGradesResponse response;
 
 			if (User.Identity.IsAuthenticated){
 				var policyCheck = await authService.AuthorizeAsync(User, "CoachPolicy");
 				if (!policyCheck.Succeeded)
 				{
-					return Unauthorized(response = new Models.AllGradeResponse() { Success = false, Error = new Models.ApiError() { Success = false, Message = "This user is not authorised.", Detail = "Requirements: Admin or Coach" } });
+					return Unauthorized(response = new Models.AllGradesResponse() { Success = false, Error = Models.ApiError.UnAuthResponse() });
 
 				}
 			}
@@ -51,8 +51,8 @@ namespace Swimclub.REST.Controllers
 				grades.Add(newGrade);
 			}
 
-			Models.standard.Collection<Models.Grade> ret = new Models.standard.Collection<Models.Grade>() { success = true, values = grades.ToArray(), length = grades.Count };
-			response = new Models.AllGradeResponse() { Success = true, Error = new Models.ApiError() { Success = true }, Grades = ret };
+			Models.standard.Collection<Models.Grade> ret = new Models.standard.Collection<Models.Grade>() {values = grades.ToArray(), length = grades.Count };
+			response = new Models.AllGradesResponse() { Success = true, Grades = ret };
 			return Ok(response);
 		}
 	}

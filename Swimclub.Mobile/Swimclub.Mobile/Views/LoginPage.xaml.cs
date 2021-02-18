@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -30,26 +29,22 @@ namespace Swimclub.Mobile.Views
 			string username = usernameEntry.Text;
 			string password = passwordEntry.Text;
 			activityIndicator.IsRunning = true;
-			Task<int> loginSuccessful = Task.Run(() => restService.LoginAsync(new Swimclub.Models.Login() { username = username, password = password }));
-			loginSuccessful.ContinueWith(statusCode => Device.BeginInvokeOnMainThread(
+			Models.AuthResponse resp;
+			Task<Models.AuthResponse> loginTask = Task.Run(() => restService.LoginAsync(new Swimclub.Models.Login() { username = username, password = password }));
+			loginTask.ContinueWith(t => Device.BeginInvokeOnMainThread(
 				async () => {
 					activityIndicator.IsRunning = false;
 					running = false;
-					int temp = loginSuccessful.Result;
-					if (temp == 200)
-					{
-						AppShell appShell = new AppShell(restService.Role=="Admin");
-						App.Current.MainPage = appShell;
-						await DisplayAlert("Login Successfull", $"You have logged in with the role of a {restService.Role}", "Hooray!");
 
-					}
-					else if(temp == 401)
+					resp = t.Result;
+					if (resp.Success)
 					{
-						await DisplayAlert("Login Failed", "Either the credentials are incorrect or the user does not exist", "Oh no!");
+						AppShell appShell = new AppShell(restService.Role == "Admin");
+						App.Current.MainPage = appShell;
 					}
 					else
 					{
-						await DisplayAlert("Login Failed", "Either the server is offline or you are disconnected", "Oh no!");
+						await DisplayAlert(resp.Error.Message, resp.Error.Detail, "Try Again");
 					}
 
 				}
