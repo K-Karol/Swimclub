@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Swimclub.Mobile.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LoginPage : ContentPage
+	public partial class SettingsPage : ContentPage
 	{
-		private ViewModels.LoginViewModel _viewModel;
-		public LoginPage(bool breach)
+		private ViewModels.SettingsViewModel _viewModel;
+		public SettingsPage()
 		{
-			_viewModel = new ViewModels.LoginViewModel();
+			_viewModel = new ViewModels.SettingsViewModel();
 			InitializeComponent();
-			if (breach) DisplayAlert("Security Breach", "You've accessed the page not as an admin. You have been logged to enforce the security policy", "Affirmitive");
 			BindingContext = _viewModel;
 		}
 
@@ -25,6 +25,5 @@ namespace Swimclub.Mobile.Views
 			base.OnAppearing();
 			_viewModel.IP = (string)Application.Current.Properties["API_URL"];
 		}
-
 	}
 }

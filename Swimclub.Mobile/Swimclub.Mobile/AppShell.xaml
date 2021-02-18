@@ -99,8 +99,13 @@
         <ShellContent Route="StudentsPage" ContentTemplate="{DataTemplate local:StudentsPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Admin Page" Icon="icon_feed.png" IsVisible="{Binding isAdmin}" x:Name="adminFlyout">
+    <FlyoutItem Title="Settings Page" Icon="icon_feed.png" IsVisible="{Binding isAdmin}" x:Name="adminFlyout">
+        <ShellContent Route="SettingsPage" ContentTemplate="{DataTemplate local:SettingsPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Admin Page" Icon="icon_feed.png" >
         <ShellContent Route="AdminPage" ContentTemplate="{DataTemplate local:AdminPage}" />
+        
     </FlyoutItem>
 
     <!-- When the Flyout is visible this will be a menu item you can tie a click behavior to  -->

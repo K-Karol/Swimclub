@@ -15,6 +15,7 @@ namespace Swimclub.Mobile.Services
 	{
 		string AuthToken { get; }
 		string Role { get; }
+		string ApiUrl { set; }
 		/// <summary>
 		/// Logs the user in, sets the <see cref="AuthToken"/> and <see cref="Role"/>
 		/// </summary>
@@ -33,6 +34,10 @@ namespace Swimclub.Mobile.Services
 	public class RestService : IRestService
 	{
 		private string api_url;
+		public string ApiUrl
+		{
+			set { SetURL(value); }
+		}
 		//private WinHttpHandler handler;
 		private HttpClient client;
 
@@ -41,13 +46,14 @@ namespace Swimclub.Mobile.Services
 		private string role;
 		public string Role { get { return role; } }
 
+		private IConfigurationService config;
 		public RestService()
 		{
 			//handler = new WinHttpHandler();
 			//HttpClientHandler httpHandler = new HttpClientHandler();
 			//httpHandler.ServerCertificateCustomValidationCallback
-			IConfigurationService config = DependencyService.Get<IConfigurationService>();
-			api_url = $"https://{config.ConfigValues["apiIP"]}:{config.ConfigValues["apiPORT"]}";
+			config = DependencyService.Get<IConfigurationService>();
+			//api_url = $"https://{config.ConfigValues["apiIP"]}:{config.ConfigValues["apiPORT"]}";
 
 			HttpClientHandler h = new System.Net.Http.HttpClientHandler();
 
@@ -61,6 +67,12 @@ namespace Swimclub.Mobile.Services
 		{
 			authToken = "";
 			role = "";
+		}
+
+		private void SetURL(string IP)
+		{
+			//api_url = $"https://{IP}:{config.ConfigValues["apiPORT"]}";
+			api_url = $"https://{IP}";
 		}
 
 		public async Task<AuthResponse> LoginAsync(Login _loginModel)
@@ -79,8 +91,12 @@ namespace Swimclub.Mobile.Services
 				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
 				//Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
 				Swimclub.Models.AuthResponse res = JsonConvert.DeserializeObject<Swimclub.Models.AuthResponse>(responseBody);
-				role = res.Role;
-				authToken = res.Token;
+				if (res.Success)
+				{
+					role = res.Role;
+					authToken = res.Token;
+				}
+				
 				return res;
 			}
 			else

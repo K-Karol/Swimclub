@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Swimclub.Mobile.Views.LoginPage"
-             BackgroundColor="{StaticResource Surface}">
+             BackgroundColor="{StaticResource Surface}" Title="Login">
     <ContentPage.Content>
         <Grid>
             <Grid.RowDefinitions>
@@ -10,8 +10,9 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <StackLayout Grid.Row="0" BackgroundColor="{StaticResource PrimaryLight}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill">
-                <Label Style="{StaticResource PrimLabel}" FontSize="40" Text="Login" Margin="5,20,0,20"/>
+            <StackLayout Grid.Row="0" BackgroundColor="{StaticResource PrimaryLight}" VerticalOptions="FillAndExpand" HorizontalOptions="Fill" Orientation="Horizontal">
+                <Label Margin="20,0,0,0" FontSize="20" TextColor="{StaticResource OnSecondary}" VerticalOptions="Center" Text="{Binding IP}"/>
+                <Button Text="Settings" Margin="30,0,0,0" Command="{Binding GoToSettings}"/>
             </StackLayout>
 
             <Grid Grid.Row="1" Margin="20">
@@ -28,10 +29,10 @@
 
                 <Label Text="Username:" Grid.Column="0" Grid.Row="0" VerticalOptions="End" HorizontalOptions="Start" Margin="0,0,0,20" TextColor="Black"/>
                 <Label Text="Password:" Grid.Column="0" Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Start" Margin="0,20,0,0" TextColor="Black"/>
-                <Entry x:Name="usernameEntry" Grid.Column="1" Grid.Row="0" VerticalOptions="End" HorizontalOptions="Fill" Margin="0,0,0,20" TextColor="Black"/>
-                <Entry x:Name="passwordEntry" IsPassword="True" Grid.Column="1" Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Fill" Margin="0,20,0,0" TextColor="Black"/>
-                <ActivityIndicator x:Name="activityIndicator" IsRunning="False" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></ActivityIndicator>
-                <Button Text="Login" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" HorizontalOptions="Center" VerticalOptions="Center" Clicked="Button_Clicked"></Button>
+                <Entry Text="{Binding Login.username}" Grid.Column="1" Grid.Row="0" VerticalOptions="End" HorizontalOptions="Fill" Margin="0,0,0,20" TextColor="Black"/>
+                <Entry Text="{Binding Login.password}" IsPassword="True" Grid.Column="1" Grid.Row="1" VerticalOptions="Start" HorizontalOptions="Fill" Margin="0,20,0,0" TextColor="Black"/>
+                <ActivityIndicator IsRunning="{Binding isRefreshing}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"></ActivityIndicator>
+                <Button Text="Login" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" HorizontalOptions="Center" VerticalOptions="Center"  Command="{Binding LogInUser}"></Button>
             </Grid>
         </Grid>
     </ContentPage.Content>

@@ -30,7 +30,12 @@ namespace Swimclub.REST.Controllers
 		public async Task<ActionResult<Models.AuthResponse>> Login([FromBody] Models.Login loginInfo)
 		{
 			Models.AuthResponse feedback = await user_service.LoginUserAsync(loginInfo);
-			return feedback;
+			if (!feedback.Success)
+			{
+				if (feedback.Error.Code == (int)Models.ServerResponse.ErrorCodes.USER_CREDENTIALS_INCORRECT) return Unauthorized(feedback);
+				return BadRequest(feedback);
+			}
+			return Ok(feedback);
 		}
 
 
