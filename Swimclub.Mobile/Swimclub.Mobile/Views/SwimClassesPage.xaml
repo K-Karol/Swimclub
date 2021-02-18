@@ -4,10 +4,10 @@
              x:Class="Swimclub.Mobile.Views.SwimClassesPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Add a Class"  Command="{Binding AddSwimCLassCommand}" />
+        <ToolbarItem Text="Add a Class" Clicked="CreateAClass" Command="{Binding AddSwimCLassCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-       
+
         <StackLayout Spacing="20" Padding="15">
             <Label Text="Upcoming Classes" FontSize="Title"/>
             <Label Text="Class:" FontSize="Medium" />

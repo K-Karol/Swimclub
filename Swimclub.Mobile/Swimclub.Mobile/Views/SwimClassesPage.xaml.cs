@@ -15,7 +15,12 @@ namespace Swimclub.Mobile.Views
         public SwimClassesPage()
         {
             InitializeComponent();
-           // BindingContext = new SwimCLassViewModel();
+            //BindingContext = new SwimCLassViewModel();
+        }
+
+        private void CreateAClass(object sender, EventArgs e)
+        {
+            Shell.Current.Navigation.PushAsync(new NewClass());
         }
     }
 }
