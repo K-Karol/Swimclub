@@ -8,15 +8,17 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
 
                 </Grid.ColumnDefinitions>
-                
-                <Button x:Name="Modify_Student_bt" Text="Modify Student Data" Grid.Row="0" Grid.ColumnSpan="2" Pressed="Modify_Student"/>
 
+                <Button Text="Modify student data" Grid.Row="0" Grid.ColumnSpan="2" Command="{Binding ModifyStudentDataPage}"/>
+                <Button Text="Register new system user" Grid.Row="1" Grid.ColumnSpan="2" Command="{Binding RegisterUserPage}"/>
+                <Button Text="Delete a system user" Grid.Row="2" Grid.ColumnSpan="2" Command="{Binding DeleteUserPage}"/>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

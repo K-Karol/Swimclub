@@ -17,7 +17,7 @@ namespace Swimclub.REST.Services
 
 		Task<Models.UserServiceResponse> LoginUserAsync(Models.Login _model);
 		Task<int?> GetUserIdAsync(ClaimsPrincipal principal);
-
+		Task<Models.UserServiceRegistrationResponse> RegisterUserAsync(Register register);
 		Task<User> GetUserAsync(ClaimsPrincipal user);
 	}
 
@@ -71,6 +71,47 @@ namespace Swimclub.REST.Services
 			}
 
 			return new Models.UserServiceResponse() { success = true, token = tokenAsString, ExpireDate = token.ValidTo, Role = role }; ;
+		}
+
+		public async Task<Models.UserServiceRegistrationResponse> RegisterUserAsync(Register register)
+		{
+			List<string> passwordErrors = new List<string>();
+
+			var validators = user_manager.PasswordValidators;
+
+			foreach (var validator in validators)
+			{
+				var result = await validator.ValidateAsync(user_manager, null, register.Password);
+
+				if (!result.Succeeded)
+				{
+					foreach (var error in result.Errors)
+					{
+						passwordErrors.Add(error.Description);
+					}
+
+					return new UserServiceRegistrationResponse() { Success = false, PasswordValidErrors = passwordErrors.ToArray() };
+				}
+				
+			}
+
+
+			var user = new Entities.User
+			{
+				Forename = register.Forename,
+				UserName = register.Username,
+				Surname = register.Surname
+			};
+
+			Task<IdentityResult> t = user_manager.CreateAsync(user, register.Password);
+			t.Wait();
+			//put the user in the role
+
+			await user_manager.AddToRoleAsync(user, register.Role);
+
+			await user_manager.UpdateAsync(user);
+
+			return new UserServiceRegistrationResponse() { Success = true };
 		}
 
 		public async Task<User> GetUserAsync(ClaimsPrincipal user)

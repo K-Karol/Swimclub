@@ -21,6 +21,13 @@ namespace Swimclub.Models
 		public Models.ApiError error { get; set; }
 
 	}
+
+	public class AllUsersResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+		public standard.Collection<Models.User> Users { get; set; }
+	}
 	public class AuthResponse
 	{
 		public bool Success { get; set; }
@@ -35,6 +42,12 @@ namespace Swimclub.Models
 		public string token { get; set; }
 		public DateTime? ExpireDate { get; set; }
 		public string Role { get; set; }
+	}
+
+	public class UserServiceRegistrationResponse
+	{
+		public bool Success;
+		public string[] PasswordValidErrors;
 	}
 	public class AllStudentsResponse
 	{
@@ -78,6 +91,11 @@ namespace Swimclub.Models
 		public standard.Collection<Models.Grade> Grades { get; set; }
 	}
 
+	public class CreateUserResponse
+	{
+		public bool Success { get; set; }
+		public Models.ApiError Error { get; set; }
+	}
 	
 
 	namespace standard

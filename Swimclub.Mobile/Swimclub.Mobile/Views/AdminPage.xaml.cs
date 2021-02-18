@@ -12,15 +12,16 @@ namespace Swimclub.Mobile.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AdminPage : ContentPage
 	{
+		private ViewModels.AdminPageViewModel _viewModel;
 		public AdminPage()
 		{
+			_viewModel = new ViewModels.AdminPageViewModel();
 			InitializeComponent();
+
+			BindingContext = _viewModel;
 		}
 
-		private void Modify_Student(object sender, EventArgs e)
-    {
-			Shell.Current.Navigation.PushAsync(new StudentData());
-    }
+		
 		protected override void OnAppearing()
 		{
 			Services.IRestService s = DependencyService.Get<Services.IRestService>();
