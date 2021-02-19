@@ -85,7 +85,7 @@ namespace Swimclub.REST.Controllers
 			List<Models.Class> classModels = new List<Models.Class>();
 			foreach(Entities.Class ent in classesEntities)
 			{
-				Models.Class temp = new Models.Class() { ID = ent.ID, TimeOfClass = ent.TimeOfClass };
+				Models.Class temp = new Models.Class() { ID = ent.ID, TimeOfClass = ent.TimeOfClass, ClassGrade = ent.ClassGrade};
 				Entities.User tempUserent = userEntities.FirstOrDefault<Entities.User>(e => e.Id == ent.coachID);
 				if(tempUserent == null) return BadRequest(new Models.AllClassResponse() { Success = false, Error = new Models.ApiError() { Message = "Coudln't fetch a class", Detail = "This coach does not exist", Code = (int)Models.ServerResponse.ErrorCodes.MISSING_DATA } });
 
