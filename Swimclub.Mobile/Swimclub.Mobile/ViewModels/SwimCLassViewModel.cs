@@ -75,6 +75,8 @@ namespace Swimclub.Mobile.ViewModels
                         return;
                     }
 
+                    if (resp.Classes == null || resp.Classes.length == 0 || resp.Classes.values == null) { isRefreshing = false; return; }
+
                     Classes = resp.Classes.values;
 
 
