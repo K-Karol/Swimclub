@@ -11,5 +11,6 @@ namespace Swimclub.REST.Data
 		public ResourceDbContext(DbContextOptions<ResourceDbContext> _options) : base(_options) { Database.EnsureCreated(); }
 
 		public DbSet<Entities.Grade> Grades { get; set; }
+		public DbSet<Entities.StudentGradeTests> StudentGradeTests { get; set; }
 	}
 }

@@ -89,6 +89,18 @@ namespace Swimclub.Models
 		public standard.Collection<Models.Grade> Grades { get; set; }
 	}
 
+	public class StudentGradeTestsResponse : ServerResponse
+	{
+		public standard.Item<Models.StudentGradeTests> StudentGradeTests { get; set; }
+	}
+
+	public class ModifyStudentGradeTestResponse : ServerResponse
+	{
+		public bool AdvancedGrade { get; set; }
+		public bool MaxGrade { get; set; }
+		public standard.Item<Models.Student> Student { get; set; }
+	}
+
 
 	namespace standard
 	{
