@@ -96,6 +96,7 @@ namespace Swimclub.Mobile.ViewModels
 
 			Models.AddClassResponse resp;
 			_class.Students = SelectedGrade.Students;
+			_class.ClassGrade = SelectedGrade.Number;
 			Dictionary<int, bool> temp = new Dictionary<int, bool>();
 			foreach(var s in _class.Students)
 			{
