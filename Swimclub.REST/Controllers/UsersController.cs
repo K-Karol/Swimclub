@@ -32,7 +32,7 @@ namespace Swimclub.REST.Controllers
 		/// Root of this controller
 		/// </summary>
 		/// <returns>Controller's endpoints</returns>
-		[HttpGet(Name=nameof(UserRoot))]
+		[HttpGet(Name = nameof(UserRoot))]
 		[ProducesResponseType(StatusCodes.Status200OK), ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		public IActionResult UserRoot()
 		{
@@ -43,16 +43,17 @@ namespace Swimclub.REST.Controllers
 				{
 					href = Url.Link(nameof(UserInfo), null)
 				},
-				
+
 
 			}); ;
-			}
+		}
 
 		/// <summary>
 		/// This will respond with the information about the current user.
 		/// </summary>
 		/// <returns><see cref="Models.UserInfoResponse"/></returns>
 		[HttpGet("info", Name = nameof(UserInfo))]
+		[Authorize]
 		[ProducesResponseType(StatusCodes.Status400BadRequest, Type=typeof(Models.UserInfoResponse)), ProducesResponseType(StatusCodes.Status401Unauthorized), ProducesResponseType(StatusCodes.Status200OK, Type=typeof(Models.UserInfoResponse))]
 		public async Task<ActionResult<Models.UserInfoResponse>> UserInfo() {
 			var user = await user_service.GetUserAsync(User);
@@ -60,7 +61,7 @@ namespace Swimclub.REST.Controllers
 			{
 				return BadRequest(new Models.UserInfoResponse() { Success = false, Error = new Models.ApiError() { Message = "Invalid user", Detail = "Cannot retrieve user", Code= 0 } });
 			}
-			return Ok(new Models.UserInfoResponse() { Success = true, User = user});
+			return Ok(new Models.UserInfoResponse() { Success = true, User = new Models.standard.Item<Models.User>() { itemValue = user } });
 		}
 
 

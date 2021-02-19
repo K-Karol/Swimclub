@@ -60,6 +60,8 @@ namespace Swimclub.Mobile.ViewModels
 					if (resp.Success)
 					{
 						AppShell appShell = new AppShell(restService.Role == "Admin");
+						Models.UserInfoResponse usrR = await restService.UserInfo();
+						if (resp.Success) restService.CurrentUser = usrR.User.itemValue;
 						App.Current.MainPage = appShell;
 					}
 					else

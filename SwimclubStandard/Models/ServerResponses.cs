@@ -39,7 +39,7 @@ namespace Swimclub.Models
 
 	public class UserInfoResponse : ServerResponse
 	{
-		public Models.User User { get; set; }
+		public standard.Item<Models.User> User { get; set; }
 	}
 
 	public class AllUsersResponse : ServerResponse
@@ -99,6 +99,16 @@ namespace Swimclub.Models
 		public bool AdvancedGrade { get; set; }
 		public bool MaxGrade { get; set; }
 		public standard.Item<Models.Student> Student { get; set; }
+	}
+
+	public class AddClassResponse : ServerResponse
+	{
+		public standard.Item<Models.Class> Class { get; set; }
+	}
+
+	public class AllClassResponse : ServerResponse
+	{
+		public standard.Collection<Models.Class> Classes { get; set; }
 	}
 
 

@@ -10,6 +10,8 @@ namespace Swimclub.Models
         public string Pool { get; set; }
         public int ClassGrade { get; set; }
         public Models.User coach { get; set; }
-        DateTime TimeOfClass { get; set; }
+        public DateTime TimeOfClass { get; set; }
+        public Models.Student[] Students { get; set; }
+        public Dictionary<int,bool> Attendance { get; set; }
     }
 }

@@ -12,5 +12,6 @@ namespace Swimclub.REST.Data
 
 		public DbSet<Entities.Grade> Grades { get; set; }
 		public DbSet<Entities.StudentGradeTests> StudentGradeTests { get; set; }
+		public DbSet<Entities.Class> Classes { get; set; }
 	}
 }

@@ -17,12 +17,15 @@ namespace Swimclub.Mobile.Services
 		string AuthToken { get; }
 		string Role { get; }
 		string ApiUrl { set; }
+		Models.User CurrentUser { get; set; }
 		/// <summary>
 		/// Logs the user in, sets the <see cref="AuthToken"/> and <see cref="Role"/>
 		/// </summary>
 		/// <param name="_loginModel"></param>
 		/// <returns>200 = OK, 401 = Unauthorised, 503 = Server down</returns>
+		/// 
 		Task<AuthResponse> LoginAsync(Login _loginModel);
+		Task<UserInfoResponse> UserInfo();
 		Task<AllStudentsResponse> GetAllStudentsAsync();
 		Task<AllGradesResponse> GetAllGradesAsync();
 		Task<CreateStudentResponse> CreateStudent(Models.Student student);
@@ -30,6 +33,8 @@ namespace Swimclub.Mobile.Services
 		Task<RegistrationResponse> RegisterUser(Models.Register register);
 		Task<StudentGradeTestsResponse> GetCurrentStudentGradeTestByID(Models.StudentGradeTestRequest req);
 		Task<ModifyStudentGradeTestResponse> ModifySGTest(Models.StudentGradeTests _sg);
+		Task<AllClassResponse> GetAllClasses();
+		Task<AddClassResponse> CreateNewClass(Models.Class _class);
 		void ClearClient();
 
 	}
@@ -48,6 +53,9 @@ namespace Swimclub.Mobile.Services
 		public string AuthToken { get { return authToken; } }
 		private string role;
 		public string Role { get { return role; } }
+
+		private Models.User currentUser;
+		public Models.User CurrentUser { get { return currentUser; } set { currentUser = value; } }
 
 		private IConfigurationService config;
 		public RestService()
@@ -320,6 +328,103 @@ namespace Swimclub.Mobile.Services
 			else
 			{
 				return new ModifyStudentGradeTestResponse() { Success = false, Error = ApiError.TimeOutResponse() };
+			}
+		}
+
+		public async Task<AllClassResponse> GetAllClasses()
+		{
+			if (authToken == null)
+				return new AllClassResponse() { Success = false, Error = ApiError.NotLoggedInError() };
+
+			Uri uri = new Uri(String.Format("{0}/{1}/{2}", api_url, "class", "all"));
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Get,
+				RequestUri = uri,
+
+			};
+			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
+			//var response = await client.SendAsync(request).ConfigureAwait(false);
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+			//if (response.StatusCode != System.Net.HttpStatusCode.OK)
+			//{
+			//	return new AllStudentsReturn() { Success = false };
+			//}
+			//else
+			//{
+			//	var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+			//	Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
+			//	return new AllStudentsReturn() { Success = false, Students = students.values};
+			//}
+
+			if (response.Wait(TimeSpan.FromSeconds(60)))
+			{
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				//Swimclub.Models.standard.Collection<Student> students = JsonConvert.DeserializeObject<Swimclub.Models.standard.Collection<Student>>(responseBody);
+				Swimclub.Models.AllClassResponse res = JsonConvert.DeserializeObject<Swimclub.Models.AllClassResponse>(responseBody);
+				return res;
+			}
+			else
+			{
+				return new AllClassResponse() { Success = false, Error = ApiError.TimeOutResponse() };
+			}
+		}
+		public async Task<AddClassResponse> CreateNewClass(Models.Class _class)
+		{
+			if (authToken == null)
+				return new AddClassResponse() { Success = false, Error = ApiError.NotLoggedInError() };
+
+			Uri uri = new Uri(String.Format("{0}/{1}/{2}", api_url, "class", "add"));
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Post,
+				RequestUri = uri,
+				Content = new StringContent(JsonConvert.SerializeObject(_class), Encoding.UTF8, "application/json")
+
+			};
+			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+
+			if (response.Wait(TimeSpan.FromSeconds(40)))
+			{
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				AddClassResponse res = JsonConvert.DeserializeObject<Swimclub.Models.AddClassResponse>(responseBody);
+
+				return res;
+
+			}
+			else
+			{
+				return new AddClassResponse() { Success = false, Error = ApiError.TimeOutResponse() };
+			}
+		}
+
+		public async Task<UserInfoResponse> UserInfo()
+		{
+			if (authToken == null)
+				return new UserInfoResponse() { Success = false, Error = ApiError.NotLoggedInError() };
+
+			Uri uri = new Uri(String.Format("{0}/{1}/{2}", api_url, "users", "info"));
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Get,
+				RequestUri = uri,
+
+			};
+			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+
+			if (response.Wait(TimeSpan.FromSeconds(40)))
+			{
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				UserInfoResponse res = JsonConvert.DeserializeObject<Swimclub.Models.UserInfoResponse>(responseBody);
+
+				return res;
+
+			}
+			else
+			{
+				return new UserInfoResponse() { Success = false, Error = ApiError.TimeOutResponse() };
 			}
 		}
 	}
