@@ -114,7 +114,7 @@ namespace Swimclub.REST.Demo
 				DateOfBirth = new DateTime(2008, 1, 1), //When they were born
 				MedicalDetails = new Models.MedicalDetails() // medical details and emergeny contact
 				{
-					Allergies = new string[] { "Strawberries" }, //if (and what) algeries the child has, only inculde if one exists
+					Allergies = new string[] { "Strawberries", "Alcohol" }, //if (and what) algeries the child has, only inculde if one exists
 					Notes = "Struggles with endurance", // notes about student (medical problems)
 					Immunizations = new string[] { "Teenage booster?" }, // recient vaccines taken
 					Illnesses = new string[] {"Mumps"}, // curent illness' possesed
@@ -189,7 +189,7 @@ namespace Swimclub.REST.Demo
 				DateOfBirth = new DateTime(2009, 01, 29),
 				MedicalDetails = new Models.MedicalDetails()
 				{
-					Allergies = new string[] { "Latex" },
+					Allergies = new string[] { "Latex", "Alcohol" },
 					EmergencyContacts = new Models.Contact[]
 					{
 						new Models.Contact()
@@ -237,7 +237,7 @@ namespace Swimclub.REST.Demo
 				MedicalDetails = new Models.MedicalDetails()
 				{
 					Allergies = new string[] { "Aquagenic urticaria", "Xeroderma Pigmentosum" },
-					Illnesses = new string[] { "Acute lymphoblastic leukaemia" },
+					Illnesses = new string[] { "Acute lymphoblastic leukaemia", "Gout", "Outbreaks" },
 					EmergencyContacts = new Models.Contact[]
 					{
 						new Models.Contact()
@@ -261,9 +261,9 @@ namespace Swimclub.REST.Demo
 				DateOfBirth = new DateTime(2008, 1, 1), //When they were born
 				MedicalDetails = new Models.MedicalDetails() // medical details and emergeny contact
 				{
-					Allergies = new string[] { "Mould" }, //if (and what) algeries the child has, only inculde if one exists
+					Allergies = new string[] { "Mould", "Alcohol", "Pollen" }, //if (and what) algeries the child has, only inculde if one exists
 					Illnesses = new string[] { "Bulimia" }, // curent illness' possesed
-					Disabilities = new string[] { "Cerebral Palsy" }, // phisical and mental diabalitys the student has
+					Disabilities = new string[] { "Cerebral Palsy", "Alzheimer's Disease" }, // phisical and mental diabalitys the student has
 					EmergencyContacts = new Models.Contact[] // who and where is thir emergency contact
 					{
 						new Models.Contact()
@@ -335,7 +335,7 @@ namespace Swimclub.REST.Demo
 				DateOfBirth = new DateTime(2005, 12, 31),
 				MedicalDetails = new Models.MedicalDetails()
 				{
-					Illnesses = new string[] { "Earache" },
+					Illnesses = new string[] { "Earache", "Myiasis" },
 					Disabilities = new string[] { "Deafblindness" },
 					EmergencyContacts = new Models.Contact[]
 					{
@@ -408,7 +408,7 @@ namespace Swimclub.REST.Demo
 				DateOfBirth = new DateTime(2006, 6, 11),
 				MedicalDetails = new Models.MedicalDetails()
 				{
-					Allergies = new string[] { "Shellfish" },
+					Allergies = new string[] { "Shellfish", "Pollen" },
 					EmergencyContacts = new Models.Contact[]
 					{
 						new Models.Contact()
@@ -480,7 +480,7 @@ namespace Swimclub.REST.Demo
 				MedicalDetails = new Models.MedicalDetails()
 				{
 					Disabilities = new string[] { "Dwarfism" },
-					Illnesses = new string[] { "Thrush", "AIDS" },
+					Illnesses = new string[] { "Thrush", "AIDS", "Monkeypox" },
 					EmergencyContacts = new Models.Contact[]
 					{
 						new Models.Contact()
