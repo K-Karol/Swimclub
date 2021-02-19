@@ -11,16 +11,16 @@
             <Label Text="Pool" FontSize="Medium" />
             <Editor Text="{Binding _Class.Pool}" AutoSize="TextChanges" FontSize="Medium" Margin="0" Placeholder="Enter Pool You Will Use"/>
             <Label Text="Grade OF Class" FontSize="Medium" />
-            <Editor Text="{Binding _Class.ClassGrade}" AutoSize="TextChanges" FontSize="Medium" Margin="0" Placeholder="Enter Grade Of The Class"/>
+            <Picker ItemsSource="{Binding GradesCollection}" ItemDisplayBinding="{Binding Number}" Margin="0" SelectedItem="{Binding SelectedGrade}"/>
             <Label Text="Coach" FontSize="Medium" />
-            <Editor Text="{Binding _Class.coachID}" IsReadOnly="True" Placeholder="IsReadOnly"/>
+            <Editor Text="{Binding _Class.coach.Forename}" IsReadOnly="True" Placeholder="IsReadOnly"/>
             <Label Text="Date Of Class" FontSize="Medium" />
             <DatePicker Date="{Binding _Class.TimeOfClass}"/>
             <Label Text="Time Of Class" FontSize="Medium" />
             <TimePicker Time="{Binding _Class.TimeOfClass}"/>
+            <ActivityIndicator IsRunning="{Binding isRefreshing}"></ActivityIndicator>
             <StackLayout Orientation="Horizontal">
-                <Button Text="Cancel" Command="{Binding CancelCommand}" HorizontalOptions="FillAndExpand"></Button>
-                <Button Text="Save" Command="{Binding SaveCommand}" HorizontalOptions="FillAndExpand"></Button>
+                <Button Text="Save" Command="{Binding SubmitClass}" HorizontalOptions="FillAndExpand"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

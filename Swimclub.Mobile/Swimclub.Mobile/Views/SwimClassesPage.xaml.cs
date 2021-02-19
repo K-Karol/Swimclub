@@ -12,10 +12,12 @@ namespace Swimclub.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SwimClassesPage : ContentPage
     {
+        private readonly ViewModels.SwimCLassViewModel _viewModel;
         public SwimClassesPage()
         {
+            _viewModel = new ViewModels.SwimCLassViewModel();
             InitializeComponent();
-            //BindingContext = new SwimCLassViewModel();
+            BindingContext = _viewModel;
         }
 
         private void CreateAClass(object sender, EventArgs e)

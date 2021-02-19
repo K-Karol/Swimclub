@@ -1,20 +1,63 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Swimclub.Mobile.Views.SwimClassesPage" Title="Swim classes">
+             x:Class="Swimclub.Mobile.Views.SwimClassesPage" Title="Swim classes"
+             xmlns:model="clr-namespace:Swimclub.Models;assembly=SwimclubStandard"
+             xmlns:local="clr-namespace:Swimclub.Mobile.ViewModels">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Add a Class" Clicked="CreateAClass" Command="{Binding AddSwimCLassCommand}" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
+        <RefreshView IsRefreshing="{Binding isRefreshing}" Command="{Binding LoadData}">
+            <CollectionView x:Name="cv" ItemsSource="{Binding ClassesCollection}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding Pool}" FontSize="30" Grid.Row="1" Grid.Column="0"  x:DataType="model:Class"></Label>
+                            <Label Text="{Binding coach.Forename}" FontSize="30" Grid.Row="1" Grid.Column="0"  x:DataType="model:Class"></Label>
+                            <Label Text="{Binding TimeOfClass}" FontSize="30" Grid.Row="0" Grid.ColumnSpan="2"  x:DataType="model:Class"></Label>
+                            <Label Text="{Binding ClassGrade}" FontSize="30" Grid.Row="0" Grid.ColumnSpan="2"  x:DataType="model:Class"></Label>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.4*"/>
+                                </Grid.ColumnDefinitions>
 
-        <StackLayout Spacing="20" Padding="15">
-            <Label Text="Upcoming Classes" FontSize="Title"/>
-            <Label Text="Class:" FontSize="Medium" />
-            <Label Text="{Binding Class}" FontSize="Small"/>
-            <Label Text="Details:" FontSize="Medium" />
-            <Label Text="{Binding Details}" FontSize="Small"/>
-        </StackLayout>
+                                <ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Students}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:Student">
+                                            <ViewCell>
+                                                <StackLayout>
+                                                    <Label Text="{Binding Forename}"></Label>
+                                                </StackLayout>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
 
+
+                                <ListView Grid.Row="0" Grid.Column="1" ItemsSource="{Binding AttendanceArray}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="local:ClassesTemp">
+                                            <ViewCell>
+                                                <StackLayout>
+                                                    <CheckBox IsChecked="{Binding .}"></CheckBox>
+                                                </StackLayout>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+
+                            </Grid>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
     </ContentPage.Content>
 </ContentPage> 

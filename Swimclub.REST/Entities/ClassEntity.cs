@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,6 +20,21 @@ namespace Swimclub.REST.Entities
         [Required]
         public int coachID { get; set; }
         [Required]
-        DateTime TimeOfClass { get; set; }
+        public DateTime TimeOfClass { get; set; }
+        [Required, NotMapped]
+        public int[] StudentIDs { get; set; }
+        public string StudentIDsJSON
+		{
+			get { return JsonConvert.SerializeObject(StudentIDs); }
+            set { StudentIDs = JsonConvert.DeserializeObject<int[]>(value); }
+        }
+        [Required, NotMapped]
+        public bool[] StudentAttendance { get; set; }
+        public string StudentAttendanceJSON
+        {
+            get { return JsonConvert.SerializeObject(StudentAttendance); }
+            set { StudentAttendance = JsonConvert.DeserializeObject<bool[]>(value); }
+        }
+
     }
 }
