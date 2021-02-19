@@ -57,6 +57,7 @@ namespace Swimclub.REST.Controllers
 			await resourceDbContext.AddAsync(classEnt);
 			await resourceDbContext.SaveChangesAsync();
 			_class.ID = classEnt.ID;
+			_class.ClassGrade = classEnt.ClassGrade;
 			response = new Models.AddClassResponse() { Success = true, Class = new Models.standard.Item<Models.Class>() { itemValue = _class } };
 			return Ok(response);
 		}
