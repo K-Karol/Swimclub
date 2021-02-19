@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swimclub.Mobile.Views.TestingSheets"
+             xmlns:local="clr-namespace:Swimclub.Mobile.Views"
+             xmlns:model="clr-namespace:Swimclub.Models;assembly=SwimclubStandard"
+             Title="Testing">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:StudentPickerConverter x:Key="StudentPickerConverter"/>
+            <Style TargetType="Label" x:Key="pickLab">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor" Value="{StaticResource OnBackground}"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <RefreshView x:Name="refView" Margin="5" Refreshing="refView_Refreshing">
+            <StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Style="{StaticResource pickLab}" VerticalOptions="Center" Text="Choose Grade" Grid.Row="0" Grid.Column="0"/>
+                    <Picker SelectedIndexChanged="gradPicker_SelectedIndexChanged"   x:Name="gradPicker" x:DataType="model:Grade" ItemDisplayBinding="{Binding Number}" Grid.Row="0" Grid.Column="1"/>
+                </Grid>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label Style="{StaticResource pickLab}" VerticalOptions="Center" Text="Choose Student" Grid.Row="0" Grid.Column="0"/>
+                    <Picker IsEnabled="False" SelectedIndexChanged="studentPickers_SelectedIndexChanged" ItemDisplayBinding="{Binding ., Converter={StaticResource StudentPickerConverter}}" x:Name="studentPickers" Grid.Row="0" Grid.Column="1"/>
+                </Grid>
+
+                <!--<CollectionView>
+                    
+                    </CollectionView>-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Number" Grid.Column="0"/>
+                    <Label Text="Name" Grid.Column="1"/>
+                    <Label Text="Completed" Grid.Column="2"/>
+                    <Label Text="Passed" Grid.Column="3"/>
+
+                </Grid>
+                <ScrollView HorizontalScrollBarVisibility="Never">
+                <CollectionView x:Name="testsColl" >
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:TestAttempt">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding AttemptedTest.Number}" Grid.Column="0"/>
+                                <Label Text="{Binding AttemptedTest.Name}"  Grid.Column="1"/>
+                                <CheckBox IsChecked="{Binding Completed}"  Grid.Column="2"/>
+                                <CheckBox IsChecked="{Binding Passed}"  Grid.Column="3"/>
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+                </ScrollView>
+                <Button Text="Save changes" x:Name="saveButton" Clicked="saveButton_Clicked"></Button>
+            </StackLayout>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Swimclub.Models;
 using Xamarin.Forms;
 
@@ -27,6 +28,8 @@ namespace Swimclub.Mobile.Services
 		Task<CreateStudentResponse> CreateStudent(Models.Student student);
 		Task<ModifyStudentResponse> ModifyStudent(Models.Student student);
 		Task<RegistrationResponse> RegisterUser(Models.Register register);
+		Task<StudentGradeTestsResponse> GetCurrentStudentGradeTestByID(Models.StudentGradeTestRequest req);
+		Task<ModifyStudentGradeTestResponse> ModifySGTest(Models.StudentGradeTests _sg);
 		void ClearClient();
 
 	}
@@ -257,6 +260,66 @@ namespace Swimclub.Mobile.Services
 			else
 			{
 				return new RegistrationResponse() { Success = false, Error = ApiError.TimeOutResponse()};
+			}
+		}
+
+		public async Task<StudentGradeTestsResponse> GetCurrentStudentGradeTestByID(Models.StudentGradeTestRequest req)
+		{
+			if (authToken == null)
+				return new StudentGradeTestsResponse() { Success = false, Error = ApiError.NotLoggedInError() };
+
+			Uri uri = new Uri(String.Format("{0}/{1}/{2}/{3}", api_url, "grades", "studentgradetest", "id"));
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Post,
+				RequestUri = uri,
+				Content = new StringContent(JsonConvert.SerializeObject(req), Encoding.UTF8, "application/json")
+
+			};
+			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+
+			if (response.Wait(TimeSpan.FromSeconds(40)))
+			{
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				StudentGradeTestsResponse res = JsonConvert.DeserializeObject<Swimclub.Models.StudentGradeTestsResponse>(responseBody);
+
+				return res;
+
+			}
+			else
+			{
+				return new StudentGradeTestsResponse() { Success = false, Error = ApiError.TimeOutResponse() };
+			}
+		}
+
+		public async Task<ModifyStudentGradeTestResponse> ModifySGTest(Models.StudentGradeTests _sg)
+		{
+			if (authToken == null)
+				return new ModifyStudentGradeTestResponse() { Success = false, Error = ApiError.NotLoggedInError() };
+
+			Uri uri = new Uri(String.Format("{0}/{1}/{2}/{3}", api_url, "grades", "studentgradetest", "modify"));
+			var request = new HttpRequestMessage
+			{
+				Method = HttpMethod.Post,
+				RequestUri = uri,
+				Content = new StringContent(JsonConvert.SerializeObject(_sg), Encoding.UTF8, "application/json")
+
+			};
+			request.Headers.Add("Authorization", String.Format("Bearer {0}", authToken));
+			Task<HttpResponseMessage> response = Task.Run(() => client.SendAsync(request));
+
+			if (response.Wait(TimeSpan.FromSeconds(40)))
+			{
+				var responseBody = await response.Result.Content.ReadAsStringAsync().ConfigureAwait(false);
+				ModifyStudentGradeTestResponse res = JsonConvert.DeserializeObject<Swimclub.Models.ModifyStudentGradeTestResponse>(responseBody);
+
+				return res;
+
+			}
+			else
+			{
+				return new ModifyStudentGradeTestResponse() { Success = false, Error = ApiError.TimeOutResponse() };
 			}
 		}
 	}

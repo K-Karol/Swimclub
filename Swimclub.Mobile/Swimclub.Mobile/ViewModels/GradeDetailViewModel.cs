@@ -13,11 +13,6 @@ namespace Swimclub.Mobile.ViewModels
 		ObservableCollection<StudentTemp> students = new ObservableCollection<StudentTemp>();
 
 		public ObservableCollection<StudentTemp> StudentsCollection { get { return students; } }
-
-
-
-
-
 		private Models.Grade grade;
 
 		public Models.Grade Grade
