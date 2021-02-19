@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swimclub.Mobile.Views.SwimClassDetailView"
+             xmlns:model="clr-namespace:Swimclub.Models;assembly=SwimclubStandard"
+             xmlns:local="clr-namespace:Swimclub.Mobile.ViewModels">
+    <ContentPage.Content>
+        <StackLayout>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="0.4*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label FontSize="20" TextColor="{StaticResource OnBackground}" Grid.Row="0" Grid.Column="0" Text="Students"></Label>
+                <Label FontSize="20" TextColor="{StaticResource OnBackground}" Grid.Row="0" Grid.Column="1" Text="Attendance"></Label>
+                <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding _Class.Students}" SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Student">
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label Text="{Binding Forename}"></Label>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+                <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding _Class.AttendanceArray}" SelectionMode="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:ClassesTemp">
+                            <ViewCell>
+                                <StackLayout>
+                                    <CheckBox IsChecked="{Binding .}"></CheckBox>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

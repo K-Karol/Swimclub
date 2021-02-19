@@ -21,7 +21,7 @@ namespace Swimclub.Mobile.ViewModels
 
 
         public Command LoadData { get; }
-        public Command<object> SelectClass { get; }
+        public Command SelectClass { get; }
 
         private ClassesTemp selectedClass;
         public ClassesTemp SelectedClass
@@ -48,6 +48,7 @@ namespace Swimclub.Mobile.ViewModels
             restService = DependencyService.Get<Services.IRestService>();
             AddSwimCLassCommand = new Command(OnAddClass);
             LoadData = new Command(loadData);
+            SelectClass = new Command(selectClass);
             Task.Run(() => loadDataAsync());
         }
 
@@ -55,6 +56,11 @@ namespace Swimclub.Mobile.ViewModels
         {
             isRefreshing = true;
             loadData();
+        }
+
+        private void selectClass()
+		{
+            Shell.Current.Navigation.PushAsync(new Views.SwimClassDetailView(SelectedClass));
         }
 
 

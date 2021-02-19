@@ -10,7 +10,7 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <RefreshView IsRefreshing="{Binding isRefreshing}" Command="{Binding LoadData}">
-            <CollectionView x:Name="cv" ItemsSource="{Binding ClassesCollection}">
+            <CollectionView x:Name="cv" ItemsSource="{Binding ClassesCollection}" SelectedItem="{Binding SelectedClass}" SelectionMode="Single" SelectionChangedCommand="{Binding SelectClass}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
@@ -21,13 +21,13 @@
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="0.4*"/>
                                 </Grid.ColumnDefinitions>
-
-                                <ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Students}">
+                                <!--<ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Students}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="model:Student">
                                             <ViewCell>
@@ -45,12 +45,12 @@
                                         <DataTemplate x:DataType="local:ClassesTemp">
                                             <ViewCell>
                                                 <StackLayout>
-                                                    <CheckBox IsChecked="{Binding .}"></CheckBox>
+                                                    <CheckBox IsEnabled="False" IsChecked="{Binding .}"></CheckBox>
                                                 </StackLayout>
                                             </ViewCell>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
-                                </ListView>
+                                </ListView>-->
 
 
                             </Grid>
