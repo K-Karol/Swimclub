@@ -14,47 +14,66 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
-                            <Label Text="{Binding Pool}" FontSize="30" Grid.Row="1" Grid.Column="0"  x:DataType="model:Class"></Label>
+                            <!--<Label Text="{Binding Pool}" FontSize="30" Grid.Row="1" Grid.Column="0"  x:DataType="model:Class"></Label>
                             <Label Text="{Binding coach.Forename}" FontSize="30" Grid.Row="1" Grid.Column="0"  x:DataType="model:Class"></Label>
                             <Label Text="{Binding TimeOfClass}" FontSize="30" Grid.Row="0" Grid.ColumnSpan="2"  x:DataType="model:Class"></Label>
-                            <Label Text="{Binding ClassGrade}" FontSize="30" Grid.Row="0" Grid.ColumnSpan="2"  x:DataType="model:Class"></Label>
-                            <Grid>
+                            <Label Text="{Binding ClassGrade}" FontSize="30" Grid.Row="0" Grid.ColumnSpan="2"  x:DataType="model:Class"></Label>-->
+
+                            <!--<Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="0.4*"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <!--<ListView Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Students}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="model:Student">
-                                            <ViewCell>
-                                                <StackLayout>
-                                                    <Label Text="{Binding Forename}"></Label>
-                                                </StackLayout>
-                                            </ViewCell>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
 
+                                <Label TextColor="{StaticResource OnBackground}" Text="Pool:" Grid.Row="0" Grid.Column="0"/>
+                                <Label TextColor="{StaticResource OnBackground}" Text="{Binding Pool}" FontSize="30" Grid.Row="0" Grid.Column="1"  x:DataType="model:Class"></Label>
+                            </Grid>-->
 
-                                <ListView Grid.Row="0" Grid.Column="1" ItemsSource="{Binding AttendanceArray}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="local:ClassesTemp">
-                                            <ViewCell>
-                                                <StackLayout>
-                                                    <CheckBox IsEnabled="False" IsChecked="{Binding .}"></CheckBox>
-                                                </StackLayout>
-                                            </ViewCell>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>-->
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-
+                                <Label TextColor="{StaticResource OnBackground}" Text="Coach name:" Grid.Row="0" Grid.Column="0"/>
+                                <Label TextColor="{StaticResource OnBackground}" Text="{Binding coach.Forename}" Grid.Row="0" Grid.Column="1"  x:DataType="model:Class"></Label>
                             </Grid>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label TextColor="{StaticResource OnBackground}" Text="Class Time and Date:" Grid.Row="0" Grid.Column="0"/>
+                                <Label TextColor="{StaticResource OnBackground}" Text="{Binding TimeOfClass}" Grid.Row="0" Grid.Column="1"  x:DataType="model:Class"></Label>
+                            </Grid>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label TextColor="{StaticResource OnBackground}" Text="Class Grade:" Grid.Row="0" Grid.Column="0"/>
+                                <Label TextColor="{StaticResource OnBackground}" Text="{Binding ClassGrade}" Grid.Row="0" Grid.Column="1"  x:DataType="model:Class"></Label>
+                            </Grid>
+
+                            <Label Text="  "/>
                         </StackLayout>
+                        
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
