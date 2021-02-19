@@ -28,6 +28,8 @@ namespace Swimclub.Mobile.ViewModels
          public ObservableCollection<StudentTemp> StudentsCollection { get { return students; } }
 
 
+        
+
          private bool loading;
          public bool isLoading
 		 {

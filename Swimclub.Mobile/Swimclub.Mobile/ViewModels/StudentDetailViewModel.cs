@@ -15,6 +15,26 @@ namespace Swimclub.Mobile.ViewModels
             get { return student; }
             set { SetProperty(ref student, value); }
         }
+
+        public int AllSize
+        {
+            get { return student.MedicalDetails.Allergies != null ? student.MedicalDetails.Allergies.Length * 20 : 20; }
+        }
+
+        public int ImmSize
+        {
+            get { return student.MedicalDetails.Immunizations != null ? student.MedicalDetails.Immunizations.Length * 20 : 20; }
+        }
+
+        public int IllSize
+        {
+            get { return student.MedicalDetails.Illnesses != null ? student.MedicalDetails.Illnesses.Length * 20 : 20; }
+        }
+
+        public int DisbSize
+        {
+            get { return student.MedicalDetails.Disabilities != null ? student.MedicalDetails.Disabilities.Length * 20 : 20; }
+        }
     }
 
     public class StringArrayToString : IValueConverter

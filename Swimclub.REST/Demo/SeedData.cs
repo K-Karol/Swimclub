@@ -126,6 +126,41 @@ namespace Swimclub.REST.Demo
 							{
 								Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"
 							}
+						},
+						new Models.Contact()
+						{
+							FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address() // name, mobile number, address and postcode of the emergency contact
+							{
+								Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"
+							}
+						},
+						new Models.Contact()
+						{
+							FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address() // name, mobile number, address and postcode of the emergency contact
+							{
+								Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"
+							}
+						},
+						new Models.Contact()
+						{
+							FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address() // name, mobile number, address and postcode of the emergency contact
+							{
+								Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"
+							}
+						},
+						new Models.Contact()
+						{
+							FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address() // name, mobile number, address and postcode of the emergency contact
+							{
+								Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"
+							}
+						},
+						new Models.Contact()
+						{
+							FullName = "Sarah Bloggs", MobileNumber = "07777777777", Address = new Models.Address() // name, mobile number, address and postcode of the emergency contact
+							{
+								Line1 = "1 Awesome Street", Line2 = "Eckington", Line3 = "Sheffield", Line4 = "Yorkshire", PostCode = "S11 2AB"
+							}
 						}
 					}
 				}

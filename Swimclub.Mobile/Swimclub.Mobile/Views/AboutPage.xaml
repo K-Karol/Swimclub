@@ -18,7 +18,7 @@
 
         </StackLayout>
         <StackLayout Grid.Row="1" Margin="5,0,5,0">
-            <Label Text="Welcome to the Dromfield Swimclub app." HorizontalTextAlignment="Center" 
+            <Label Text="Welcome to the Dronfield Swimclub app." HorizontalTextAlignment="Center" 
                    FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
             <Label Text="Use the tab in the top left to navigate throught the application." HorizontalTextAlignment="Center" 
                    FontSize="Large" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
