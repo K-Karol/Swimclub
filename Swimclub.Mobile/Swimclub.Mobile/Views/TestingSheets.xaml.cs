@@ -77,6 +77,11 @@ namespace Swimclub.Mobile.Views
 
 		private void saveButton_Clicked(object sender, EventArgs e)
 		{
+			if(sgt == null)
+			{
+				DisplayAlert("Please wait", "Please wait for the data to load", "Ok");
+				return;
+			}
 			Models.ModifyStudentGradeTestResponse resp;
 			Task<Models.ModifyStudentGradeTestResponse> task = Task.Run(() => restService.ModifySGTest(sgt));
 			task.ContinueWith(t => Device.BeginInvokeOnMainThread(
@@ -141,6 +146,16 @@ namespace Swimclub.Mobile.Views
 
 		private void refView_Refreshing(object sender, EventArgs e)
 		{
+			testsColl.ItemsSource = null;
+			studentPickers.ItemsSource = null;
+			studentPickers.IsEnabled = false;
+			gradPicker.ItemsSource = null;
+			Task.Run(() => loadData());
+		}
+
+		protected override void OnAppearing()
+		{
+			base.OnAppearing();
 			testsColl.ItemsSource = null;
 			studentPickers.ItemsSource = null;
 			studentPickers.IsEnabled = false;
